@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 55;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2DFD5D6E9DDEA6E09EEF3D46 /* Pods_BookMark.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5721549DEE181646370BC256 /* Pods_BookMark.framework */; };
 		86C3C2B1296858370035CFFE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C3C2B0296858370035CFFE /* AppDelegate.swift */; };
 		86C3C2B3296858370035CFFE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C3C2B2296858370035CFFE /* SceneDelegate.swift */; };
 		86C3C2B5296858370035CFFE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C3C2B4296858370035CFFE /* ViewController.swift */; };
@@ -16,6 +17,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		418EDADFB5CFEB9E1C9ADDE8 /* Pods-BookMark.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BookMark.debug.xcconfig"; path = "Target Support Files/Pods-BookMark/Pods-BookMark.debug.xcconfig"; sourceTree = "<group>"; };
+		5721549DEE181646370BC256 /* Pods_BookMark.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BookMark.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		86C3C2AD296858370035CFFE /* BookMark.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BookMark.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		86C3C2B0296858370035CFFE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		86C3C2B2296858370035CFFE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -24,6 +27,7 @@
 		86C3C2B9296858380035CFFE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		86C3C2BC296858380035CFFE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		86C3C2BE296858380035CFFE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CD50D9E346145F9EDEF00686 /* Pods-BookMark.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BookMark.release.xcconfig"; path = "Target Support Files/Pods-BookMark/Pods-BookMark.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +35,30 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2DFD5D6E9DDEA6E09EEF3D46 /* Pods_BookMark.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		650C55764473948B3B1476E4 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				418EDADFB5CFEB9E1C9ADDE8 /* Pods-BookMark.debug.xcconfig */,
+				CD50D9E346145F9EDEF00686 /* Pods-BookMark.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		86C3C2A4296858370035CFFE = {
 			isa = PBXGroup;
 			children = (
 				86C3C2AF296858370035CFFE /* BookMark */,
 				86C3C2AE296858370035CFFE /* Products */,
+				650C55764473948B3B1476E4 /* Pods */,
+				AD88288103AF29B584527552 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -67,6 +84,14 @@
 			path = BookMark;
 			sourceTree = "<group>";
 		};
+		AD88288103AF29B584527552 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5721549DEE181646370BC256 /* Pods_BookMark.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -74,9 +99,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 86C3C2C1296858380035CFFE /* Build configuration list for PBXNativeTarget "BookMark" */;
 			buildPhases = (
+				314F6AFFB55243CDD777E7BA /* [CP] Check Pods Manifest.lock */,
 				86C3C2A9296858370035CFFE /* Sources */,
 				86C3C2AA296858370035CFFE /* Frameworks */,
 				86C3C2AB296858370035CFFE /* Resources */,
+				833218BFB0D0D501AF4F1F22 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -103,7 +130,7 @@
 				};
 			};
 			buildConfigurationList = 86C3C2A8296858370035CFFE /* Build configuration list for PBXProject "BookMark" */;
-			compatibilityVersion = "Xcode 14.0";
+			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -132,6 +159,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		314F6AFFB55243CDD777E7BA /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-BookMark-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		833218BFB0D0D501AF4F1F22 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-BookMark/Pods-BookMark-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-BookMark/Pods-BookMark-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BookMark/Pods-BookMark-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		86C3C2A9296858370035CFFE /* Sources */ = {
@@ -282,6 +351,7 @@
 		};
 		86C3C2C2296858380035CFFE /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 418EDADFB5CFEB9E1C9ADDE8 /* Pods-BookMark.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -309,6 +379,7 @@
 		};
 		86C3C2C3296858380035CFFE /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CD50D9E346145F9EDEF00686 /* Pods-BookMark.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
