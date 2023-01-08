@@ -14,6 +14,15 @@
 		86C3C2B8296858370035CFFE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 86C3C2B6296858370035CFFE /* Main.storyboard */; };
 		86C3C2BA296858380035CFFE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 86C3C2B9296858380035CFFE /* Assets.xcassets */; };
 		86C3C2BD296858380035CFFE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 86C3C2BB296858380035CFFE /* LaunchScreen.storyboard */; };
+		E8C2B4F1296A8915000E2030 /* MyLibTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8C2B4F0296A8915000E2030 /* MyLibTab.swift */; };
+		E8C2B4F5296A8A85000E2030 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8C2B4F4296A8A85000E2030 /* Colors.swift */; };
+		E8C2B4F7296A8CC5000E2030 /* OneLineTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8C2B4F6296A8CC5000E2030 /* OneLineTab.swift */; };
+		E8C2B4F9296A8D6D000E2030 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8C2B4F8296A8D6D000E2030 /* MainTabBarController.swift */; };
+		E8C2B4FB296A8F40000E2030 /* CommunityTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8C2B4FA296A8F40000E2030 /* CommunityTab.swift */; };
+		E8C2B4FD296A8F6A000E2030 /* ScrapTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8C2B4FC296A8F6A000E2030 /* ScrapTab.swift */; };
+		E8C2B4FF296A8F8C000E2030 /* MyPageTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8C2B4FE296A8F8C000E2030 /* MyPageTab.swift */; };
+		E8C2B501296A93C2000E2030 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8C2B500296A93C2000E2030 /* Utils.swift */; };
+		E8C2B50F296AA576000E2030 /* pepe.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E8C2B50E296AA576000E2030 /* pepe.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +37,15 @@
 		86C3C2BC296858380035CFFE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		86C3C2BE296858380035CFFE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CD50D9E346145F9EDEF00686 /* Pods-BookMark.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BookMark.release.xcconfig"; path = "Target Support Files/Pods-BookMark/Pods-BookMark.release.xcconfig"; sourceTree = "<group>"; };
+		E8C2B4F0296A8915000E2030 /* MyLibTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLibTab.swift; sourceTree = "<group>"; };
+		E8C2B4F4296A8A85000E2030 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		E8C2B4F6296A8CC5000E2030 /* OneLineTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneLineTab.swift; sourceTree = "<group>"; };
+		E8C2B4F8296A8D6D000E2030 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		E8C2B4FA296A8F40000E2030 /* CommunityTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityTab.swift; sourceTree = "<group>"; };
+		E8C2B4FC296A8F6A000E2030 /* ScrapTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrapTab.swift; sourceTree = "<group>"; };
+		E8C2B4FE296A8F8C000E2030 /* MyPageTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageTab.swift; sourceTree = "<group>"; };
+		E8C2B500296A93C2000E2030 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		E8C2B50E296AA576000E2030 /* pepe.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = pepe.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,13 +66,13 @@
 				418EDADFB5CFEB9E1C9ADDE8 /* Pods-BookMark.debug.xcconfig */,
 				CD50D9E346145F9EDEF00686 /* Pods-BookMark.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
 		86C3C2A4296858370035CFFE = {
 			isa = PBXGroup;
 			children = (
+				E8C2B4F3296A8A66000E2030 /* MyLib */,
 				86C3C2AF296858370035CFFE /* BookMark */,
 				86C3C2AE296858370035CFFE /* Products */,
 				650C55764473948B3B1476E4 /* Pods */,
@@ -90,6 +108,22 @@
 				5721549DEE181646370BC256 /* Pods_BookMark.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E8C2B4F3296A8A66000E2030 /* MyLib */ = {
+			isa = PBXGroup;
+			children = (
+				E8C2B4F8296A8D6D000E2030 /* MainTabBarController.swift */,
+				E8C2B4F0296A8915000E2030 /* MyLibTab.swift */,
+				E8C2B50E296AA576000E2030 /* pepe.jpg */,
+				E8C2B4F6296A8CC5000E2030 /* OneLineTab.swift */,
+				E8C2B4F4296A8A85000E2030 /* Colors.swift */,
+				E8C2B4FA296A8F40000E2030 /* CommunityTab.swift */,
+				E8C2B4FC296A8F6A000E2030 /* ScrapTab.swift */,
+				E8C2B4FE296A8F8C000E2030 /* MyPageTab.swift */,
+				E8C2B500296A93C2000E2030 /* Utils.swift */,
+			);
+			path = MyLib;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -154,6 +188,7 @@
 			files = (
 				86C3C2BD296858380035CFFE /* LaunchScreen.storyboard in Resources */,
 				86C3C2BA296858380035CFFE /* Assets.xcassets in Resources */,
+				E8C2B50F296AA576000E2030 /* pepe.jpg in Resources */,
 				86C3C2B8296858370035CFFE /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -208,8 +243,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				86C3C2B5296858370035CFFE /* ViewController.swift in Sources */,
+				E8C2B4FB296A8F40000E2030 /* CommunityTab.swift in Sources */,
+				E8C2B4FF296A8F8C000E2030 /* MyPageTab.swift in Sources */,
+				E8C2B4F5296A8A85000E2030 /* Colors.swift in Sources */,
 				86C3C2B1296858370035CFFE /* AppDelegate.swift in Sources */,
+				E8C2B4F9296A8D6D000E2030 /* MainTabBarController.swift in Sources */,
 				86C3C2B3296858370035CFFE /* SceneDelegate.swift in Sources */,
+				E8C2B501296A93C2000E2030 /* Utils.swift in Sources */,
+				E8C2B4FD296A8F6A000E2030 /* ScrapTab.swift in Sources */,
+				E8C2B4F7296A8CC5000E2030 /* OneLineTab.swift in Sources */,
+				E8C2B4F1296A8915000E2030 /* MyLibTab.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
