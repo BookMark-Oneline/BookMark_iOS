@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		24A7CFFE296D4501005865E5 /* AddBookBarcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A7CFFD296D4501005865E5 /* AddBookBarcode.swift */; };
 		24A7D000296D4522005865E5 /* BarcodeReaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A7CFFF296D4522005865E5 /* BarcodeReaderView.swift */; };
+		24A7D024296DB713005865E5 /* ReadingTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A7D023296DB713005865E5 /* ReadingTime.swift */; };
 		2DFD5D6E9DDEA6E09EEF3D46 /* Pods_BookMark.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5721549DEE181646370BC256 /* Pods_BookMark.framework */; };
 		86C3C2B1296858370035CFFE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C3C2B0296858370035CFFE /* AppDelegate.swift */; };
 		86C3C2B3296858370035CFFE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C3C2B2296858370035CFFE /* SceneDelegate.swift */; };
@@ -30,6 +31,7 @@
 /* Begin PBXFileReference section */
 		24A7CFFD296D4501005865E5 /* AddBookBarcode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBookBarcode.swift; sourceTree = "<group>"; };
 		24A7CFFF296D4522005865E5 /* BarcodeReaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeReaderView.swift; sourceTree = "<group>"; };
+		24A7D023296DB713005865E5 /* ReadingTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingTime.swift; sourceTree = "<group>"; };
 		418EDADFB5CFEB9E1C9ADDE8 /* Pods-BookMark.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BookMark.debug.xcconfig"; path = "Target Support Files/Pods-BookMark/Pods-BookMark.debug.xcconfig"; sourceTree = "<group>"; };
 		5721549DEE181646370BC256 /* Pods_BookMark.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BookMark.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		86C3C2AD296858370035CFFE /* BookMark.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BookMark.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -128,6 +130,7 @@
 				E8C2B500296A93C2000E2030 /* Utils.swift */,
 				24A7CFFD296D4501005865E5 /* AddBookBarcode.swift */,
 				24A7CFFF296D4522005865E5 /* BarcodeReaderView.swift */,
+				24A7D023296DB713005865E5 /* ReadingTime.swift */,
 			);
 			path = MyLib;
 			sourceTree = "<group>";
@@ -255,6 +258,7 @@
 				E8C2B4F5296A8A85000E2030 /* Colors.swift in Sources */,
 				86C3C2B1296858370035CFFE /* AppDelegate.swift in Sources */,
 				E8C2B4F9296A8D6D000E2030 /* MainTabBarController.swift in Sources */,
+				24A7D024296DB713005865E5 /* ReadingTime.swift in Sources */,
 				86C3C2B3296858370035CFFE /* SceneDelegate.swift in Sources */,
 				E8C2B501296A93C2000E2030 /* Utils.swift in Sources */,
 				E8C2B4FD296A8F6A000E2030 /* ScrapTab.swift in Sources */,
