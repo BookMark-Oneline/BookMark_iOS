@@ -16,6 +16,9 @@
 		86C3C2BD296858380035CFFE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 86C3C2BB296858380035CFFE /* LaunchScreen.storyboard */; };
 		86C3C2C5296D77EB0035CFFE /* BookDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C3C2C4296D77EB0035CFFE /* BookDetailViewController.swift */; };
 		86C3C2CD296D8CCC0035CFFE /* book.png in Resources */ = {isa = PBXBuildFile; fileRef = 86C3C2CC296D8CCC0035CFFE /* book.png */; };
+		86C3C2D0296E694B0035CFFE /* AddBookBarcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C3C2CE296E694B0035CFFE /* AddBookBarcode.swift */; };
+		86C3C2D1296E694B0035CFFE /* BarcodeReaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C3C2CF296E694B0035CFFE /* BarcodeReaderView.swift */; };
+		86C3C2D3296E69630035CFFE /* ConfirmBookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C3C2D2296E69630035CFFE /* ConfirmBookViewController.swift */; };
 		E8C2B4F1296A8915000E2030 /* MyLibTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8C2B4F0296A8915000E2030 /* MyLibTab.swift */; };
 		E8C2B4F5296A8A85000E2030 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8C2B4F4296A8A85000E2030 /* Colors.swift */; };
 		E8C2B4F7296A8CC5000E2030 /* OneLineTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8C2B4F6296A8CC5000E2030 /* OneLineTab.swift */; };
@@ -40,6 +43,9 @@
 		86C3C2BE296858380035CFFE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		86C3C2C4296D77EB0035CFFE /* BookDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookDetailViewController.swift; sourceTree = "<group>"; };
 		86C3C2CC296D8CCC0035CFFE /* book.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = book.png; sourceTree = "<group>"; };
+		86C3C2CE296E694B0035CFFE /* AddBookBarcode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddBookBarcode.swift; sourceTree = "<group>"; };
+		86C3C2CF296E694B0035CFFE /* BarcodeReaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarcodeReaderView.swift; sourceTree = "<group>"; };
+		86C3C2D2296E69630035CFFE /* ConfirmBookViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmBookViewController.swift; sourceTree = "<group>"; };
 		CD50D9E346145F9EDEF00686 /* Pods-BookMark.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BookMark.release.xcconfig"; path = "Target Support Files/Pods-BookMark/Pods-BookMark.release.xcconfig"; sourceTree = "<group>"; };
 		E8C2B4F0296A8915000E2030 /* MyLibTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLibTab.swift; sourceTree = "<group>"; };
 		E8C2B4F4296A8A85000E2030 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
@@ -97,6 +103,7 @@
 			children = (
 				86C3C2B0296858370035CFFE /* AppDelegate.swift */,
 				86C3C2B2296858370035CFFE /* SceneDelegate.swift */,
+				86C3C2D2296E69630035CFFE /* ConfirmBookViewController.swift */,
 				86C3C2B4296858370035CFFE /* ViewController.swift */,
 				86C3C2B6296858370035CFFE /* Main.storyboard */,
 				86C3C2B9296858380035CFFE /* Assets.xcassets */,
@@ -119,6 +126,8 @@
 			children = (
 				E8C2B4F8296A8D6D000E2030 /* MainTabBarController.swift */,
 				E8C2B4F0296A8915000E2030 /* MyLibTab.swift */,
+				86C3C2CE296E694B0035CFFE /* AddBookBarcode.swift */,
+				86C3C2CF296E694B0035CFFE /* BarcodeReaderView.swift */,
 				E8C2B50E296AA576000E2030 /* pepe.jpg */,
 				E8C2B4F6296A8CC5000E2030 /* OneLineTab.swift */,
 				E8C2B4F4296A8A85000E2030 /* Colors.swift */,
@@ -251,6 +260,7 @@
 			files = (
 				86C3C2B5296858370035CFFE /* ViewController.swift in Sources */,
 				E8C2B4FB296A8F40000E2030 /* CommunityTab.swift in Sources */,
+				86C3C2D1296E694B0035CFFE /* BarcodeReaderView.swift in Sources */,
 				86C3C2C5296D77EB0035CFFE /* BookDetailViewController.swift in Sources */,
 				E8C2B4FF296A8F8C000E2030 /* MyPageTab.swift in Sources */,
 				E8C2B4F5296A8A85000E2030 /* Colors.swift in Sources */,
@@ -258,7 +268,9 @@
 				E8C2B4F9296A8D6D000E2030 /* MainTabBarController.swift in Sources */,
 				86C3C2B3296858370035CFFE /* SceneDelegate.swift in Sources */,
 				E8C2B501296A93C2000E2030 /* Utils.swift in Sources */,
+				86C3C2D3296E69630035CFFE /* ConfirmBookViewController.swift in Sources */,
 				E8C2B4FD296A8F6A000E2030 /* ScrapTab.swift in Sources */,
+				86C3C2D0296E694B0035CFFE /* AddBookBarcode.swift in Sources */,
 				E8C2B4F7296A8CC5000E2030 /* OneLineTab.swift in Sources */,
 				E8C2B4F1296A8915000E2030 /* MyLibTab.swift in Sources */,
 			);

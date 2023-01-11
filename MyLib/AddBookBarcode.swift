@@ -22,7 +22,7 @@ class AddBookBarcode: UIViewController {
         let btn = UIButton()
         
         btn.frame = CGRect(x: 0, y: 0, width: 286, height: 50)
-        btn.backgroundColor = UIColor.tabBarOrange
+        btn.backgroundColor = UIColor.textOrange
         btn.titleLabel?.textColor = .white
         btn.setTitle("스캔하기", for: .normal)
         btn.setTitle("스캔을 멈추기", for: .selected)
