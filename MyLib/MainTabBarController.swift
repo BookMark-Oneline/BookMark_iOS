@@ -14,8 +14,8 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
         super.viewDidLoad()
         self.view.backgroundColor = .white
         tabBar.tintColor = .white
-        tabBar.tintColor = .tabBarOrange
-        tabBar.unselectedItemTintColor = .tabBarGray
+        tabBar.tintColor = .textOrange
+        tabBar.unselectedItemTintColor = .textBoldGray
         
         setViewController()
     }

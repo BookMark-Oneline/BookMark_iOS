@@ -21,7 +21,7 @@ class MyLibTab: UIViewController, UICollectionViewDelegate, UICollectionViewDele
     }
 }
 
-// MARK: - collection view 데이터 연결
+// MARK: - collection view 데이터 연결: data source
 extension MyLibTab {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "bookcell", for: indexPath) as? BookCollectionCell else {
@@ -46,6 +46,25 @@ extension MyLibTab {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.books.count
+    }
+}
+
+// MARK: - collection view 반응 연결: delegate
+extension MyLibTab {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let item = collectionView.cellForItem(at: indexPath) as? BookCollectionCell else {
+            return
+        }
+        
+        // 북 추가 화면 연결
+        if (item.label_title.text == "addbook") {
+            
+        }
+        
+        // 책 세부 내용 화면 연결
+        else {
+            
+        }
     }
 }
 

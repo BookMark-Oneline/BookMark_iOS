@@ -1,20 +1,30 @@
 PODS:
   - Alamofire (5.5.0)
+  - Charts (4.1.0):
+    - Charts/Core (= 4.1.0)
+  - Charts/Core (4.1.0):
+    - SwiftAlgorithms (~> 1.0)
   - SnapKit (5.6.0)
+  - SwiftAlgorithms (1.0.0)
 
 DEPENDENCIES:
   - Alamofire
+  - Charts
   - SnapKit (~> 5.6)
 
 SPEC REPOS:
   trunk:
     - Alamofire
+    - Charts
     - SnapKit
+    - SwiftAlgorithms
 
 SPEC CHECKSUMS:
   Alamofire: 1c4fb5369c3fe93d2857c780d8bbe09f06f97e7c
+  Charts: 354f86803d11d9c35de280587fef50d1af063978
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
+  SwiftAlgorithms: 38dda4731d19027fdeee1125f973111bf3386b53
 
-PODFILE CHECKSUM: 7c63ceda704a06d674d0179e01bb014b02eb7afb
+PODFILE CHECKSUM: c0fdc7044010a953f8a07abf9016ead6489873dd
 
 COCOAPODS: 1.11.3
