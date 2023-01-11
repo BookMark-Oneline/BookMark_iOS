@@ -24,8 +24,9 @@ extension UIColor {
                   blue: AHex & 0xFF, a: (AHex >> 24) & 0xFF)
     }
     
-    static let tabBarOrange = UIColor(red: 0.975, green: 0.565, blue: 0.187, alpha: 1)
-    static let tabBarGray =  UIColor(red: 0.442, green: 0.442, blue: 0.442, alpha: 1)
+    static let textOrange = UIColor(Hex: 0xF99030)
     static let textGray = UIColor(Hex: 0x555555)
-    
+    static let textBoldGray = UIColor(Hex: 0x717171)
+    static let textLightGray = UIColor(Hex: 0x979797)
+    static let lightOrange = UIColor(Hex: 0xFFB35A)
 }

@@ -7,4 +7,5 @@ target 'BookMark' do
 
 	pod 'Alamofire'
 	pod 'SnapKit', '~> 5.6'
+	pod 'Charts'
 end
