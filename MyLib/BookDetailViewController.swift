@@ -85,14 +85,13 @@ class layout_BookDetail {
             make.edges.equalTo(view.safeAreaLayoutGuide)
         }
         layout_scroll.contentLayoutGuide.snp.makeConstraints() { make in
-            make.top.leading.trailing.equalToSuperview()
+            make.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             make.height.equalTo(1300)
         }
         
         layout_scroll.addSubview(layout_main)
         layout_main.snp.makeConstraints() { make in
             make.edges.equalTo(layout_scroll.contentLayoutGuide)
-            make.size.equalToSuperview()
         }
         
         layout_main.addSubviews(layout_horizontal, layout_book, label_title, label_author, layout_vertical, label_firstread, label_firstread_data, label_totaltime, label_totaltime_data)
@@ -327,9 +326,9 @@ class layout_BookDetail {
             make.height.equalTo(300)
         }
         layout_barchart.contentLayoutGuide.snp.makeConstraints() { make in
-            make.top.equalTo(label_myTimeDescription).offset(5)
+            make.bottom.equalToSuperview()
             make.leading.equalToSuperview().offset(10)
-            make.height.equalToSuperview()
+            make.height.equalTo(300)
             make.width.equalTo(500)
         }
         layout_barchart.addSubview(layout_add)
@@ -339,7 +338,7 @@ class layout_BookDetail {
         layout_add.snp.makeConstraints() { make in
             make.width.equalTo(layout_barchart.contentLayoutGuide)
             make.height.equalTo(300)
-            make.centerY.equalToSuperview()
+            make.bottom.equalToSuperview()
         }
         barchart.isUserInteractionEnabled = false
         barchart.snp.makeConstraints() { make in
