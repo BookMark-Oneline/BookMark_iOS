@@ -337,7 +337,10 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
                 _barShadowRectBuffer.size.height = viewPortHandler.contentHeight
                 
                 context.setFillColor(dataSet.barShadowColor.cgColor)
-                context.fill(_barShadowRectBuffer)
+                
+                //context.fill(_barShadowRectBuffer)
+                let paths = UIBezierPath(roundedRect: _barShadowRectBuffer, byRoundingCorners: [.topLeft, .topRight] ,cornerRadii: CGSize(width: 3, height: 3))
+                context.addPath(paths.cgPath)
             }
         }
 
@@ -379,7 +382,10 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
                 context.setFillColor(dataSet.color(atIndex: j).cgColor)
             }
             
-            context.fill(barRect)
+            //let pathfd = UIBezierPath(roundedRect: barRect, cornerRadius: 10)
+            let pathfd = UIBezierPath(roundedRect: barRect, byRoundingCorners: [.topLeft, .topRight] ,cornerRadii: CGSize(width: 9, height: 9))
+            context.addPath(pathfd.cgPath)
+            context.drawPath(using: .fill)
             
             if drawBorder
             {
