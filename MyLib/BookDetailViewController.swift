@@ -12,10 +12,44 @@ import Charts
 // MARK: - 책 세부 내용 화면 뷰 컨트롤러
 class BookDetailViewController: UIViewController {
     var layout_bookdetail = layout_BookDetail()
+    var isFavorite: Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
         
         layout_bookdetail.initViews(view: self.view)
+        setNavCustom()
+    }
+    
+    // set navigation view
+    func setNavCustom() {
+        self.navigationController?.navigationItem.backBarButtonItem?.title = ""
+        self.navigationController?.navigationBar.backItem?.title = ""
+        self.navigationController?.navigationBar.tintColor = .black
+        
+        let heartBtn = UIBarButtonItem(image: UIImage(systemName: "heart"), style: .plain, target: self, action: #selector(tapHeart))
+        heartBtn.width = 27
+        let spacer1 = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
+        spacer1.width = 5
+        let stopwatchBtn = UIBarButtonItem(image: UIImage(systemName: "stopwatch"), style: .plain, target: self, action: #selector(tapStopwatch))
+        stopwatchBtn.width = 27
+        let spacer2 = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
+        spacer2.width = 5
+        
+        self.navigationItem.rightBarButtonItems = [stopwatchBtn, spacer1, heartBtn, spacer2]
+    }
+    
+    @objc func tapHeart(_ selector: UIBarButtonItem) {
+        isFavorite.toggle()
+        if (isFavorite) {
+            selector.image = UIImage(systemName: "heart.fill")
+        }
+        else {
+            selector.image = UIImage(systemName: "heart")
+        }
+    }
+    
+    @objc func tapStopwatch(_ selector: UIBarButtonItem) {
+        print("stopwatch")
     }
 
 }
@@ -46,6 +80,8 @@ class layout_BookDetail {
     var label_nowpage_data = UILabel()
     var label_totalpage_data = UILabel()
     
+    var layout_progress = UIProgressView()
+    
     var label_zero = UILabel()
     var label_hundred = UILabel()
     
@@ -53,34 +89,43 @@ class layout_BookDetail {
     var label_pageinput = UILabel()
     
     var label_myTime = UILabel()
+    var label_myTimeDescription = UILabel()
+    
+    var layout_barchart = UIScrollView()
+    var layout_add = UIView()
+    var barchart = BarChartView()
+    var chartEntry: [BarChartDataEntry] = []
+    
+    var layout_lastLine = UIView()
     
     var label_summary = UILabel()
     var label_summary_data = UILabel()
-    var btn_showall = UIButton()
     
-    var layout_readingHBarGraph = HorizontalBarChartView()
-    var layout_test = UIView()
-    var chartEntry: [BarChartDataEntry] = []
+    var layout_showall = UIView()
+    var label_showall = UILabel()
+    var img_showall = UIImageView()
     
     func initViews(view: UIView) {
         initViews_part1(view: view)
         initViews_part2(view: view)
+        initViews_part3(view: view)
     }
     
-    func initViews_part1(view: UIView) {
+    private func initViews_part1(view: UIView) {
         view.addSubview(layout_scroll)
         
         layout_scroll.translatesAutoresizingMaskIntoConstraints = false
         layout_scroll.snp.makeConstraints() { make in
             make.edges.equalTo(view.safeAreaLayoutGuide)
         }
-        layout_scroll.frameLayoutGuide.snp.makeConstraints() { make in
-            make.edges.equalTo(view.safeAreaLayoutGuide)
+        layout_scroll.contentLayoutGuide.snp.makeConstraints() { make in
+            make.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            make.height.equalTo(1300)
         }
+        
         layout_scroll.addSubview(layout_main)
         layout_main.snp.makeConstraints() { make in
             make.edges.equalTo(layout_scroll.contentLayoutGuide)
-            make.size.equalToSuperview()
         }
         
         layout_main.addSubviews(layout_horizontal, layout_book, label_title, label_author, layout_vertical, label_firstread, label_firstread_data, label_totaltime, label_totaltime_data)
@@ -189,8 +234,8 @@ class layout_BookDetail {
         label_totaltime_data.font = .systemFont(ofSize: 19, weight: .medium)
     }
     
-    func initViews_part2(view: UIView) {
-        layout_main.addSubviews(layout_line, label_untilFin, label_untilFin_data, label_nowpage_data, label_totalpage_data, label_zero, label_hundred, btn_pageinput, label_pageinput, label_myTime)
+    private func initViews_part2(view: UIView) {
+        layout_main.addSubviews(layout_line, label_untilFin, label_untilFin_data, label_nowpage_data, label_totalpage_data, label_zero, label_hundred, btn_pageinput)
         
         layout_line.snp.makeConstraints() { make in
             make.top.equalTo(label_firstread.snp.bottom).offset(56)
@@ -237,29 +282,23 @@ class layout_BookDetail {
         label_nowpage_data.textColor = .textOrange
         label_nowpage_data.font = .systemFont(ofSize: 19, weight: .semibold)
         
-        layout_main.addSubviews(layout_readingHBarGraph, label_zero, label_hundred)
+        layout_main.addSubviews(layout_progress, label_zero, label_hundred)
         
-//        layout_main.addSubview(layout_test)
-//        layout_test.snp.makeConstraints() { make in
-//            make.top.equalTo(label_untilFin.snp.bottom).offset(11)
-//            make.leading.equalTo(label_untilFin)
-//            make.trailing.equalTo(label_totalpage_data)
-//            make.height.equalTo(15)
-//        }
-//        layout_test.backgroundColor = .textOrange
-        
-        layout_readingHBarGraph.snp.makeConstraints() { make in
+        layout_progress.snp.makeConstraints() { make in
             make.top.equalTo(label_untilFin.snp.bottom).offset(11)
             make.leading.equalTo(label_untilFin)
             make.trailing.equalTo(label_totalpage_data)
-            make.height.equalTo(15)
+            make.height.equalTo(7)
         }
-        layout_readingHBarGraph.layer.zPosition = 999
-        setReadingBarAttribute()
+        layout_progress.progressTintColor = .lightOrange
+        layout_progress.trackTintColor = .lightGray
+        layout_progress.setProgress(0.42, animated: true)
+        layout_progress.clipsToBounds = true
+        layout_progress.layer.cornerRadius = 3
         
         label_zero.snp.makeConstraints() { make in
             make.leading.equalTo(label_untilFin)
-            make.top.equalTo(layout_readingHBarGraph.snp.bottom).offset(3)
+            make.top.equalTo(layout_progress.snp.bottom).offset(5)
         }
         label_zero.text = "0"
         label_zero.textColor = .textBoldGray
@@ -272,30 +311,170 @@ class layout_BookDetail {
         label_hundred.text = "100"
         label_hundred.textColor = .textBoldGray
         label_hundred.font = .systemFont(ofSize: 11, weight: .semibold)
+        
+        btn_pageinput.snp.makeConstraints() { make in
+            make.top.equalTo(label_zero.snp.bottom).offset(8)
+            make.centerX.equalToSuperview()
+            make.width.equalTo(140)
+            make.height.equalTo(40)
+        }
+        btn_pageinput.backgroundColor = .lightOrange
+        btn_pageinput.clipsToBounds = true
+        btn_pageinput.layer.cornerRadius = 20
+        
+        btn_pageinput.addSubview(label_pageinput)
+        label_pageinput.snp.makeConstraints() { make in
+            make.center.equalToSuperview()
+        }
+        label_pageinput.sizeToFit()
+        label_pageinput.text = "페이지 입력"
+        label_pageinput.textColor = .white
+        label_pageinput.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+    }
+
+    private func initViews_part3(view: UIView) {
+        layout_main.addSubviews(label_myTime, label_myTimeDescription, layout_barchart,  layout_lastLine, label_summary, label_summary_data, layout_showall)
+        label_myTime.snp.makeConstraints() { make in
+            make.top.equalTo(btn_pageinput.snp.bottom).offset(39)
+            make.leading.equalToSuperview().offset(23)
+        }
+        label_myTime.text = "나의 독서기록"
+        label_myTime.textColor = .black
+        label_myTime.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        label_myTime.sizeToFit()
+        
+        label_myTimeDescription.snp.makeConstraints() { make in
+            make.top.equalTo(label_myTime.snp.bottom).offset(7)
+            make.leading.equalTo(label_myTime)
+        }
+        label_myTimeDescription.sizeToFit()
+        label_myTimeDescription.text = "날짜별로 보는 하루 독서량"
+        label_myTimeDescription.textColor = .textLightGray
+        label_myTimeDescription.font = UIFont.systemFont(ofSize: 13, weight: .medium)
+        
+        layout_barchart.translatesAutoresizingMaskIntoConstraints = false
+        layout_barchart.snp.makeConstraints() { make in
+            make.top.equalTo(label_myTimeDescription.snp.bottom).offset(5)
+            make.leading.equalToSuperview().offset(10)
+            make.trailing.equalToSuperview().offset(-10)
+            make.height.equalTo(300)
+        }
+        layout_barchart.contentLayoutGuide.snp.makeConstraints() { make in
+            make.bottom.equalToSuperview()
+            make.leading.equalToSuperview().offset(10)
+            make.height.equalTo(300)
+            make.width.equalTo(500)
+        }
+        layout_barchart.addSubview(layout_add)
+        layout_add.addSubview(barchart)
+        
+        layout_add.isUserInteractionEnabled = false
+        layout_add.snp.makeConstraints() { make in
+            make.width.equalTo(layout_barchart.contentLayoutGuide)
+            make.height.equalTo(300)
+            make.bottom.equalToSuperview()
+        }
+        barchart.isUserInteractionEnabled = false
+        barchart.snp.makeConstraints() { make in
+            make.edges.equalToSuperview()
+        }
+        setChartAttribute()
+        
+        layout_lastLine.snp.makeConstraints() { make in
+            make.top.equalTo(layout_barchart.snp.bottom).offset(40)
+            make.centerX.equalToSuperview()
+            make.width.equalTo(344)
+            make.height.equalTo(1)
+        }
+        layout_lastLine.layer.cornerRadius = 3
+        layout_lastLine.clipsToBounds = false
+        layout_lastLine.layer.borderColor = UIColor.black.cgColor
+        layout_lastLine.backgroundColor = UIColor(Hex: 0xDFDFDF)
+        
+        label_summary.snp.makeConstraints() { make in
+            make.top.equalTo(layout_lastLine.snp.bottom).offset(28)
+            make.leading.equalToSuperview().offset(23)
+        }
+        label_summary.text = "줄거리"
+        label_summary.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
+        label_summary.textColor = .black
+        label_summary.sizeToFit()
+        
+        label_summary_data.snp.makeConstraints { make in
+            make.leading.equalToSuperview().offset(23)
+            make.trailing.equalToSuperview().offset(-23)
+            make.top.equalTo(label_summary.snp.bottom).offset(10)
+            make.height.equalTo(75)
+        }
+        label_summary_data.text = "봄이 시작되는 3월, 급행열차 한 대가 탈선해 절벽 아래로 떨어졌다. 수많은 중상자를 낸 이 대형 사고 때문에 유가족은 순식간에 사랑하는 가족, 연인을 잃었다. 그렇게 두 달이 흘렀을까. 사람들 사이에서 이상한 소문이 돌기 시작하는데…. 역에서 가장 가까운 역인 ‘니시유이가하마 역’에 가면 유령이 나타나 사고가 일어난 그날의 열차에 오르도록 도와준다는 것. 단 유령이 제시한 네 가지 규칙을 반드시 지켜야만 한다. 그렇지 않으면 자신도 죽게 된다. 이를 알고도 유가족은 한 치의 망설임도 없이 역으로 향한다. 과연 유령 열차가 완전히 하늘로 올라가 사라지기 전, 사람들은 무사히 열차에 올라 사랑하는 이의 마지막을 함께할 수 있을까. 틱톡에 소개되어 일본 독자들 사이에서 크게 입소문이 난 화제작. 현실과 판타지를 넘나들며 단숨에 독자를 이야기의 세계로 빠져들게 하는 무라세 다케시의 소설로, 작가의 여러 작품 중 한국에 처음 소개되는 작품이다. 작가가 쓴 작품 중 단연코 손꼽히는 판타지 휴머니즘 소설."
+        label_summary_data.font = .systemFont(ofSize: 14)
+        label_summary_data.textColor = .black
+        label_summary_data.textAlignment = .justified
+        label_summary_data.lineBreakMode = .byTruncatingTail
+        label_summary_data.numberOfLines = 0
+        
+        layout_showall.snp.makeConstraints() { make in
+            make.top.equalTo(label_summary_data.snp.bottom).offset(12)
+            make.width.equalTo(51)
+            make.height.equalTo(16)
+            make.trailing.equalToSuperview().offset(-23)
+        }
+        
+        layout_showall.addSubviews(label_showall, img_showall)
+        label_showall.snp.makeConstraints() { make in
+            make.leading.equalToSuperview()
+            make.centerY.equalToSuperview()
+        }
+        label_showall.sizeToFit()
+        label_showall.text = "전체보기"
+        label_showall.textColor = .textBoldGray
+        label_showall.font = UIFont.systemFont(ofSize: 11, weight: .medium)
+        
+        img_showall.snp.makeConstraints() { make in
+            make.leading.equalTo(label_showall.snp.trailing).offset(4)
+            make.centerY.equalToSuperview()
+            make.width.equalTo(8)
+            make.height.equalTo(4)
+        }
+        img_showall.image = UIImage(named: "down")
     }
     
-    func setReadingBarAttribute(data: Double = 45) {
-        chartEntry.append(BarChartDataEntry(x: 1, y: 45))
+    private func setChartAttribute(_ data: [Int] = [62, 34, 13, 43, 46, 43, 11, 98, 23, 50], _ dates: [String] = ["12/1", "12/2", "12/3", "12/4", "12/5", "12/6", "12/7", "12/8", "12/9", "12/10"]) {
+        for i in 0..<data.count {
+            let entry = BarChartDataEntry(x: Double(data.count - i), y: Double(data[i]))
+            chartEntry.append(entry)
+        }
+        barchart.noDataText = "데이터가 없습니다"
+        barchart.noDataFont = UIFont.systemFont(ofSize: 14, weight: .medium)
+        barchart.noDataTextColor = .textLightGray
+        barchart.doubleTapToZoomEnabled = false
         
-        layout_readingHBarGraph.noDataText = "no data"
-        layout_readingHBarGraph.doubleTapToZoomEnabled = false
-        layout_readingHBarGraph.animate(xAxisDuration: 0, yAxisDuration: 5, easingOptionX: .linear, easingOptionY: .easeOutCirc)
-        layout_readingHBarGraph.leftAxis.enabled = false
-        layout_readingHBarGraph.rightAxis.enabled = false
-        layout_readingHBarGraph.leftAxis.axisMaximum = 0
-        layout_readingHBarGraph.legend.enabled = false
-        layout_readingHBarGraph.xAxis.drawLabelsEnabled = false
-        layout_readingHBarGraph.xAxis.drawGridLinesEnabled = false
-        layout_readingHBarGraph.xAxis.drawAxisLineEnabled = false
-        layout_readingHBarGraph.drawBarShadowEnabled = false
+        barchart.leftAxis.enabled = false
+        barchart.rightAxis.enabled = false
+        barchart.leftAxis.axisMinimum = 0
+        barchart.rightAxis.axisMaximum = 1000
+        barchart.legend.enabled = false
+
+        barchart.xAxis.labelPosition = .bottom
+        barchart.xAxis.valueFormatter = IndexAxisValueFormatter(values: dates)
+        barchart.xAxis.setLabelCount(dates.count, force: false)
+        barchart.xAxis.drawGridLinesEnabled = false
+        barchart.xAxis.drawAxisLineEnabled = false
+
         
-        let chartSet = BarChartDataSet(entries: chartEntry, label: "")
-        chartSet.colors = [.lightOrange]
-        chartSet.barShadowColor = .textLightGray
-        chartSet.highlightEnabled = false
-        chartSet.drawValuesEnabled = false
+        let dataSet = BarChartDataSet(entries: chartEntry, label: "")
+        dataSet.colors = [.lightLightOrange]
+        dataSet.highlightEnabled = false
+        dataSet.drawValuesEnabled = true
+        dataSet.valueFont = UIFont.systemFont(ofSize: 11, weight: .semibold)
+        dataSet.valueColors = [.textOrange]
         
-        let data = BarChartData(dataSet: chartSet)
-        layout_readingHBarGraph.data = data
+        let data = BarChartData(dataSet: dataSet)
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .none
+        numberFormatter.generatesDecimalNumbers = false
+        let formatter = DefaultValueFormatter(formatter: numberFormatter)
+        data.setValueFormatter(formatter)
+        barchart.data = data
     }
 }

@@ -29,4 +29,6 @@ extension UIColor {
     static let textBoldGray = UIColor(Hex: 0x717171)
     static let textLightGray = UIColor(Hex: 0x979797)
     static let lightOrange = UIColor(Hex: 0xFFB35A)
+    static let lightGray = UIColor(Hex: 0xEDEDED)
+    static let lightLightOrange = UIColor(Hex: 0xFFDDA9)
 }

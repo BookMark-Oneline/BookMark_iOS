@@ -22,7 +22,8 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
     
     // 탭 뷰 컨트롤러 설정
     private func setViewController() {
-        let first = MyLibTab()
+        let first = UINavigationController(rootViewController: MyLibTab())
+        //let first = MyLibTab()
         let firstBarItem = UITabBarItem(title: "나의 서재", image: UIImage(named: "mylib_normal"), tag: 1)
         first.tabBarItem = firstBarItem
         first.tabBarItem.selectedImage = UIImage(named: "mylib_tab")
