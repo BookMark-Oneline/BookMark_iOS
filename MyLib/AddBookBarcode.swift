@@ -6,7 +6,7 @@
 //
 
 import UIKit
-//import SnapKit
+import SnapKit
 
 class AddBookBarcode: UIViewController {
     
@@ -79,6 +79,12 @@ extension AddBookBarcode {
             make.top.equalTo(self.view.snp.centerY).offset(100)
         }
     }
+    
+    func showConfirmBook() {
+        let confirmView = ConfirmBookViewController()
+//        confirmView.modalPresentationStyle = .fullScreen
+        self.present(confirmView, animated: true, completion: nil)
+    }
 }
 
 extension AddBookBarcode: BarcodeReaderViewDelegate {
@@ -96,6 +102,10 @@ extension AddBookBarcode: BarcodeReaderViewDelegate {
 
             title = "알림"
             message = "인식성공\n\(code)"
+            
+            // 책 등록 확인 뷰 전환
+            showConfirmBook()
+            
         case .fail:
             title = "에러"
             message = "바코드를 인식하지 못했습니다.\n다시 시도해주세요."
