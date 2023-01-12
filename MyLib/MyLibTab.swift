@@ -19,6 +19,8 @@ class MyLibTab: UIViewController, UICollectionViewDelegate, UICollectionViewDele
         layout.layout_collection.layout_books.delegate = self
         layout.layout_collection.layout_books.dataSource = self
     }
+    
+    
 }
 
 // MARK: - collection view 데이터 연결: data source
@@ -33,12 +35,14 @@ extension MyLibTab {
             cell.layout_img.image = UIImage(named: "addBook")
             cell.label_title.text = ""
             cell.label_author.text = ""
+            cell.tag = 0
         }
         
         else {
             cell.layout_img.image = UIImage(named: book[0])
             cell.label_title.text = book[1]
             cell.label_author.text = book[2]
+            cell.tag = 1
         }
         
         return cell
@@ -57,13 +61,13 @@ extension MyLibTab {
         }
         
         // 북 추가 화면 연결
-        if (item.label_title.text == "addbook") {
-            
+        if (item.label_title.text == "" && item.label_author.text == "" && item.tag == 0) {
+            self.navigationController?.pushViewController(AddBookBarcode(), animated: true)
         }
         
         // 책 세부 내용 화면 연결
         else {
-            
+            self.navigationController?.pushViewController(BookDetailViewController(), animated: true)
         }
     }
 }
