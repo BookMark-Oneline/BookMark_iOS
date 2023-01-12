@@ -10,7 +10,7 @@ import UIKit
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
+    var books = [["addbook", "", ""], ["", "제목 1", "작가 1"], ["", "제목 2", "작가 2"], ["", "제목 3", "작가 3"], ["", "제목 4", "작가 4"]]
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.

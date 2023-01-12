@@ -32,3 +32,9 @@ extension UIScrollView {
         return totalRect.union(view.frame)
     }
 }
+
+// MARK: - NavigationController extension
+extension UINavigationController {
+    func setBasicSettings(title: String = "") {
+    }
+}

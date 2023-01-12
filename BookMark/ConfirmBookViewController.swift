@@ -17,6 +17,7 @@ class ConfirmBookViewController: UIViewController {
         scrollView.addSubview(contentView)
         setUpContentView()
         setConstraints()
+        setUpNavigationBar()
     }
     
     // MARK: - Views
@@ -55,7 +56,22 @@ extension ConfirmBookViewController {
         contentView.addSubview(divideView)
         contentView.addSubview(upperDivideView)
     }
+    
+    func setUpNavigationBar() {
+        self.navigationController?.navigationBar.tintColor = .black
+        let btn = UIBarButtonItem(title: "등록", style: .plain, target: self, action: #selector(addToCell))
+        btn.tintColor = .textOrange
+        self.navigationItem.rightBarButtonItem = btn
+    }
 
+    @objc func addToCell(_ selector: UIBarButtonItem) {
+        // 임시로 UIApplication에 데이터 저장
+        if let appdel = UIApplication.shared.delegate as? AppDelegate {
+            appdel.books.append(["book", titleLabel.text ?? "제목", authorLabel.text ?? "작가"])
+            print(appdel.books)
+        }
+        self.navigationController?.popToRootViewController(animated: true)
+    }
     
     // Constraints
     func setConstraints() {
@@ -82,6 +98,7 @@ extension ConfirmBookViewController {
             make.top.equalTo(upperDivideView.snp.bottom).offset(11)
             make.centerX.equalTo(self.view.safeAreaLayoutGuide)
         }
+        imageView.image = UIImage(named: "book")
         imageView.backgroundColor = .systemBlue
         imageView.layer.shadowColor = UIColor.black.cgColor
         imageView.layer.masksToBounds = false
@@ -95,6 +112,7 @@ extension ConfirmBookViewController {
             make.top.equalTo(imageView.snp.bottom).offset(24)
         }
         titleLabel.text = "세상의 마지막 기차역에서"
+        titleLabel.numberOfLines = 0
         titleLabel.font = .boldSystemFont(ofSize: 18)
         titleLabel.textColor = .black
         titleLabel.textAlignment = .center
