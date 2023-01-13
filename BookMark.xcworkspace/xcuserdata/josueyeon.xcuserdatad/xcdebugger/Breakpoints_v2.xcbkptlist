@@ -14,8 +14,8 @@
             filePath = "MyLib/BookDetailViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "379"
-            endingLineNumber = "379"
+            startingLineNumber = "412"
+            endingLineNumber = "412"
             landmarkName = "initViews_part3(view:)"
             landmarkType = "7">
          </BreakpointContent>

@@ -10,9 +10,10 @@ import SnapKit
 
 // MARK: - 나의 서재 탭
 class MyLibTab: UIViewController, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
-    var books = [["addbook", "", ""], ["", "제목 1", "작가 1"], ["", "제목 2", "작가 2"], ["", "제목 3", "작가 3"], ["", "제목 4", "작가 4"], ["", "제목 5", "작가 5"], ["", "제목 6", "작가 6"], ["", "제목제목제목제목", "작가작가작가작가작가"], ["", "제목제목제목제목", "작가작가작가작가작가"], ["", "제목제목제목제목제목제목제목제목", "작가작가작가작가작가작가작가작가작가작가"], ["", "제목제목제목제목제목제목제목제목", "작가작가작가작가작가작가작가작가작가작가"]]
     let layout = layout_MyLibTab()
     
+    // 임시로 UIApplication에 데이터 저장
+    var books = ((UIApplication.shared.delegate as? AppDelegate)?.books)!
     override func viewDidLoad() {
         super.viewDidLoad()
         layout.initViews(view: self.view)
@@ -20,7 +21,10 @@ class MyLibTab: UIViewController, UICollectionViewDelegate, UICollectionViewDele
         layout.layout_collection.layout_books.dataSource = self
     }
     
-    
+    override func viewWillAppear(_ animated: Bool) {
+        self.books = ((UIApplication.shared.delegate as? AppDelegate)?.books)!
+        layout.layout_collection.layout_books.reloadData()
+    }
 }
 
 // MARK: - collection view 데이터 연결: data source

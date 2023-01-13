@@ -40,6 +40,9 @@ class AddBookBarcode: UIViewController {
         setLayouts()
         
         self.readerView.delegate = self
+        
+        self.navigationController?.navigationBar.tintColor = .black
+        self.navigationItem.title = "바코드 인식"
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -53,13 +56,15 @@ class AddBookBarcode: UIViewController {
 
 extension AddBookBarcode {
     @objc func scanButtonAction(_ sender: UIButton) {
-        if self.readerView.isRunning {
-            self.readerView.stop(isButtonTap: true)
-        } else {
-            self.readerView.start()
-        }
-
-        sender.isSelected = self.readerView.isRunning
+        self.navigationController?.pushViewController(ConfirmBookViewController(), animated: true)
+//
+//        if self.readerView.isRunning {
+//            self.readerView.stop(isButtonTap: true)
+//        } else {
+//            self.readerView.start()
+//        }
+//
+//        sender.isSelected = self.readerView.isRunning
     }
     
     func setLayouts() {
@@ -83,7 +88,8 @@ extension AddBookBarcode {
     func showConfirmBook() {
         let confirmView = ConfirmBookViewController()
 //        confirmView.modalPresentationStyle = .fullScreen
-        self.present(confirmView, animated: true, completion: nil)
+        // self.present(confirmView, animated: true, completion: nil)
+        self.navigationController?.pushViewController(confirmView, animated: true)
     }
 }
 
