@@ -36,11 +36,11 @@ class AddBookBarcode: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = UIColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)
-        
+
         setLayouts()
-        
+
         self.readerView.delegate = self
-        
+
         self.navigationController?.navigationBar.tintColor = .black
         self.navigationItem.title = "바코드 인식"
     }
