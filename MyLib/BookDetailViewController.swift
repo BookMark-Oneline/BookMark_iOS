@@ -13,11 +13,19 @@ import Charts
 class BookDetailViewController: UIViewController {
     var layout_bookdetail = layout_BookDetail()
     var isFavorite: Bool = false
+    // 페이지 입력 팝업 뷰용
+    let pageInputPopUp = CustomPopUp()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         layout_bookdetail.initViews(view: self.view)
         setNavCustom()
+    }
+    
+    // 페이지 입력 팝업 뷰용
+    @objc func submitAlert() {
+        pageInputPopUp.submitPopUp()
     }
     
     // set navigation view
@@ -50,7 +58,13 @@ class BookDetailViewController: UIViewController {
     
     @objc func tapStopwatch(_ selector: UIBarButtonItem) {
         print("stopwatch")
+        // 페이지 입력이 Button이 아니어서 우선 여기에 페이지 입력 AlertView 실행되게 해놓겠습니다!
+        pageInputPopUp.showPopUp(with: "책갈피",
+                              message: "몇 페이지까지 읽으셨나요?",
+                              on: self)
     }
+    
+    
 
 }
 
