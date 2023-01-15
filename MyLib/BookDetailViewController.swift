@@ -21,13 +21,22 @@ class BookDetailViewController: UIViewController {
         
         layout_bookdetail.initViews(view: self.view)
         setNavCustom()
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(pageInput(_:)))
+        layout_bookdetail.btn_pageinput.addGestureRecognizer(tapGestureRecognizer)
     }
     
-    // 페이지 입력 팝업 뷰용
-    @objc func submitAlert() {
-        pageInputPopUp.submitPopUp()
+    // 페이지 입력
+    @objc func pageInput(_ sender: UITapGestureRecognizer) {
+        pageInputPopUp.showPopUp(with: "책갈피",
+                              message: "몇 페이지까지 읽으셨나요?",
+                              on: self)
     }
-    
+//
+//    // 페이지 입력 팝업 뷰용
+//    @objc func submitAlert() {
+//        pageInputPopUp.submitPopUp()
+//    }
+
     // set navigation view
     func setNavCustom() {
         self.navigationController?.navigationItem.backBarButtonItem?.title = ""
@@ -58,10 +67,7 @@ class BookDetailViewController: UIViewController {
     
     @objc func tapStopwatch(_ selector: UIBarButtonItem) {
         print("stopwatch")
-        // 페이지 입력이 Button이 아니어서 우선 여기에 페이지 입력 AlertView 실행되게 해놓겠습니다!
-        pageInputPopUp.showPopUp(with: "책갈피",
-                              message: "몇 페이지까지 읽으셨나요?",
-                              on: self)
+        self.navigationController?.pushViewController(ReadingTime(), animated: true)
     }
     
     
@@ -332,6 +338,7 @@ class layout_BookDetail {
             make.width.equalTo(140)
             make.height.equalTo(40)
         }
+        btn_pageinput.isUserInteractionEnabled = true
         btn_pageinput.backgroundColor = .lightOrange
         btn_pageinput.clipsToBounds = true
         btn_pageinput.layer.cornerRadius = 20
