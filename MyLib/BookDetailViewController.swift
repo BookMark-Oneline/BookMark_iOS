@@ -68,6 +68,7 @@ class BookDetailViewController: UIViewController {
     @objc func tapStopwatch(_ selector: UIBarButtonItem) {
         print("stopwatch")
         self.navigationController?.pushViewController(ReadingTime(), animated: true)
+        
     }
     
     
