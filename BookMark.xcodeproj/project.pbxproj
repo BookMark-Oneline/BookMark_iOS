@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		24A21A392976EA2400AE8BF9 /* DataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A21A382976EA2400AE8BF9 /* DataClass.swift */; };
 		24E794242971653C00E69633 /* ReadingTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24E794232971653C00E69633 /* ReadingTime.swift */; };
 		24E7942C2972BDD300E69633 /* CustomPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24E7942B2972BDD300E69633 /* CustomPopUp.swift */; };
 		2DFD5D6E9DDEA6E09EEF3D46 /* Pods_BookMark.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5721549DEE181646370BC256 /* Pods_BookMark.framework */; };
@@ -34,6 +35,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		24A21A382976EA2400AE8BF9 /* DataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataClass.swift; sourceTree = "<group>"; };
 		24E794232971653C00E69633 /* ReadingTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingTime.swift; sourceTree = "<group>"; };
 		24E7942B2972BDD300E69633 /* CustomPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPopUp.swift; sourceTree = "<group>"; };
 		418EDADFB5CFEB9E1C9ADDE8 /* Pods-BookMark.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BookMark.debug.xcconfig"; path = "Target Support Files/Pods-BookMark/Pods-BookMark.debug.xcconfig"; sourceTree = "<group>"; };
@@ -146,6 +148,7 @@
 				24E794232971653C00E69633 /* ReadingTime.swift */,
 				24E7942B2972BDD300E69633 /* CustomPopUp.swift */,
 				E8C2B51229743975000E2030 /* Network.swift */,
+				24A21A382976EA2400AE8BF9 /* DataClass.swift */,
 			);
 			path = MyLib;
 			sourceTree = "<group>";
@@ -268,6 +271,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				86C3C2B5296858370035CFFE /* ViewController.swift in Sources */,
+				24A21A392976EA2400AE8BF9 /* DataClass.swift in Sources */,
 				E8C2B4FB296A8F40000E2030 /* CommunityTab.swift in Sources */,
 				86C3C2D1296E694B0035CFFE /* BarcodeReaderView.swift in Sources */,
 				E8C2B51329743975000E2030 /* Network.swift in Sources */,
