@@ -36,6 +36,8 @@ class ConfirmBookViewController: UIViewController {
     let contentView = UIView()
     let divideView = UIView()
     let upperDivideView = UIView()
+    
+    let network = Network()
 
 }
 
@@ -70,7 +72,9 @@ extension ConfirmBookViewController {
             appdel.books.append(["book", titleLabel.text ?? "제목", authorLabel.text ?? "작가"])
             print(appdel.books)
         }
-        self.navigationController?.popToRootViewController(animated: true)
+        network.registerBooks(completion: {
+            self.navigationController?.popToRootViewController(animated: true)
+        })
     }
     
     // Constraints

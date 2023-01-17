@@ -22,8 +22,13 @@ class MyLibTab: UIViewController, UICollectionViewDelegate, UICollectionViewDele
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden = true
         self.books = ((UIApplication.shared.delegate as? AppDelegate)?.books)!
         layout.layout_collection.layout_books.reloadData()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden = false
     }
 }
 
@@ -101,7 +106,8 @@ class layout_MyLibTab {
     func initViews(view: UIView) {
         view.addSubviews(layout_title, layout_scroll)
         layout_title.snp.makeConstraints() { make in
-            make.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             make.height.equalTo(44)
         }
         layout_title.addSubview(label_title)
