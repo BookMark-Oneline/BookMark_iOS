@@ -27,6 +27,7 @@ class ReadingTime: UIViewController {
     var timer: Timer = Timer()
     var timeCount: Int = 0
     var timerRunning: Bool = false
+    var shouldPostTimerStart: Bool = true
 
     let timerLabel: UILabel = {
         let label = UILabel()
@@ -95,11 +96,6 @@ class ReadingTime: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-// MARK: - TimerStart POST
-        network.timerStart(completion: {
-            print("---[POST] TIMER START---")
-        })
-        
         setLayouts()
     }
 
@@ -109,9 +105,17 @@ extension ReadingTime {
 
 // MARK: Button Action Functions
     @objc func timerButtonAction(_ sender: UIButton) {
+// MARK: - TimerStart POST
+        if (shouldPostTimerStart) {
+            shouldPostTimerStart = false
+            network.timerStart(completion: {
+                print("---[POST] TIMER START---")
+            })
+        }
         if (timerRunning) {
             timerButton.isSelected = false
             timerRunning = false
+            shouldPostTimerStart = false
             timer.invalidate()
         }
         else {
@@ -122,6 +126,7 @@ extension ReadingTime {
     }
 
     @objc func stopButtonAction(_ sender: UIButton) {
+        shouldPostTimerStart = true
         self.timeHistories.append(self.timeCount)
         print("--TIMER STOP--")
         print(self.timerLabel.text!)
