@@ -8,26 +8,6 @@
 import Foundation
 import Alamofire
 
-// MARK: - 네트워킹 result 열거형
-enum NetworkResult<T> {
-    case success(T)
-    case requestErr(T)
-    case pathErr
-    case serverErr
-    case networkFail
-}
-
-// MARK: - 책 세부내용 data class
-class BookDetail: Decodable {
-    let user_id: Int
-    let title: String
-    let author: String
-    let img_url: String
-    let publisher: String
-    let ave_reading_time: Int
-    let ave_reading_page: Int
-}
-
 // MARK: - 네트워킹 용 클래스 나중에 싱글톤으로 만들기
 class Network {
     // base Url
@@ -70,6 +50,20 @@ class Network {
         })
     }
     
+    // 서재 조회 GET
+    func getShelf(completion: @escaping (NetworkResult<Any>) -> Void) {
+        let header: HTTPHeaders = ["값": "값"]
+        let datarequest = AF.request("url", method: .get, encoding: JSONEncoding.default, headers: header)
+        
+        datarequest.responseData(completionHandler: {res in
+            switch res.result {
+            case .success:
+                print("ok")
+            case .failure(let e):
+                print(e)
+            }
+        })
+    }
     
     // JSON 객체 Decode
     func decodeJSON(data: Data) -> NetworkResult<Any> {
@@ -78,7 +72,6 @@ class Network {
             return .networkFail
         }
         return .success(decoding)
-        
     }
 }
 
