@@ -65,6 +65,75 @@ class Network {
         })
     }
     
+    // 책 검색(바코드) GET
+    func getBookSearch(completion: @escaping (NetworkResult<Any>) -> Void) {
+        let URL = "url"
+        let header: HTTPHeaders = ["Content-Type": "Value"]
+        let dataRequest = AF.request( URL,
+                                      method: .get,
+                                      encoding: JSONEncoding.default,
+                                      headers: header )
+        
+        dataRequest.responseData(completionHandler: { dataResponse in
+            switch dataResponse.result {
+            case .success:
+                print("SUCCESS")
+//                guard let statusCode = dataResponse.response?.statusCode else { return }
+                guard let value = dataResponse.value else { return }
+                
+                let bookSearchData = self.decodeJSON(data: value)
+                print(bookSearchData)
+            case .failure(let e):
+                print(e)
+            }
+        })
+    }
+    
+    func timerStart(completion: @escaping (() -> Void)) {
+        let URL = "url"
+        let dataRequest = AF.request( URL,
+                                      method: .post,
+                                        encoding: JSONEncoding.default ).validate()
+        
+        dataRequest.responseData(completionHandler: { dataResponse in
+            switch dataResponse.result {
+            case .success:
+                print("SUCCESS")
+            case .failure(let e):
+                print(e)
+            }
+            
+//MARK: todo2 - completion에 NetworkResult<AnyObject>으로 추가하기 나중에
+            completion()
+        })
+    }
+    
+    func timerStop(completion: @escaping (() -> Void)) {
+        let params: Parameters = [
+            "total_reading_time": 1000,
+            "current_reading_time": 100
+        ]
+        // current는 timeCount로, total은 get에서 받아온 토탈에 current 더하기...?
+        
+        let URL = "url"
+        let dataRequest = AF.request( URL,
+                                      method: .post,
+                                      parameters: params,
+                                      encoding: JSONEncoding.default ).validate()
+        
+        dataRequest.responseData(completionHandler: { dataResponse in
+            switch dataResponse.result {
+            case .success:
+                print("SUCCESS")
+            case .failure(let e):
+                print(e)
+            }
+            
+//MARK: todo3 - completion에 NetworkResult<AnyObject>으로 추가하기 나중에
+            completion()
+        })
+    }
+    
     // JSON 객체 Decode
     func decodeJSON(data: Data) -> NetworkResult<Any> {
         let decoder = JSONDecoder()

@@ -8,13 +8,16 @@ import UIKit
 import SnapKit
 
 class ReadingTime: UIViewController {
+// MARK: - Network
+    let network = Network()
 
 // MARK: - Timer Components
     let timerView: UIView = {
         let view = UIView()
 
         view.frame = CGRect(x: 0, y: 0, width: 258, height: 258)
-        view.backgroundColor = .gray
+        view.layer.borderColor = UIColor.textOrange.cgColor
+        view.layer.borderWidth = 10
         view.layer.masksToBounds = true
         view.layer.cornerRadius = 129
 
@@ -24,10 +27,15 @@ class ReadingTime: UIViewController {
     var timer: Timer = Timer()
     var timeCount: Int = 0
     var timerRunning: Bool = false
+    var shouldPostTimerStart: Bool = true
 
     let timerLabel: UILabel = {
         let label = UILabel()
-        label.text = "00H : 00M : 00S"
+        label.text = "00 : 00"
+        label.textColor = .textGray
+        // Font 수정?
+//        label.font = UIFont(name: "SUIT-ExtraLight", size: 80)
+        label.font = .systemFont(ofSize: 50)
         label.textAlignment = .center
         return label
     }()
@@ -87,7 +95,7 @@ class ReadingTime: UIViewController {
 // MARK: - viewDidLoad()
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         setLayouts()
     }
 
@@ -97,9 +105,17 @@ extension ReadingTime {
 
 // MARK: Button Action Functions
     @objc func timerButtonAction(_ sender: UIButton) {
+// MARK: - TimerStart POST
+        if (shouldPostTimerStart) {
+            shouldPostTimerStart = false
+            network.timerStart(completion: {
+                print("---[POST] TIMER START---")
+            })
+        }
         if (timerRunning) {
             timerButton.isSelected = false
             timerRunning = false
+            shouldPostTimerStart = false
             timer.invalidate()
         }
         else {
@@ -110,13 +126,18 @@ extension ReadingTime {
     }
 
     @objc func stopButtonAction(_ sender: UIButton) {
+        shouldPostTimerStart = true
         self.timeHistories.append(self.timeCount)
         print("--TIMER STOP--")
         print(self.timerLabel.text!)
         self.timeCount = 0
         self.timer.invalidate()
-        self.timerLabel.text = "00H : 00M : 00S"
-        print("Histories : \(self.timeHistories)")
+        self.timerLabel.text = "00 : 00"
+        
+// MARK: - TimerStop POST
+        network.timerStop(completion: {
+            print("Histories : \(self.timeHistories)")
+        })
     }
 
 // MARK: - Timer Calculation
@@ -129,23 +150,33 @@ extension ReadingTime {
     }
 
     func secToHourMinSec(sec: Int) -> (Int, Int, Int) {
-        return ((sec/3600), ((sec&3600)/60), ((sec%3600)%60))
+        return ((sec/3600), ((sec%3600)/60), ((sec%3600)%60))
     }
 
     func timeToString(h: Int, m: Int, s: Int) -> String {
         var str = ""
-        str += String(format: "%02d", h)
-        str += "H : "
-        str += String(format: "%02d", m)
-        str += "M : "
-        str += String(format: "%02d", s)
-        str += "S"
+        if h >= 1 {
+            str += String(format: "%02d", h)
+            str += " : "
+            str += String(format: "%02d", m)
+            str += " : "
+            str += String(format: "%02d", s)
+        }
+        else {
+            str += String(format: "%02d", m)
+            str += " : "
+            str += String(format: "%02d", s)
+        }
+        
         return str
     }
 
 // MARK: - setLayouts()
     func setLayouts() {
-        view.addSubviews(timerView, timerButton, stopButton, timeHistoryView)
+//        view.addSubviews(timerView, timerButton, stopButton, timeHistoryView)
+        
+        // History View 뺀 버전
+        view.addSubviews(timerView, timerButton, stopButton)
 
         timerView.snp.makeConstraints() { make in
             make.width.equalTo(258)
@@ -168,19 +199,19 @@ extension ReadingTime {
             make.trailing.equalTo(self.view.snp.centerX).offset(-30)
         }
 
-        timeHistoryView.snp.makeConstraints() { make in
-            make.leading.equalToSuperview()
-            make.trailing.equalToSuperview()
-            make.bottom.equalToSuperview()
-            make.height.equalTo(241)
-
-        }
+//        timeHistoryView.snp.makeConstraints() { make in
+//            make.leading.equalToSuperview()
+//            make.trailing.equalToSuperview()
+//            make.bottom.equalToSuperview()
+//            make.height.equalTo(241)
+//
+//        }
 
         timerView.addSubview(timerLabel)
 
         timerLabel.snp.makeConstraints() { make in
             make.width.equalTo(250)
-            make.height.equalTo(30)
+            make.height.equalTo(100)
             make.centerX.equalToSuperview()
             make.centerY.equalToSuperview()
         }

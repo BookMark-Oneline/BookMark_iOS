@@ -35,3 +35,15 @@ class Shelf: Decodable {
     let author: String
     let img_url: String
 }
+
+
+// MARK: - 책 검색 data class
+class BookSearch: Codable {
+    let user_id: Int
+    let title: String
+    let img_url: String
+    let author: String
+    let publisher: String
+}
+
+
