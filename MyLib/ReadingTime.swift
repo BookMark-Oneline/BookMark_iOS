@@ -97,6 +97,10 @@ class ReadingTime: UIViewController {
         super.viewDidLoad()
         
         setLayouts()
+        
+        network.getBookSearch(completion: {_ in
+            print("---[GET] SEARCH BOOK---")
+        })
     }
 
 }
@@ -136,7 +140,8 @@ extension ReadingTime {
         
 // MARK: - TimerStop POST
         network.timerStop(completion: {
-            print("Histories : \(self.timeHistories)")
+            print("---[POST] TIMER STOP---")
+//            print("Histories : \(self.timeHistories)")
         })
     }
 
