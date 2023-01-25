@@ -67,22 +67,29 @@ class Network {
     
     // 책 검색(바코드) GET
     func getBookSearch(completion: @escaping (NetworkResult<Any>) -> Void) {
-        let URL = "url"
-        let header: HTTPHeaders = ["Content-Type": "Value"]
+        let URL = "https://port-0-server-nodejs-1ih8d2gld1khslm.gksl2.cloudtype.app/search/book/1"
+        let header: HTTPHeaders = ["Content-Type": "application/json"]
+        let params : Parameters = [
+            "query" : 9788995151204,
+        ]
         let dataRequest = AF.request( URL,
                                       method: .get,
+                                      parameters: params,
                                       encoding: JSONEncoding.default,
                                       headers: header )
         
         dataRequest.responseData(completionHandler: { dataResponse in
             switch dataResponse.result {
-            case .success:
+            case .success(let res):
                 print("SUCCESS")
 //                guard let statusCode = dataResponse.response?.statusCode else { return }
-                guard let value = dataResponse.value else { return }
                 
-                let bookSearchData = self.decodeJSON(data: value)
-                print(bookSearchData)
+//                guard let value = dataResponse.value else { return }
+//
+//                let bookSearchData = self.decodeJSON(data: value)
+//                print(bookSearchData)
+                
+                print("응답 데이터 :: ", String(data: res, encoding: .utf8) ?? "")
             case .failure(let e):
                 print(e)
             }
@@ -90,16 +97,18 @@ class Network {
     }
     
     func timerStart(completion: @escaping (() -> Void)) {
-        let URL = "url"
+        let URL = "https://port-0-server-nodejs-1ih8d2gld1khslm.gksl2.cloudtype.app/timer/start/1/2"
         let dataRequest = AF.request( URL,
                                       method: .post,
-                                        encoding: JSONEncoding.default ).validate()
+                                      encoding: JSONEncoding.default ).validate()
         
         dataRequest.responseData(completionHandler: { dataResponse in
             switch dataResponse.result {
-            case .success:
+            case .success(let res):
                 print("SUCCESS")
+                print("응답 데이터 :: ", String(data: res, encoding: .utf8) ?? "")
             case .failure(let e):
+                print("ERROR")
                 print(e)
             }
             
@@ -115,7 +124,7 @@ class Network {
         ]
         // current는 timeCount로, total은 get에서 받아온 토탈에 current 더하기...?
         
-        let URL = "url"
+        let URL = "https://port-0-server-nodejs-1ih8d2gld1khslm.gksl2.cloudtype.app/timer/finish/1/1"
         let dataRequest = AF.request( URL,
                                       method: .post,
                                       parameters: params,
@@ -123,9 +132,11 @@ class Network {
         
         dataRequest.responseData(completionHandler: { dataResponse in
             switch dataResponse.result {
-            case .success:
+            case .success(let res):
                 print("SUCCESS")
+                print("응답 데이터 :: ", String(data: res, encoding: .utf8) ?? "")
             case .failure(let e):
+                print("ERROR")
                 print(e)
             }
             
