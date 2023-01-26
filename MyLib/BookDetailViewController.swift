@@ -11,7 +11,7 @@ import Charts
 
 // MARK: - 책 세부 내용 화면 뷰 컨트롤러
 class BookDetailViewController: UIViewController {
-    var layout_bookdetail = layout_BookDetail()
+    var layout_bookdetail = BookDetailView()
     var isFavorite: Bool = false
     // 페이지 입력 팝업 뷰용
     let pageInputPopUp = CustomPopUp()
@@ -76,7 +76,7 @@ class BookDetailViewController: UIViewController {
 }
 
 // MARK: - 책 세부 내용 화면 layout class
-class layout_BookDetail {
+class BookDetailView {
     var layout_scroll = UIScrollView()
     
     var layout_main = UIView()
