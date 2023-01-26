@@ -33,6 +33,10 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UITextVie
         removeAllText(textView)
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+      }
+    
     private func removeAllText(_ textView: UITextView) {
         if textView.text ==  "내용을 입력하세요." {
             textView.text = nil
@@ -63,7 +67,49 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UITextVie
         layout_createPost.txt_post.textStorage.insert(attachmentString, at: 0)
         imgPicker.dismiss(animated: true)
     }
+}
+
+// MARK: - 키보드 높이에 따른 view 이동 extension
+extension CreatePostViewController {
+    override func viewWillAppear(_ animated: Bool) {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardUp), name: UIResponder.keyboardWillShowNotification, object: nil)
+           NotificationCenter.default.addObserver(self, selector: #selector(keyboardDown), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc func keyboardUp(_ sender: NSNotification) {
+        if let keyboardFrame: NSValue = sender.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardRectangle = keyboardFrame.cgRectValue
+        
+             UIView.animate(
+                 withDuration: 0
+                 , animations: {
+                     self.layout_createPost.layout_bottom.transform = CGAffineTransform(translationX: 0, y: -keyboardRectangle.height + self.view.safeAreaInsets.bottom)
+                     let height = (self.layout_createPost.layout_bottom.layer.position.y) - (self.layout_createPost.line1.layer.position.y + 24)
+                     self.layout_createPost.txt_post.snp.remakeConstraints() { make in
+                         make.top.equalTo(self.layout_createPost.line1.snp.bottom).offset(24)
+                         make.leading.equalToSuperview().offset(23)
+                         make.trailing.equalToSuperview().offset(-23)
+                         make.height.equalTo(height - keyboardRectangle.height)
+                     }
+                 }
+             )
+         }
+    }
+    
+    @objc func keyboardDown(_ sender: NSNotification) {
+        self.layout_createPost.layout_bottom.transform = .identity
+        self.layout_createPost.txt_post.snp.remakeConstraints() {make in
+            make.top.equalTo(self.layout_createPost.line1.snp.bottom).offset(24)
+            make.leading.equalToSuperview().offset(23)
+            make.trailing.equalToSuperview().offset(-23)
+            make.bottom.equalTo(self.layout_createPost.layout_bottom.snp.top)
+        }
+    }
 }
 
 // MARK: - 게시글 작성 view
@@ -101,16 +147,6 @@ class CreatePostView {
         }
         line1.backgroundColor = .semiLightGray
         
-        txt_post.snp.makeConstraints() { make in
-            make.top.equalTo(line1.snp.bottom).offset(24)
-            make.leading.equalToSuperview().offset(23)
-            make.trailing.equalToSuperview().offset(-23)
-            make.height.equalTo(571)
-        }
-        txt_post.font = UIFont.systemFont(ofSize: 13, weight: .bold)
-        txt_post.text = "내용을 입력하세요."
-        txt_post.textColor = .semiLightGray
-        
         layout_bottom.snp.makeConstraints() { make in
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(48)
@@ -131,5 +167,15 @@ class CreatePostView {
         }
         img_camera.image = UIImage(named: "iconCAMERA")
         img_camera.isUserInteractionEnabled = true
+        
+        txt_post.snp.makeConstraints() { make in
+            make.top.equalTo(line1.snp.bottom).offset(24)
+            make.leading.equalToSuperview().offset(23)
+            make.trailing.equalToSuperview().offset(-23)
+            make.bottom.equalTo(layout_bottom.snp.top)
+        }
+        txt_post.font = UIFont.systemFont(ofSize: 13, weight: .bold)
+        txt_post.text = "내용을 입력하세요."
+        txt_post.textColor = .semiLightGray
     }
 }
