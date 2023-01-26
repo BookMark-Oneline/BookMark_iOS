@@ -24,11 +24,19 @@ extension UIColor {
                   blue: AHex & 0xFF, a: (AHex >> 24) & 0xFF)
     }
     
+    // MARK: 텍스트 색상
     static let textOrange = UIColor(Hex: 0xF99030)
+    static let textLightGray = UIColor(Hex: 0x979797)
+    
     static let textGray = UIColor(Hex: 0x555555)
     static let textBoldGray = UIColor(Hex: 0x717171)
-    static let textLightGray = UIColor(Hex: 0x979797)
+    
+    // MARK: 그 외 색상
     static let lightOrange = UIColor(Hex: 0xFFB35A)
-    static let lightGray = UIColor(Hex: 0xEDEDED)
     static let lightLightOrange = UIColor(Hex: 0xFFDDA9)
+    
+    static let lightGray = UIColor(Hex: 0xEDEDED)
+    static let lightLightGray = UIColor(Hex: 0xE3E3E3)
+    static let semiLightGray = UIColor(Hex: 0xDFDFDF)
+    
 }

@@ -10,7 +10,7 @@ import SnapKit
 
 // MARK: - 나의 서재 탭
 class MyLibTab: UIViewController, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
-    let layout = layout_MyLibTab()
+    let layout = MyLibTabView()
     
     // 임시로 UIApplication에 데이터 저장
     var books = ((UIApplication.shared.delegate as? AppDelegate)?.books)!
@@ -82,7 +82,7 @@ extension MyLibTab {
 }
 
 // MARK: - layout class
-class layout_MyLibTab {
+class MyLibTabView {
     var layout_main = UIView()
     
     var layout_title = UIView()
@@ -101,7 +101,7 @@ class layout_MyLibTab {
     var label_timecount = UILabel()
     
     var layout_collectionview = UIView()
-    var layout_collection = layout_books()
+    var layout_collection = Books()
     
     func initViews(view: UIView) {
         view.addSubviews(layout_title, layout_scroll)
@@ -218,7 +218,7 @@ class layout_MyLibTab {
 
 
 // MARK: - scroll view + collection view
-class layout_books {
+class Books {
     var label_mylib = UILabel()
     var label_bookcount = UILabel()
     var layout_books: UICollectionView = {
@@ -282,7 +282,7 @@ class BookCollectionCell: UICollectionViewCell {
             make.width.equalTo(104)
             make.height.equalTo(139.17)
         }
-        layout_img.backgroundColor = UIColor(Hex: 0xE3E3E3)
+        layout_img.backgroundColor = .lightLightGray
         layout_img.layer.cornerRadius = 3
         
         label_title.snp.makeConstraints() { make in
