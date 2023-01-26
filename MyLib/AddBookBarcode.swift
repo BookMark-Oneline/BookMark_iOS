@@ -10,6 +10,8 @@ import SnapKit
 
 class AddBookBarcode: UIViewController {
     
+//    let network = Network()
+
     let readerView: BarcodeReaderView = {
         let view = BarcodeReaderView(frame: CGRect(x: 0, y: 0, width: 286, height: 137))
         view.backgroundColor = .white
@@ -65,6 +67,25 @@ extension AddBookBarcode {
 //        }
 //
 //        sender.isSelected = self.readerView.isRunning
+        
+// MARK: - [GET] 책 검색
+//        network.getBookSearch { response in
+//            switch response {
+//            case .success(let bookSearchData):
+//                if let data = bookSearchData as? BookSearch {
+////                    print(data.myData[0].title)
+//                }
+//            case .requestErr(let message):
+//                print("requestErr", message)
+//            case .pathErr:
+//                print("pathErr")
+//            case .serverErr:
+//                print("serverErr")
+//            case .networkFail:
+//                print("networkFail")
+//            }
+//        }
+        
     }
     
     func setLayouts() {

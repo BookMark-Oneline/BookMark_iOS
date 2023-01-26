@@ -38,3 +38,18 @@ extension UINavigationController {
     func setBasicSettings(title: String = "") {
     }
 }
+
+//MARK: - UIImageView extension: Image URL 로드용
+extension UIImageView {
+    func load(url: URL) {
+        DispatchQueue.global().async { [weak self] in
+            if let data = try? Data(contentsOf: url) {
+                if let image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        self?.image = image
+                    }
+                }
+            }
+        }
+    }
+}
