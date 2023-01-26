@@ -97,10 +97,6 @@ class ReadingTime: UIViewController {
         super.viewDidLoad()
         
         setLayouts()
-        
-        network.getBookSearch(completion: {_ in
-            print("---[GET] SEARCH BOOK---")
-        })
     }
 
 }

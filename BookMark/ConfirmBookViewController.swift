@@ -18,6 +18,7 @@ class ConfirmBookViewController: UIViewController {
         setUpContentView()
         setConstraints()
         setUpNavigationBar()
+        getBookSearchAPI()
     }
     
     // MARK: - Views
@@ -38,6 +39,13 @@ class ConfirmBookViewController: UIViewController {
     let upperDivideView = UIView()
     
     let network = Network()
+    
+    var bookTitle: String = ""
+    var bookImageURL: String = ""
+    var bookAuthor: String = ""
+    var bookPublisher: String = ""
+    var bookDate: String = ""
+    var bookDes: String = ""
 
 }
 
@@ -181,6 +189,44 @@ extension ConfirmBookViewController {
         showallButton.setTitleColor(.gray, for: .normal)
         showallButton.titleLabel?.font = .systemFont(ofSize: 11)
 
+    }
+    
+    func getBookSearchAPI() {
+        network.getBookSearch { response in
+            switch response {
+            case .success(let bookSearchData):
+                if let data = bookSearchData as? BookSearch {
+                    self.bookTitle = data.myData[0].title
+                    self.bookImageURL = data.myData[0].image
+                    self.bookAuthor = data.myData[0].author
+                    self.bookPublisher = data.myData[0].publisher
+                    self.bookDate = data.myData[0].pubdate
+                    self.bookDes = data.myData[0].description
+                    
+                    self.showContents()
+                    
+//                    print(data.myData[0].title)
+//                    print(self.bookTitle)
+                }
+            case .requestErr(let message):
+                print("requestErr", message)
+            case .pathErr:
+                print("pathErr")
+            case .serverErr:
+                print("serverErr")
+            case .networkFail:
+                print("networkFail")
+            }
+        }
+    }
+    
+    func showContents() {
+        titleLabel.text = self.bookTitle
+        authorLabel.text = self.bookAuthor
+//        publisherLabel.text = "출판사 " + bookPublisher + " 발행일" + bookDate
+        descriptionTextView.text = self.bookDes
+        let imgURL = URL(string: self.bookImageURL)
+        imageView.load(url: imgURL!)
     }
 }
 

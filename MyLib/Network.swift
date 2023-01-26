@@ -67,34 +67,97 @@ class Network {
     
     // 책 검색(바코드) GET
     func getBookSearch(completion: @escaping (NetworkResult<Any>) -> Void) {
-        let URL = "https://port-0-server-nodejs-1ih8d2gld1khslm.gksl2.cloudtype.app/search/book/1"
-        let header: HTTPHeaders = ["Content-Type": "application/json"]
-        let params : Parameters = [
-            "query" : 9788995151204,
-        ]
+        let URL = "https://port-0-server-nodejs-1ih8d2gld1khslm.gksl2.cloudtype.app/search/book/1/?query=9788965049043"
+
+        
+//        AF.request(URL,
+//                   method: .get, // GET 메소드
+//                   parameters: nil,
+//                   encoding: URLEncoding.default)
+//        .validate(statusCode: 200..<500) // 에러 여부
+//        .responseData(completionHandler: { response in
+//            switch response.result {
+//            case let .success(data):
+//                do {
+//                    let decoder = JSONDecoder()
+//                    let result = try decoder.decode(BookSearchDataModel.self, from: data)
+//
+//                    completion(.success(result))
+//                } catch {
+//                    print("ERROR")
+//                    completion(.pathErr)
+//                }
+//            case let .failure(error):
+//                completion(.pathErr)
+//            }
+//        })
+
+        
         let dataRequest = AF.request( URL,
                                       method: .get,
-                                      parameters: params,
-                                      encoding: JSONEncoding.default,
-                                      headers: header )
-        
-        dataRequest.responseData(completionHandler: { dataResponse in
+                                      encoding: JSONEncoding.default)
+
+        dataRequest.responseData { dataResponse in
             switch dataResponse.result {
-            case .success(let res):
+            case .success:
                 print("SUCCESS")
-//                guard let statusCode = dataResponse.response?.statusCode else { return }
+                guard let statusCode = dataResponse.response?.statusCode else { return }
                 
-//                guard let value = dataResponse.value else { return }
-//
-//                let bookSearchData = self.decodeJSON(data: value)
-//                print(bookSearchData)
-                
-                print("응답 데이터 :: ", String(data: res, encoding: .utf8) ?? "")
-            case .failure(let e):
-                print(e)
+                print(statusCode)
+
+                guard let value = dataResponse.value else { return }
+
+                let networkResult = self.judgeStatus(by: statusCode, value)
+                completion(networkResult)
+
+            case .failure:
+                completion(.pathErr)
             }
-        })
+        }
+        
+        
+        //        dataRequest.responseDecodable(completionHandler: { res in
+        //            switch res.result {
+        //            case .success:
+        //                print("SUCCESS")
+        //                guard let statusCode = res.response?.statusCode else { return }
+        //
+        //                guard let value = res.value else { return }
+        //
+        //                let bookSearchData = self.decodeJSON(data: value)
+        //                print(statusCode)
+        //                print(bookSearchData)
+        //
+        //            case .failure(let e):
+        //                print("ERROR")
+        //                print(e)
+        //            }
+        //        })
+
     }
+    
+    private func judgeStatus(by statusCode: Int, _ data: Data) -> NetworkResult<Any> {
+        switch statusCode {
+        case 200: return isValidData(data: data)
+        case 400: return .pathErr // 요청이 잘못됨
+        case 500: return .serverErr // 서버 에러
+        default: return .networkFail // 네트워크 에러
+        }
+    }
+    
+    private func isValidData(data: Data) -> NetworkResult<Any> {
+        let decoder = JSONDecoder()
+        
+        guard let decodedData = try? decoder.decode(BookSearch.self, from: data) else {
+            return .pathErr }
+        
+//        print(decodedData)
+        
+        return .success(decodedData)
+    }
+
+    
+    
     
     func timerStart(completion: @escaping (() -> Void)) {
         let URL = "https://port-0-server-nodejs-1ih8d2gld1khslm.gksl2.cloudtype.app/timer/start/1/2"
