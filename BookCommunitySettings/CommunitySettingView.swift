@@ -122,6 +122,7 @@ class CommunitySettingView {
         layout_img.backgroundColor = .lightLightGray
         layout_img.clipsToBounds = true
         layout_img.translatesAutoresizingMaskIntoConstraints = false
+        layout_img.isUserInteractionEnabled = true
         
         layout_img.addSubview(img_iconIMG)
         img_iconIMG.snp.makeConstraints() { make in

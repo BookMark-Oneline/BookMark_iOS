@@ -7,7 +7,7 @@
 
 import UIKit
 
-// MARK: - 모임 설정 기본 view controller
+// MARK: - 모임 설정 기본 공통 view controller
 class CommunitySettingBaseViewController: UIViewController {
     let layout_SetCommunity = CommunitySettingView()
     
@@ -19,21 +19,14 @@ class CommunitySettingBaseViewController: UIViewController {
     let limittapGestureRecognizer_20 = UITapGestureRecognizer()
     let limittapGestureRecognizer_nolimit = UITapGestureRecognizer()
     
-    let layout_main = UIView()
+    let imgPickerTapGestureRecognizer = UITapGestureRecognizer()
+    
+    let imgPicker = UIImagePickerController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setBaseView()
         setGestureRecognizer()
-    }
-    
-    private func setBaseView() {
-        view.addSubview(layout_main)
-        layout_main.snp.makeConstraints() { make in
-            make.edges.equalTo(view.safeAreaLayoutGuide)
-        }
-        layout_SetCommunity.initViews(layout_main)
-        
+        setImgPicker()
     }
 }
 
@@ -113,3 +106,36 @@ extension CommunitySettingBaseViewController {
     }
 }
 
+
+// MARK: - 이미지 피커 컨트롤러 extension
+extension CommunitySettingBaseViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    private func setImgPicker() {
+        imgPicker.sourceType = .photoLibrary
+        imgPicker.allowsEditing = true
+        imgPicker.delegate = self
+        
+        imgPickerTapGestureRecognizer.addTarget(self, action: #selector(imagePicker))
+        layout_SetCommunity.layout_img.addGestureRecognizer(imgPickerTapGestureRecognizer)
+    }
+    
+    @objc func imagePicker(_ sender: UITapGestureRecognizer) {
+        present(self.imgPicker, animated: true)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        var newImage: UIImage? = nil
+        
+        if let possibleImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
+            newImage = possibleImage
+        } else if let possibleImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            newImage = possibleImage
+        }
+        
+        self.layout_SetCommunity.layout_img.image = newImage
+        picker.dismiss(animated: true, completion: {
+            self.layout_SetCommunity.img_iconIMG.isHighlighted = true
+        })
+    }
+}

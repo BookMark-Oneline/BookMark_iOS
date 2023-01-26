@@ -282,7 +282,7 @@ class BookCollectionCell: UICollectionViewCell {
             make.width.equalTo(104)
             make.height.equalTo(139.17)
         }
-        layout_img.backgroundColor = UIColor(Hex: 0xE3E3E3)
+        layout_img.backgroundColor = .lightLightGray
         layout_img.layer.cornerRadius = 3
         
         label_title.snp.makeConstraints() { make in
