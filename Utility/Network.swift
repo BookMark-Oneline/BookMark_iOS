@@ -34,9 +34,9 @@ class Network {
     }
     
     // 책 세부내용 조회 GET
-    func getBookDetail(completion: @escaping (NetworkResult<Any>) -> Void) {
+    func getBookDetail(bookId: Int, completion: @escaping (NetworkResult<Any>) -> Void) {
   
-        let URL = baseUrl + "/shelf/book/1"
+        let URL = baseUrl + "/shelf/book/\(bookId)"
         let datarequest = AF.request(URL, method: .get, encoding: JSONEncoding.default)
         
         datarequest.responseData(completionHandler: { res in

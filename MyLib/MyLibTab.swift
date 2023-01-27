@@ -19,7 +19,7 @@ class MyLibTab: UIViewController, UICollectionViewDelegate, UICollectionViewDele
     override func viewDidLoad() {
         super.viewDidLoad()
         getShelfData()
-        getBookDetail()
+
         layout.initViews(view: self.view)
         layout.layout_collection.layout_books.delegate = self
         layout.layout_collection.layout_books.dataSource = self
@@ -63,21 +63,6 @@ extension MyLibTab {
                 print("failed")
             }
         }
-    }
-    
-    // 책 세부정보 get
-    func getBookDetail() {
-        network.getBookDetail(completion: { response in
-            switch response {
-            case .success(let book):
-                if let book = book as? [BookDetail] {
-                    print(book[0].author)
-                }
-                return
-            default:
-                print("failed")
-            }
-        })
     }
 }
 
@@ -127,7 +112,7 @@ extension MyLibTab {
         else {
             let vc = BookDetailViewController()
             
-            network.getBookDetail(completion: { response in
+            network.getBookDetail(bookId: indexPath.row, completion: { response in
                 switch response {
                 case .success(let book):
                     if let book = book as? [BookDetail] {

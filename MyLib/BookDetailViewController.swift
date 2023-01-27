@@ -75,8 +75,7 @@ class BookDetailViewController: UIViewController {
     func setBookData() {
         self.layout_bookdetail.label_title.text = bookData?.title
         self.layout_bookdetail.label_author.text = bookData?.author
-        // 줄거리 정보 내놔
-        // self.layout_bookdetail.label_summary_data.text = bookData.
+
         if let url = bookData?.img_url {
             self.layout_bookdetail.img_book.setImageUrl(url: url)
         }
@@ -86,9 +85,16 @@ class BookDetailViewController: UIViewController {
         self.layout_bookdetail.label_totaltime_data.text = String(describing: bookData?.ave_reading_time ?? 0)
         self.layout_bookdetail.label_nowpage_data.text = String(describing: bookData?.ave_reading_page ?? 0)
         
-        let progress = Float((bookData?.ave_reading_page ?? 0) / 354)
+        setProgress(readingPage: bookData?.ave_reading_page ?? 10)
+    }
+    
+    
+    private func setProgress(readingPage: Int, totalPage: Int = 354) {
+        let progress = Int(Double(readingPage) / Double(totalPage) * 100)
         self.layout_bookdetail.label_untilFin_data.text = "\(progress)%"
-        self.layout_bookdetail.layout_progress.setProgress(progress, animated: false)
+        
+        let percent = Float(Double(progress) / Double(100))
+        self.layout_bookdetail.layout_progress.setProgress(percent, animated: false)
     }
 }
 
