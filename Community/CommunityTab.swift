@@ -104,7 +104,7 @@ class CommunityTabView: UIView {
         let btn = UIButton()
         
         btn.setImage(UIImage(named: "search"), for: .normal)
-        btn.addTarget(CommunityTabView.self, action: #selector(searchButtonPress), for: .touchUpInside)
+//        btn.addTarget(CommunityTabView.self, action: #selector(searchButtonPress), for: .touchUpInside)
         
         return btn
     }()
@@ -113,7 +113,7 @@ class CommunityTabView: UIView {
         let btn = UIButton()
         
         btn.setImage(UIImage(named: "add"), for: .normal)
-        btn.addTarget(CommunityTabView.self, action: #selector(addButtonPress), for: .touchUpInside)
+//        btn.addTarget(CommunityTabView.self, action: #selector(addButtonPress), for: .touchUpInside)
         
         return btn
     }()
@@ -137,13 +137,13 @@ class CommunityTabView: UIView {
         return label
     }()
     
-    @objc func searchButtonPress() {
-        print("search button press")
-    }
-    
-    @objc func addButtonPress() {
-        print("add button press")
-    }
+//    @objc func searchButtonPress() {
+//        print("search button press")
+//    }
+//    
+//    @objc func addButtonPress() {
+//        print("add button press")
+//    }
     
     func initViews(view: UIView) {
         view.addSubviews(titleView, collectView)
