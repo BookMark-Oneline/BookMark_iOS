@@ -19,7 +19,7 @@ class MyLibTab: UIViewController, UICollectionViewDelegate, UICollectionViewDele
     override func viewDidLoad() {
         super.viewDidLoad()
         getShelfData()
-        
+        getBookDetail()
         layout.initViews(view: self.view)
         layout.layout_collection.layout_books.delegate = self
         layout.layout_collection.layout_books.dataSource = self
@@ -34,6 +34,22 @@ class MyLibTab: UIViewController, UICollectionViewDelegate, UICollectionViewDele
         self.navigationController?.isNavigationBarHidden = false
     }
     
+    func dataReload(status: Int = 1, img_url: String = "", title: String = "", author: String = "") {
+        // 데이터 새로 추가
+        if (status == 0) {
+            if let appdel = UIApplication.shared.delegate as? AppDelegate {
+                appdel.books.append([img_url, title, author])
+            }
+        }
+        
+        self.books = ((UIApplication.shared.delegate as? AppDelegate)?.books)!
+        layout.layout_collection.layout_books.reloadData()
+    }
+}
+
+// MARK: - 네트워크 용 extension
+extension MyLibTab {
+    // 서재 데이터 get
     func getShelfData() {
         network.getShelf { response in
             switch response {
@@ -49,16 +65,19 @@ class MyLibTab: UIViewController, UICollectionViewDelegate, UICollectionViewDele
         }
     }
     
-    func dataReload(status: Int = 1, img_url: String = "", title: String = "", author: String = "") {
-        // 데이터 새로 추가
-        if (status == 0) {
-            if let appdel = UIApplication.shared.delegate as? AppDelegate {
-                appdel.books.append([img_url, title, author])
+    // 책 세부정보 get
+    func getBookDetail() {
+        network.getBookDetail(completion: { response in
+            switch response {
+            case .success(let book):
+                if let book = book as? [BookDetail] {
+                    print(book[0].author)
+                }
+                return
+            default:
+                print("failed")
             }
-        }
-        
-        self.books = ((UIApplication.shared.delegate as? AppDelegate)?.books)!
-        layout.layout_collection.layout_books.reloadData()
+        })
     }
 }
 
@@ -106,7 +125,19 @@ extension MyLibTab {
         
         // 책 세부 내용 화면 연결
         else {
-            self.navigationController?.pushViewController(BookDetailViewController(), animated: true)
+            let vc = BookDetailViewController()
+            
+            network.getBookDetail(completion: { response in
+                switch response {
+                case .success(let book):
+                    if let book = book as? [BookDetail] {
+                        vc.bookData = book[0]
+                    }
+                    self.navigationController?.pushViewController(vc, animated: true)
+                default:
+                    print("failed")
+                }
+            })
         }
     }
 }

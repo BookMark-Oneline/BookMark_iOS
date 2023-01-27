@@ -162,6 +162,7 @@
 				E8D5C3E329838352003D1AD0 /* Barcode */,
 				E8D5C3E229838329003D1AD0 /* Timer */,
 				E8C2B4F0296A8915000E2030 /* MyLibTab.swift */,
+				24E7942B2972BDD300E69633 /* CustomPopUp.swift */,
 				86C3C2C4296D77EB0035CFFE /* BookDetailViewController.swift */,
 			);
 			path = MyLib;
@@ -229,7 +230,6 @@
 			isa = PBXGroup;
 			children = (
 				24E794232971653C00E69633 /* ReadingTime.swift */,
-				24E7942B2972BDD300E69633 /* CustomPopUp.swift */,
 			);
 			path = Timer;
 			sourceTree = "<group>";
