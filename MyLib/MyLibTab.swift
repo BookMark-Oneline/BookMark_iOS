@@ -19,7 +19,7 @@ class MyLibTab: UIViewController, UICollectionViewDelegate, UICollectionViewDele
     override func viewDidLoad() {
         super.viewDidLoad()
         getShelfData()
-        getBookDetail()
+
         layout.initViews(view: self.view)
         layout.layout_collection.layout_books.delegate = self
         layout.layout_collection.layout_books.dataSource = self
@@ -64,21 +64,6 @@ extension MyLibTab {
             }
         }
     }
-    
-    // 책 세부정보 get
-    func getBookDetail() {
-        network.getBookDetail(completion: { response in
-            switch response {
-            case .success(let book):
-                if let book = book as? [BookDetail] {
-                    print(book[0].author)
-                }
-                return
-            default:
-                print("failed")
-            }
-        })
-    }
 }
 
 // MARK: - collection view 데이터 연결: data source
@@ -120,20 +105,20 @@ extension MyLibTab {
         
         // 북 추가 화면 연결
         if (item.label_title.text == "" && item.label_author.text == "" && item.tag == 0) {
-            self.navigationController?.pushViewController(AddBookBarcode(), animated: true)
+            self.navigationController?.pushViewController(AddBookBarcode(), animated: false)
         }
         
         // 책 세부 내용 화면 연결
         else {
             let vc = BookDetailViewController()
             
-            network.getBookDetail(completion: { response in
+            network.getBookDetail(bookId: indexPath.row, completion: { response in
                 switch response {
                 case .success(let book):
                     if let book = book as? [BookDetail] {
                         vc.bookData = book[0]
                     }
-                    self.navigationController?.pushViewController(vc, animated: true)
+                    self.navigationController?.pushViewController(vc, animated: false)
                 default:
                     print("failed")
                 }

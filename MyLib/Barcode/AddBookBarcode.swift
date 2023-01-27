@@ -34,11 +34,11 @@ class AddBookBarcode: UIViewController {
         return btn
     }()
     
+    let layout_main = UIView()
+    let layout_redLine = UIView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        view.backgroundColor = UIColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)
-
         setLayouts()
 
         self.readerView.delegate = self
@@ -89,7 +89,11 @@ extension AddBookBarcode {
     }
     
     func setLayouts() {
-        view.addSubviews(readerView, readButton)
+        self.view.addSubviews(layout_main, readerView, readButton, layout_redLine)
+        layout_main.snp.makeConstraints() { make in
+            make.edges.equalTo(self.view.safeAreaLayoutGuide)
+        }
+        layout_main.backgroundColor = UIColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)
         
         readerView.snp.makeConstraints() { make in
             make.width.equalTo(286)
@@ -104,6 +108,14 @@ extension AddBookBarcode {
             make.centerX.equalToSuperview()
             make.top.equalTo(self.view.snp.centerY).offset(100)
         }
+        
+        layout_redLine.snp.makeConstraints() { make in
+            make.width.equalTo(286)
+            make.height.equalTo(1)
+            make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview()
+        }
+        layout_redLine.backgroundColor = UIColor(Hex: 0xFF0000)
     }
     
     func showConfirmBook() {

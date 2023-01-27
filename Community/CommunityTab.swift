@@ -113,7 +113,7 @@ class CommunityTabView: UIView {
         let btn = UIButton()
         
         btn.setImage(UIImage(named: "add"), for: .normal)
-//        btn.addTarget(CommunityTabView.self, action: #selector(addButtonPress), for: .touchUpInside)
+        //btn.addTarget(self, action: #selector(addButtonPress), for: .touchUpInside)
         
         return btn
     }()
