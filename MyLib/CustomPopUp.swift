@@ -8,7 +8,6 @@
 import UIKit
 
 class CustomPopUp: NSObject {
-    
     struct Constants {
         static let backgroundAlphaTo: CGFloat = 0.4
     }

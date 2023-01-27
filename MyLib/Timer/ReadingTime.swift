@@ -49,10 +49,10 @@ class ReadingTime: UIViewController {
         btn.layer.cornerRadius = 33
 
         // 시작, 멈춤 버튼 이미지 파일 요청해야 함, 받기 전까지는 텍스트 대체
-//        btn.setImage("timer-start.png", for: .normal)
-//        btn.setImage("timer-stop.png", for: .selected)
-        btn.setTitle("시작", for: .normal)
-        btn.setTitle("멈춤", for: .selected)
+        btn.setImage(UIImage(named: "play"), for: .normal)
+        btn.setImage(UIImage(named: "resume"), for: .selected)
+        //btn.setTitle("시작", for: .normal)
+        //btn.setTitle("멈춤", for: .selected)
 
         btn.addTarget(self, action: #selector(timerButtonAction), for: .touchUpInside)
 
@@ -68,7 +68,7 @@ class ReadingTime: UIViewController {
         btn.layer.cornerRadius = 33
 
         // 종료 버튼 이미지 파일 요청해야 함, 받기 전까지는 텍스트 대체
-        btn.setTitle("종료", for: .normal)
+        btn.setImage(UIImage(named: "stop"), for: .normal)
 
         btn.addTarget(self, action: #selector(stopButtonAction), for: .touchUpInside)
 
@@ -95,8 +95,8 @@ class ReadingTime: UIViewController {
 // MARK: - viewDidLoad()
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setLayouts()
+        self.navigationItem.title = "스톱워치"
     }
 
 }
