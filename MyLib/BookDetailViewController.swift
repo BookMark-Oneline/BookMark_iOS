@@ -31,12 +31,7 @@ class BookDetailViewController: UIViewController {
                               message: "몇 페이지까지 읽으셨나요?",
                               on: self)
     }
-//
-//    // 페이지 입력 팝업 뷰용
-//    @objc func submitAlert() {
-//        pageInputPopUp.submitPopUp()
-//    }
-
+    
     // set navigation view
     func setNavCustom() {
         self.navigationController?.navigationItem.backBarButtonItem?.title = ""
@@ -186,7 +181,7 @@ class BookDetailView {
         img_book.clipsToBounds = true
         img_book.translatesAutoresizingMaskIntoConstraints = false
         img_book.contentMode = .scaleAspectFill
-        img_book.image = UIImage(named: "book")
+        img_book.image = UIImage(named: "noBookImg")
         
         label_title.snp.makeConstraints() { make in
             make.top.equalTo(layout_book.snp.bottom).offset(24)
@@ -195,7 +190,7 @@ class BookDetailView {
         }
         label_title.numberOfLines = 0
         label_title.textColor = .black
-        label_title.text = "제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목"
+        label_title.text = "제목 정보가 없습니다."
         label_title.font = .systemFont(ofSize: 20, weight: UIFont.Weight(rawValue: 600))
         label_title.textAlignment = .center
         
@@ -206,7 +201,7 @@ class BookDetailView {
         }
         label_author.textAlignment = .center
         label_author.textColor = .textBoldGray
-        label_author.text = "무라세 다케시"
+        label_author.text = "작가 정보가 없습니다."
         label_author.font = .systemFont(ofSize: 20, weight: .semibold)
         
         layout_vertical.snp.makeConstraints() { make in
@@ -428,7 +423,7 @@ class BookDetailView {
             make.top.equalTo(label_summary.snp.bottom).offset(10)
             make.height.equalTo(75)
         }
-        label_summary_data.text = "봄이 시작되는 3월, 급행열차 한 대가 탈선해 절벽 아래로 떨어졌다. 수많은 중상자를 낸 이 대형 사고 때문에 유가족은 순식간에 사랑하는 가족, 연인을 잃었다. 그렇게 두 달이 흘렀을까. 사람들 사이에서 이상한 소문이 돌기 시작하는데…. 역에서 가장 가까운 역인 ‘니시유이가하마 역’에 가면 유령이 나타나 사고가 일어난 그날의 열차에 오르도록 도와준다는 것. 단 유령이 제시한 네 가지 규칙을 반드시 지켜야만 한다. 그렇지 않으면 자신도 죽게 된다. 이를 알고도 유가족은 한 치의 망설임도 없이 역으로 향한다. 과연 유령 열차가 완전히 하늘로 올라가 사라지기 전, 사람들은 무사히 열차에 올라 사랑하는 이의 마지막을 함께할 수 있을까. 틱톡에 소개되어 일본 독자들 사이에서 크게 입소문이 난 화제작. 현실과 판타지를 넘나들며 단숨에 독자를 이야기의 세계로 빠져들게 하는 무라세 다케시의 소설로, 작가의 여러 작품 중 한국에 처음 소개되는 작품이다. 작가가 쓴 작품 중 단연코 손꼽히는 판타지 휴머니즘 소설."
+        label_summary_data.text = "줄거리 정보가 없습니다."
         label_summary_data.font = .systemFont(ofSize: 14)
         label_summary_data.textColor = .black
         label_summary_data.textAlignment = .justified

@@ -9,6 +9,7 @@ import SnapKit
 
 import UIKit
 
+// MARK: - 책 확인 view controller
 class ConfirmBookViewController: UIViewController {
 
     override func viewDidLoad() {
@@ -20,8 +21,7 @@ class ConfirmBookViewController: UIViewController {
         setUpNavigationBar()
         getBookSearchAPI()
     }
-    
-    // MARK: - Views
+
     let imageView = UIImageView()
     let titleLabel = UILabel()
     let authorLabel = UILabel()
@@ -46,6 +46,7 @@ class ConfirmBookViewController: UIViewController {
     var bookPublisher: String = ""
     var bookDate: String = ""
     var bookDes: String = ""
+    var bookIsbn: String = ""
 
 }
 
@@ -55,7 +56,24 @@ extension ConfirmBookViewController {
         self.view.addSubview(scrollView)
         scrollView.addSubview(contentView)
     }
-    
+
+    @objc func addToCell(_ selector: UIBarButtonItem) {
+        // MARK: - todo: UIApplication에 데이터 저장할지 core data나 userDefaults 따로 쓸지
+        if let appdel = UIApplication.shared.delegate as? AppDelegate {
+            appdel.books.append([self.bookImageURL, self.bookTitle, self.bookAuthor])
+            print(appdel.books)
+        }
+       
+        network.registerBooks(title: self.bookTitle, img_url: self.bookImageURL, author: self.bookAuthor, pubilsher: self.bookPublisher, isbn: self.bookIsbn, completion: {
+                self.navigationController?.popToRootViewController(animated: true)
+        })
+    }
+
+}
+
+
+// MARK: - 레이아웃 용 extension
+extension ConfirmBookViewController {
     func setUpContentView() {
         contentView.addSubview(imageView)
         contentView.addSubview(titleLabel)
@@ -73,19 +91,7 @@ extension ConfirmBookViewController {
         btn.tintColor = .textOrange
         self.navigationItem.rightBarButtonItem = btn
     }
-
-    @objc func addToCell(_ selector: UIBarButtonItem) {
-        // 임시로 UIApplication에 데이터 저장
-        if let appdel = UIApplication.shared.delegate as? AppDelegate {
-            appdel.books.append(["book", titleLabel.text ?? "제목", authorLabel.text ?? "작가"])
-            print(appdel.books)
-        }
-        network.registerBooks(completion: {
-            self.navigationController?.popToRootViewController(animated: true)
-        })
-    }
     
-    // Constraints
     func setConstraints() {
         scrollView.snp.makeConstraints { make in
             make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
@@ -110,7 +116,7 @@ extension ConfirmBookViewController {
             make.top.equalTo(upperDivideView.snp.bottom).offset(11)
             make.centerX.equalTo(self.view.safeAreaLayoutGuide)
         }
-        imageView.image = UIImage(named: "book")
+        imageView.image = UIImage(named: "noBookImg")
         imageView.backgroundColor = .systemBlue
         imageView.layer.shadowColor = UIColor.black.cgColor
         imageView.layer.masksToBounds = false
@@ -123,7 +129,7 @@ extension ConfirmBookViewController {
             make.centerX.equalTo(imageView.snp.centerX)
             make.top.equalTo(imageView.snp.bottom).offset(24)
         }
-        titleLabel.text = "세상의 마지막 기차역에서"
+        titleLabel.text = "제목 정보가 없습니다."
         titleLabel.numberOfLines = 0
         titleLabel.font = .boldSystemFont(ofSize: 18)
         titleLabel.textColor = .black
@@ -134,7 +140,7 @@ extension ConfirmBookViewController {
             make.centerX.equalTo(titleLabel.snp.centerX)
             make.top.equalTo(titleLabel.snp.bottom).offset(13)
         }
-        authorLabel.text = "무라세 다케시"
+        authorLabel.text = "작가 정보가 없습니다."
         authorLabel.font = .boldSystemFont(ofSize: 15)
         authorLabel.textColor = UIColor(red: 113/256, green: 113/256, blue: 113/256, alpha: 1)
         authorLabel.textAlignment = .center
@@ -144,7 +150,7 @@ extension ConfirmBookViewController {
             make.centerX.equalTo(authorLabel.snp.centerX)
             make.top.equalTo(authorLabel.snp.bottom).offset(6)
         }
-        publisherLabel.text = "출판사 모모  발행일 2022.05.09"
+        publisherLabel.text = "출판사 정보가 없습니다."
         publisherLabel.font = .systemFont(ofSize: 14)
         publisherLabel.textColor = UIColor(red: 113/256, green: 113/256, blue: 113/256, alpha: 1)
         publisherLabel.textAlignment = .center
@@ -154,7 +160,7 @@ extension ConfirmBookViewController {
             make.top.equalTo(publisherLabel.snp.bottom).offset(88)
             make.centerX.equalTo(contentView.snp.centerX)
         }
-        descriptionTextView.text = "봄이 시작되는 3월, 급행열차 한 대가 탈선해 절벽 아래로 떨어졌다. 수많은 중상자를 낸 이 대형 사고 때문에 유가족은 순식간에 사랑하는 가족, 연인을 잃었다. 그렇게 두 달이 흘렀을까. 사람들 사이에서 이상한 소문이 돌기 시작하는데…. 역에서 가장 가까운 역인 ‘니시유이가하마 역’에 가면 유령이 나타나 사고가 일어난 그날의 열차에 오르도록 도와준다는 것. 단 유령이 제시한 네 가지 규칙을 반드시 지켜야만 한다. 그렇지 않으면 자신도 죽게 된다. 이를 알고도 유가족은 한 치의 망설임도 없이 역으로 향한다. 과연 유령 열차가 완전히 하늘로 올라가 사라지기 전, 사람들은 무사히 열차에 올라 사랑하는 이의 마지막을 함께할 수 있을까. 틱톡에 소개되어 일본 독자들 사이에서 크게 입소문이 난 화제작. 현실과 판타지를 넘나들며 단숨에 독자를 이야기의 세계로 빠져들게 하는 무라세 다케시의 소설로, 작가의 여러 작품 중 한국에 처음 소개되는 작품이다. 작가가 쓴 작품 중 단연코 손꼽히는 판타지 휴머니즘 소설."
+        descriptionTextView.text = "설명이 없습니다."
         descriptionTextView.font = .systemFont(ofSize: 14)
         descriptionTextView.textColor = .black
         descriptionTextView.textAlignment = .justified
@@ -191,6 +197,21 @@ extension ConfirmBookViewController {
 
     }
     
+    func showContents() {
+        titleLabel.text = self.bookTitle
+        authorLabel.text = self.bookAuthor
+        
+        bookDate.insert(".", at: bookDate.index(bookDate.startIndex, offsetBy: 4))
+        bookDate.insert(".", at: bookDate.index(bookDate.startIndex, offsetBy: 7))
+        publisherLabel.text = "출판사 " + self.bookPublisher + "     발행일 " + bookDate
+        
+        descriptionTextView.text = self.bookDes
+        imageView.setImageUrl(url: self.bookImageURL)
+    }
+}
+
+// MARK: - 네트워크 용 extension
+extension ConfirmBookViewController {
     func getBookSearchAPI() {
         network.getBookSearch { response in
             switch response {
@@ -202,6 +223,7 @@ extension ConfirmBookViewController {
                     self.bookPublisher = data.myData[0].publisher
                     self.bookDate = data.myData[0].pubdate
                     self.bookDes = data.myData[0].description
+                    self.bookIsbn = data.myData[0].isbn
                     
                     self.showContents()
                     
@@ -219,14 +241,4 @@ extension ConfirmBookViewController {
             }
         }
     }
-    
-    func showContents() {
-        titleLabel.text = self.bookTitle
-        authorLabel.text = self.bookAuthor
-//        publisherLabel.text = "출판사 " + bookPublisher + " 발행일" + bookDate
-        descriptionTextView.text = self.bookDes
-        let imgURL = URL(string: self.bookImageURL)
-        imageView.load(url: imgURL!)
-    }
 }
-

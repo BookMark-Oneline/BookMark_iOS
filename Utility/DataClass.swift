@@ -30,7 +30,7 @@ class BookDetail: Decodable {
 
 // MARK: - 서재 data class
 class Shelf: Decodable {
-    let user_id: Int
+    let book_id: Int
     let title: String
     let author: String
     let img_url: String
