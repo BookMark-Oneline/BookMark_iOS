@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		245FED6A2983965800EE02B6 /* SearchCommunity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245FED692983965800EE02B6 /* SearchCommunity.swift */; };
 		245FED6E2983971100EE02B6 /* JoinCommunityRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245FED6D2983971100EE02B6 /* JoinCommunityRequest.swift */; };
+		245FED712983976400EE02B6 /* myeongsoo.png in Resources */ = {isa = PBXBuildFile; fileRef = 245FED6F2983976400EE02B6 /* myeongsoo.png */; };
+		245FED722983976400EE02B6 /* haerin.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 245FED702983976400EE02B6 /* haerin.jpg */; };
 		24A21A392976EA2400AE8BF9 /* DataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A21A382976EA2400AE8BF9 /* DataClass.swift */; };
 		24E794242971653C00E69633 /* ReadingTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24E794232971653C00E69633 /* ReadingTime.swift */; };
 		24E7942C2972BDD300E69633 /* CustomPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24E7942B2972BDD300E69633 /* CustomPopUp.swift */; };
@@ -44,6 +46,8 @@
 /* Begin PBXFileReference section */
 		245FED692983965800EE02B6 /* SearchCommunity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCommunity.swift; sourceTree = "<group>"; };
 		245FED6D2983971100EE02B6 /* JoinCommunityRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinCommunityRequest.swift; sourceTree = "<group>"; };
+		245FED6F2983976400EE02B6 /* myeongsoo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = myeongsoo.png; sourceTree = "<group>"; };
+		245FED702983976400EE02B6 /* haerin.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = haerin.jpg; sourceTree = "<group>"; };
 		24A21A382976EA2400AE8BF9 /* DataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataClass.swift; sourceTree = "<group>"; };
 		24E794232971653C00E69633 /* ReadingTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingTime.swift; sourceTree = "<group>"; };
 		24E7942B2972BDD300E69633 /* CustomPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPopUp.swift; sourceTree = "<group>"; };
@@ -129,6 +133,8 @@
 			isa = PBXGroup;
 			children = (
 				E8C2B4F8296A8D6D000E2030 /* MainTabBarController.swift */,
+				245FED702983976400EE02B6 /* haerin.jpg */,
+				245FED6F2983976400EE02B6 /* myeongsoo.png */,
 				E8C2B50E296AA576000E2030 /* pepe.jpg */,
 				86C3C2CC296D8CCC0035CFFE /* book.png */,
 				86C3C2B0296858370035CFFE /* AppDelegate.swift */,
@@ -298,6 +304,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				245FED722983976400EE02B6 /* haerin.jpg in Resources */,
+				245FED712983976400EE02B6 /* myeongsoo.png in Resources */,
 				86C3C2BD296858380035CFFE /* LaunchScreen.storyboard in Resources */,
 				86C3C2CD296D8CCC0035CFFE /* book.png in Resources */,
 				86C3C2BA296858380035CFFE /* Assets.xcassets in Resources */,
