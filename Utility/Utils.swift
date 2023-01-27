@@ -52,4 +52,9 @@ extension UIImageView {
             }
         }
     }
+    
+    func setImageUrl(url: String) {
+        let imgURL = URL(string: url)
+        self.load(url: imgURL!)
+    }
 }

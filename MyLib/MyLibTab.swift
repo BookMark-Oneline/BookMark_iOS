@@ -10,12 +10,16 @@ import SnapKit
 
 // MARK: - 나의 서재 탭
 class MyLibTab: UIViewController, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
-    let layout = MyLibTabView()
     
-    // 임시로 UIApplication에 데이터 저장
+    let layout = MyLibTabView()
+    let network = Network()
+    
+    // MARK: - todo: UIApplication에 데이터 저장할지 core data나 userDefaults 따로 쓸지
     var books = ((UIApplication.shared.delegate as? AppDelegate)?.books)!
     override func viewDidLoad() {
         super.viewDidLoad()
+        getShelfData()
+        
         layout.initViews(view: self.view)
         layout.layout_collection.layout_books.delegate = self
         layout.layout_collection.layout_books.dataSource = self
@@ -23,12 +27,38 @@ class MyLibTab: UIViewController, UICollectionViewDelegate, UICollectionViewDele
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = true
-        self.books = ((UIApplication.shared.delegate as? AppDelegate)?.books)!
-        layout.layout_collection.layout_books.reloadData()
+        dataReload()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = false
+    }
+    
+    func getShelfData() {
+        network.getShelf { response in
+            switch response {
+            case .success(let shelf):
+                if let book = shelf as? [Shelf] {
+                    book.forEach({ item in
+                        self.dataReload(status: 0, img_url: item.img_url, title: item.title, author: item.author)
+                    })
+                }
+            default:
+                print("failed")
+            }
+        }
+    }
+    
+    func dataReload(status: Int = 1, img_url: String = "", title: String = "", author: String = "") {
+        // 데이터 새로 추가
+        if (status == 0) {
+            if let appdel = UIApplication.shared.delegate as? AppDelegate {
+                appdel.books.append([img_url, title, author])
+            }
+        }
+        
+        self.books = ((UIApplication.shared.delegate as? AppDelegate)?.books)!
+        layout.layout_collection.layout_books.reloadData()
     }
 }
 
@@ -48,7 +78,7 @@ extension MyLibTab {
         }
         
         else {
-            cell.layout_img.image = UIImage(named: book[0])
+            cell.layout_img.setImageUrl(url: book[0])
             cell.label_title.text = book[1]
             cell.label_author.text = book[2]
             cell.tag = 1
