@@ -37,6 +37,7 @@ class CustomPopUp: NSObject {
 //        label.frame = CGRect(x: 0, y: 0, width: popUpView.frame.size.width, height: 80)
 //        label.text = title
         label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         return label
     }()
     
@@ -45,6 +46,8 @@ class CustomPopUp: NSObject {
 //        label.frame = CGRect(x: 0, y: 30, width: popUpView.frame.size.width, height: 80)
         label.numberOfLines = 0
 //        label.text = message
+        label.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
+        label.textColor = .textBoldGray
         label.textAlignment = .center
         return label
     }()
@@ -53,7 +56,8 @@ class CustomPopUp: NSObject {
         let label = UILabel()
         label.textAlignment = .center
         label.text = "/"
-        label.textColor = .textGray
+        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        label.textColor = .semiLightGray
         return label
     }()
     
@@ -65,7 +69,9 @@ class CustomPopUp: NSObject {
         field.layer.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1).cgColor
         field.layer.cornerRadius = 7
         field.layer.borderWidth = 1
-        field.layer.borderColor = UIColor(red: 0.875, green: 0.875, blue: 0.875, alpha: 1).cgColor
+        field.font = UIFont.systemFont(ofSize: 15, weight: .medium)
+        field.textAlignment = .center
+        field.layer.borderColor = UIColor.semiLightGray.cgColor
         field.keyboardType = .numberPad
         return field
     }()
@@ -77,7 +83,9 @@ class CustomPopUp: NSObject {
         field.layer.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1).cgColor
         field.layer.cornerRadius = 7
         field.layer.borderWidth = 1
-        field.layer.borderColor = UIColor(red: 0.875, green: 0.875, blue: 0.875, alpha: 1).cgColor
+        field.font = UIFont.systemFont(ofSize: 15, weight: .medium)
+        field.textAlignment = .center
+        field.layer.borderColor = UIColor.semiLightGray.cgColor
         field.keyboardType = .numberPad
         return field
     }()
@@ -87,7 +95,8 @@ class CustomPopUp: NSObject {
         let btn = UIButton()
         btn.frame = CGRect(x: 0, y: 0, width: 130, height: 40)
         btn.setTitle("입력", for: .normal)
-        btn.backgroundColor = .textOrange
+        btn.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        btn.backgroundColor = .lightOrange
         btn.layer.masksToBounds = true
         btn.layer.cornerRadius = 20
         btn.setTitleColor(.white, for: .normal)
@@ -98,9 +107,16 @@ class CustomPopUp: NSObject {
     let closeButton: UIButton = {
         let btn = UIButton()
         // 이미지 없어서 텍스트로 대체
-        btn.setTitle("닫기", for: .normal)
-        btn.setTitleColor(.textGray, for: .normal)
+        btn.setImage(UIImage(named: "cancel"), for: .normal)
+        //btn.setTitle("닫기", for: .normal)
+        //btn.setTitleColor(.textGray, for: .normal)
         return btn
+    }()
+    
+    let rightImg: UIImageView = {
+        let imgview = UIImageView()
+        imgview.image = UIImage(named: "leftImg")
+        return imgview
     }()
     
 //MARK: - FUNC: ShowPopUP
@@ -213,7 +229,7 @@ class CustomPopUp: NSObject {
 extension CustomPopUp {
     func setLayouts() {
         
-        popUpView.addSubviews(titleLabel, messageLabel, slashLabel)
+        popUpView.addSubviews(titleLabel, messageLabel, slashLabel, rightImg)
         
         titleLabel.snp.makeConstraints() { make in
             make.centerX.equalToSuperview()
@@ -267,6 +283,12 @@ extension CustomPopUp {
             make.height.equalTo(20)
         }
         
+        rightImg.snp.makeConstraints() { make in
+            make.top.equalToSuperview()
+            make.leading.equalToSuperview().offset(35)
+            make.width.equalTo(27)
+            make.height.equalTo(35)
+        }
         
     }
 }

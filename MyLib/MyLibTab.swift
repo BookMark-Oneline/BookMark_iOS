@@ -105,7 +105,7 @@ extension MyLibTab {
         
         // 북 추가 화면 연결
         if (item.label_title.text == "" && item.label_author.text == "" && item.tag == 0) {
-            self.navigationController?.pushViewController(AddBookBarcode(), animated: true)
+            self.navigationController?.pushViewController(AddBookBarcode(), animated: false)
         }
         
         // 책 세부 내용 화면 연결
@@ -118,7 +118,7 @@ extension MyLibTab {
                     if let book = book as? [BookDetail] {
                         vc.bookData = book[0]
                     }
-                    self.navigationController?.pushViewController(vc, animated: true)
+                    self.navigationController?.pushViewController(vc, animated: false)
                 default:
                     print("failed")
                 }
