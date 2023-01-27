@@ -12,6 +12,7 @@ import Charts
 // MARK: - 책 세부 내용 화면 뷰 컨트롤러
 class BookDetailViewController: UIViewController {
     var layout_bookdetail = BookDetailView()
+    var bookData: BookDetail?
     var isFavorite: Bool = false
     // 페이지 입력 팝업 뷰용
     let pageInputPopUp = CustomPopUp()
@@ -23,6 +24,10 @@ class BookDetailViewController: UIViewController {
         setNavCustom()
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(pageInput(_:)))
         layout_bookdetail.btn_pageinput.addGestureRecognizer(tapGestureRecognizer)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        setBookData()
     }
     
     // 페이지 입력
@@ -66,8 +71,25 @@ class BookDetailViewController: UIViewController {
         
     }
     
-    
-
+    // MARK: 책 세부 내용 데이터 바인딩
+    func setBookData() {
+        self.layout_bookdetail.label_title.text = bookData?.title
+        self.layout_bookdetail.label_author.text = bookData?.author
+        // 줄거리 정보 내놔
+        // self.layout_bookdetail.label_summary_data.text = bookData.
+        if let url = bookData?.img_url {
+            self.layout_bookdetail.img_book.setImageUrl(url: url)
+        }
+        else {
+            self.layout_bookdetail.img_book.image = UIImage(named: "noBookImg")
+        }
+        self.layout_bookdetail.label_totaltime_data.text = String(describing: bookData?.ave_reading_time ?? 0)
+        self.layout_bookdetail.label_nowpage_data.text = String(describing: bookData?.ave_reading_page ?? 0)
+        
+        let progress = Float((bookData?.ave_reading_page ?? 0) / 354)
+        self.layout_bookdetail.label_untilFin_data.text = "\(progress)%"
+        self.layout_bookdetail.layout_progress.setProgress(progress, animated: false)
+    }
 }
 
 // MARK: - 책 세부 내용 화면 layout class

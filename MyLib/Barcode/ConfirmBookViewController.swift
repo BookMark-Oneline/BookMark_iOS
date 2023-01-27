@@ -61,7 +61,6 @@ extension ConfirmBookViewController {
         // MARK: - todo: UIApplication에 데이터 저장할지 core data나 userDefaults 따로 쓸지
         if let appdel = UIApplication.shared.delegate as? AppDelegate {
             appdel.books.append([self.bookImageURL, self.bookTitle, self.bookAuthor])
-            print(appdel.books)
         }
        
         network.registerBooks(title: self.bookTitle, img_url: self.bookImageURL, author: self.bookAuthor, pubilsher: self.bookPublisher, isbn: self.bookIsbn, completion: {
