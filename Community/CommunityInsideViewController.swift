@@ -81,11 +81,25 @@ class Posts {
         return layout_posts
     }()
     
+    let btn_posting = UIButton()
+    
     func initViews(view: UIView) {
-        view.addSubview(layout_posts)
+        view.addSubviews(layout_posts, btn_posting)
         layout_posts.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+        
+        btn_posting.snp.makeConstraints { make in
+            make.width.equalTo(55)
+            make.height.equalTo(55)
+            make.right.equalToSuperview().offset(-23)
+            make.bottom.equalToSuperview().offset(-49)
+        }
+        
+        btn_posting.layer.cornerRadius = 27.5
+        btn_posting.backgroundColor = .orange
+        btn_posting.setImage(UIImage(named: "group_posting"), for: .normal)
+
     }
 }
 
