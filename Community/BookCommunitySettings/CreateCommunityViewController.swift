@@ -16,7 +16,7 @@ class CreateCommunityViewController: CommunitySettingBaseViewController {
         setBaseView()
         setNavCustom()
     }
-    
+
     private func setBaseView() {
         view.addSubviews(label_title, layout_main)
         label_title.snp.makeConstraints() { make in
