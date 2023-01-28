@@ -23,13 +23,11 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
     // 탭 뷰 컨트롤러 설정
     private func setViewController() {
         let first = UINavigationController(rootViewController: MyLibTab())
-//        let first = MyLibTab()
         let firstBarItem = UITabBarItem(title: "나의 서재", image: UIImage(named: "mylib_normal"), tag: 1)
         first.tabBarItem = firstBarItem
         first.tabBarItem.selectedImage = UIImage(named: "mylib_tab")
         
-//        let second = UINavigationController(rootViewController: CommunityTab())
-        let second = CommunityTab()
+        let second = UINavigationController(rootViewController: CommunityTab())
         let secondBarItem = UITabBarItem(title: "책 모임", image: UIImage(named: "community_normal"), tag: 2)
         second.tabBarItem = secondBarItem
         second.tabBarItem.selectedImage = UIImage(named: "community_tab")
