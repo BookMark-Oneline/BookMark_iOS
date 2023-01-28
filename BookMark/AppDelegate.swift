@@ -10,6 +10,14 @@ import UIKit
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var books = [["addbook", "", ""]]
+    
+    var communities = [
+        ["myeongsoo", "책과 무스비"],
+        ["haerin.jpg", "책마니+ 스터디와 함께하는 책읽기 프로젝트"],
+        ["pepe.jpg", "밤에 책 읽는 애들"],
+        ["haerin.jpg", "UMC2023 독서증진"],
+        ["book", "책갈피 파이팅~"],
+    ]
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
