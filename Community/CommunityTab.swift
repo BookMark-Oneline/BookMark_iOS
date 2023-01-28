@@ -14,19 +14,17 @@ class CommunityTab: UIViewController {
     
     let mainView = CommunityTabView()
     
-    var communities = [
-        ["myeongsoo", "책과 무스비"],
-        ["haerin.jpg", "책마니+ 스터디와 함께하는 책읽기 프로젝트"],
-        ["pepe.jpg", "밤에 책 읽는 애들"],
-        ["haerin.jpg", "UMC2023 독서증진"],
-        ["book", "책갈피 파이팅~"],
-    ]
+    
+    var communities = ((UIApplication.shared.delegate as? AppDelegate)?.communities)!
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
         mainView.initViews(view: self.view)
+        addTargets()
         mainView.collection.communities.delegate = self
         mainView.collection.communities.dataSource = self
+        setNavigation()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -38,7 +36,23 @@ class CommunityTab: UIViewController {
         self.navigationController?.isNavigationBarHidden = false
     }
     
-    func loadCreateCommunity() {
+    func addTargets() {
+        mainView.searchButton.addTarget(self, action: #selector(searchButtonPress), for: .touchUpInside)
+        mainView.addButton.addTarget(self, action: #selector(addButtonPress), for: .touchUpInside)
+    }
+    
+    func setNavigation() {
+        let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
+        self.navigationItem.backBarButtonItem = backBarButtonItem
+    }
+    
+    @objc func searchButtonPress() {
+        print("search button press")
+        self.navigationController?.pushViewController(SearchCommunity(), animated: true)
+    }
+
+    @objc func addButtonPress() {
+        print("add button press")
         self.navigationController?.pushViewController(CreateCommunityViewController(), animated: true)
     }
 
@@ -104,7 +118,6 @@ class CommunityTabView: UIView {
         let btn = UIButton()
         
         btn.setImage(UIImage(named: "search"), for: .normal)
-//        btn.addTarget(CommunityTabView.self, action: #selector(searchButtonPress), for: .touchUpInside)
         
         return btn
     }()
@@ -113,7 +126,6 @@ class CommunityTabView: UIView {
         let btn = UIButton()
         
         btn.setImage(UIImage(named: "add"), for: .normal)
-        //btn.addTarget(self, action: #selector(addButtonPress), for: .touchUpInside)
         
         return btn
     }()
@@ -136,14 +148,6 @@ class CommunityTabView: UIView {
         
         return label
     }()
-    
-//    @objc func searchButtonPress() {
-//        print("search button press")
-//    }
-//    
-//    @objc func addButtonPress() {
-//        print("add button press")
-//    }
     
     func initViews(view: UIView) {
         view.addSubviews(titleView, collectView)
