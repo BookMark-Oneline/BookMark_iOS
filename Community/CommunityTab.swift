@@ -53,7 +53,7 @@ class CommunityTab: UIViewController {
 
     @objc func addButtonPress() {
         print("add button press")
-        self.navigationController?.pushViewController(CreateCommunityViewController(), animated: true)
+        self.navigationController?.pushViewController(CreateCommunityViewController(), animated: false)
     }
 
 }
@@ -61,6 +61,9 @@ class CommunityTab: UIViewController {
 extension CommunityTab: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         self.communities.count
+    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 24
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -294,7 +297,7 @@ class CommunitiesCell: UICollectionViewCell {
     
     let arrowImageView: UIImageView = {
         let view = UIImageView()
-        let img = UIImage(named: "right.png")
+        let img = UIImage(named: "right")
         
         view.image = img
         view.contentMode = .scaleAspectFill
