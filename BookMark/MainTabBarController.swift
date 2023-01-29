@@ -42,7 +42,7 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
         fourth.tabBarItem = fourthBarItem
         fourth.tabBarItem.selectedImage = UIImage(named: "scrap_tab")
         
-        let fifth = MyPageTab()
+        let fifth = UINavigationController(rootViewController: MyPageTab())
         let fifthBarItem = UITabBarItem(title: "마이 페이지", image: UIImage(named: "mypage_normal"), tag: 5)
         fifth.tabBarItem = fifthBarItem
         fifth.tabBarItem.selectedImage = UIImage(named: "mypage_tab")
