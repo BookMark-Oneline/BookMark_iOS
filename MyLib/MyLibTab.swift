@@ -29,6 +29,7 @@ class MyLibTab: UIViewController, UICollectionViewDelegate, UICollectionViewDele
         super.viewWillAppear(animated)
         self.navigationController?.isNavigationBarHidden = true
         dataReload()
+        self.tabBarController?.tabBar.isHidden = false
     }
     
     override func viewWillDisappear(_ animated: Bool) {

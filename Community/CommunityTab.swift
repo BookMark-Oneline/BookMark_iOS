@@ -31,6 +31,7 @@ class CommunityTab: UIViewController {
         self.navigationController?.isNavigationBarHidden = true
         mainView.collection.communities.reloadData()
         reloadData()
+        self.tabBarController?.tabBar.isHidden = false
     }
     
     override func viewWillDisappear(_ animated: Bool) {

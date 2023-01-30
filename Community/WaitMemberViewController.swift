@@ -10,10 +10,10 @@ class WaitMemberViewController: UIViewController, UITableViewDataSource, UITable
 
     let layout_waits = WaitMembers()
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         naviLayout()
+        
         layout_waits.initView(view: self.view)
         layout_waits.layout_waits.delegate = self
         layout_waits.layout_waits.dataSource = self
@@ -24,9 +24,8 @@ class WaitMemberViewController: UIViewController, UITableViewDataSource, UITable
         self.navigationItem.title = "가입 요청"
         self.navigationController?.navigationBar.tintColor = .black
     }
-    
- 
 }
+
 // MARK: - TableView Delegate & Datasource
 extension WaitMemberViewController {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
