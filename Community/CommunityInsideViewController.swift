@@ -21,8 +21,6 @@ class CommunityInsideViewController: UIViewController, UITableViewDelegate, UITa
         layout_post.layout_posts.dataSource = self
 
         layout_post.btn_posting.addTarget(self, action: #selector(pushCreatePostViewController), for: .touchUpInside)
-        
-        self.tabBarController?.tabBar.isHidden = true
     }
     
     @objc func pushCreatePostViewController(_ sender: UIButton) {

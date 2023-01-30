@@ -28,7 +28,6 @@ class BookDetailViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         setBookData()
-        self.tabBarController?.tabBar.isHidden = true
     }
     
     // 페이지 입력
