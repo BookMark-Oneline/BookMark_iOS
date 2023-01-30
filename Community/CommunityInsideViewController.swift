@@ -15,11 +15,14 @@ class CommunityInsideViewController: UIViewController, UITableViewDelegate, UITa
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        naviLayout()
         layout_post.initViews(view: self.view)
         layout_post.layout_posts.delegate = self
         layout_post.layout_posts.dataSource = self
 
         layout_post.btn_posting.addTarget(self, action: #selector(pushCreatePostViewController), for: .touchUpInside)
+        
+        self.tabBarController?.tabBar.isHidden = true
     }
     
     @objc func pushCreatePostViewController(_ sender: UIButton) {
@@ -28,20 +31,21 @@ class CommunityInsideViewController: UIViewController, UITableViewDelegate, UITa
     
     //NavigationView
     func naviLayout() {
-        self.navigationController?.navigationItem.backBarButtonItem?.title = ""
+        self.navigationItem.title = "책과 무스비"
         self.navigationController?.navigationBar.backItem?.title = ""
         self.navigationController?.navigationBar.tintColor = .black
         
-        let memberBtn = UIBarButtonItem(image: UIImage(systemName: "group_member"), style: .plain, target: self, action: nil)
-        memberBtn.width = 27
-        let spacer1 = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
-        spacer1.width = 5
-        let settingBtn = UIBarButtonItem(image: UIImage(systemName: "group_setting"), style: .plain, target: self, action: nil)
-        settingBtn.width = 27
-        let spacer2 = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
-        spacer2.width = 5
+//        self.navigationItem.title = "책과 무스비"
+//        self.navigationController?.navigationItem.backBarButtonItem?.title = ""
+//        self.navigationController?.navigationBar.backItem?.title = ""
+//        self.navigationController?.navigationBar.tintColor = .black
         
-        self.navigationItem.rightBarButtonItems = [settingBtn, spacer1, memberBtn, spacer2]
+        let memberBtn = UIBarButtonItem(image: UIImage(named: "group_member"), style: .plain, target: self, action: #selector(pushCommunityMemberViewController))
+        memberBtn.width = 27
+        let settingBtn = UIBarButtonItem(image: UIImage(named: "group_setting"), style: .plain, target: self, action: #selector(pushCommunitySettingViewController))
+        settingBtn.width = 27
+        
+        self.navigationItem.rightBarButtonItems = [settingBtn, memberBtn]
     }
     
     @objc func pushCommunitySettingViewController(_ sender: UIBarButtonItem) {
@@ -78,6 +82,10 @@ extension CommunityInsideViewController{
         } else {
             return 95
         }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // self.navigationController?.pushViewController(, animated: )
     }
 }
 
@@ -221,7 +229,7 @@ class postCell: UITableViewCell {
             make.height.equalTo(label_comment)
             make.width.equalTo(label_comment.snp.height)
         }
-        layout_comment.image = UIImage(named: "group_comment")
+        layout_comment.image = UIImage(named: "balloon")
         
         label_like.snp.makeConstraints { make in
             make.height.equalTo(label_comment)
@@ -239,7 +247,7 @@ class postCell: UITableViewCell {
             make.height.equalTo(label_comment)
             make.width.equalTo(label_comment)
         }
-        layout_like.image = UIImage(named: "group_like")
+        layout_like.image = UIImage(named: "heart")
   
     }
     

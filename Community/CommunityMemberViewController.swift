@@ -14,6 +14,7 @@ class CommunityMemberViewController: UIViewController, UITableViewDelegate, UITa
     override func viewDidLoad() {
         super.viewDidLoad()
         naviLayout()
+        
         layout_member.initViews(view: self.view)
         layout_member.layout_members.dataSource = self
         layout_member.layout_members.delegate = self
@@ -22,14 +23,19 @@ class CommunityMemberViewController: UIViewController, UITableViewDelegate, UITa
     
     // NavigationView
     func naviLayout() {
-        self.navigationController?.navigationItem.backButtonTitle = ""
-        self.navigationController?.navigationBar.topItem?.title = "모임 인원"
+        self.navigationItem.title = "모임 인원"
+        self.navigationController?.navigationBar.backItem?.title = ""
         self.navigationController?.navigationBar.tintColor = .black
         
-        let requestBtn = UIBarButtonItem(image: UIImage(named: "request"), style: .plain, target: self, action: nil)
+        let requestBtn = UIBarButtonItem(image: UIImage(named: "message"), style: .plain, target: self, action: #selector(pushJoinCommunityRequest))
         requestBtn.width = 27
         
         self.navigationItem.rightBarButtonItem = requestBtn
+    }
+    
+    @objc func pushJoinCommunityRequest(_ sender: UIBarButtonItem) {
+        
+        self.navigationController?.pushViewController(WaitMemberViewController(), animated: true)
     }
 
 }
@@ -103,6 +109,7 @@ class MemeberTableViewCell: UITableViewCell {
             make.centerY.equalToSuperview()
             make.left.equalToSuperview().offset(22)
         }
+        layout_avatarImg.image = UIImage(named: "haerin")
         layout_avatarImg.backgroundColor = .gray
         layout_avatarImg.layer.cornerRadius = 30
         
@@ -134,7 +141,7 @@ class MemeberTableViewCell: UITableViewCell {
             make.centerY.equalToSuperview()
             make.right.equalToSuperview().offset(-22)
         }
-        layout_isReadingImg.image = UIImage(named: "mylib_tab")
+        layout_isReadingImg.image = UIImage(named: "bookmark_clicked")
     }
     
     required init?(coder aDecoder: NSCoder) {

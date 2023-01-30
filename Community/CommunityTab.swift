@@ -91,9 +91,8 @@ extension CommunityTab: UICollectionViewDelegate, UICollectionViewDelegateFlowLa
         }
         
         // community 진입
-        print(item.communityTitleLabel.text ?? "default", "진입")
-        
-//        self.navigationController?.pushViewController(__책모임뷰컨트롤러이름__, animated: true)
+        //print(item.communityTitleLabel.text ?? "default", "진입")
+        self.navigationController?.pushViewController(CommunityInsideViewController(), animated: true)
         
     }
 }

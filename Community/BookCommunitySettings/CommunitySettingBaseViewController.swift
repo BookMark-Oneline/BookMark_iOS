@@ -54,7 +54,6 @@ extension CommunitySettingBaseViewController {
         limittapGestureRecognizer_nolimit.addTarget(self, action: #selector(setLimitAction_noLimit))
         layout_SetCommunity.layout_noLimit.addGestureRecognizer(limittapGestureRecognizer_nolimit)
         
-        
     }
     
     // MARK: 초대 설정 버튼 메소드
