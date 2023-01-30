@@ -257,6 +257,7 @@ class Communities {
         
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
         view.backgroundColor = .white
+        view.showsVerticalScrollIndicator = false
         view.register(CommunitiesCell.self, forCellWithReuseIdentifier: "communityCell")
         view.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 24, right: 0)
         
