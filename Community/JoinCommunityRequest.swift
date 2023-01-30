@@ -104,10 +104,18 @@ class JoinCommunityRequest: UIViewController {
         super.viewDidLoad()
         setBackgroundImage()
         setLayouts()
+        setNavCustom()
     }
     
     @objc func requestButtonPress() {
         print("가입 요청")
+    }
+    
+    func setNavCustom() {
+        self.navigationItem.title = "가입 요청"
+        self.navigationController?.navigationBar.backItem?.title = ""
+        self.navigationController?.navigationBar.tintColor = .black
+        
     }
 }
 

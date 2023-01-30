@@ -16,6 +16,7 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UITextVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setNavCustom()
         layout_createPost.initViews(self.view)
         
         layout_createPost.txt_post.delegate = self
@@ -23,9 +24,22 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UITextVie
         imgPicker.delegate = self
         imgPicker.sourceType = .photoLibrary
         imgPicker.allowsEditing = true
-        
+
         cameraTapGestureRecognizer.addTarget(self, action: #selector(presentImgPicker))
         layout_createPost.img_camera.addGestureRecognizer(cameraTapGestureRecognizer)
+    }
+    
+    private func setNavCustom() {
+        self.navigationItem.title = "게시글 작성"
+        self.navigationController?.navigationBar.tintColor = .black
+        
+        let okBtn = UIBarButtonItem(title: "게시", style: .done, target: self, action: #selector(createPostViewController))
+        
+        self.navigationItem.rightBarButtonItems = [okBtn]
+    }
+    
+    @objc func createPostViewController(_ sender: UIBarButtonItem) {
+        self.navigationController?.popViewController(animated: true)
     }
     
     // MARK: 내용 text view 입력 이벤트

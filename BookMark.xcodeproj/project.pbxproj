@@ -15,7 +15,6 @@
 		24E794242971653C00E69633 /* ReadingTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24E794232971653C00E69633 /* ReadingTime.swift */; };
 		24E7942C2972BDD300E69633 /* CustomPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24E7942B2972BDD300E69633 /* CustomPopUp.swift */; };
 		2DFD5D6E9DDEA6E09EEF3D46 /* Pods_BookMark.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5721549DEE181646370BC256 /* Pods_BookMark.framework */; };
-		412DDC8229858E0400F6CB22 /* CommunityInsideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 412DDC8129858E0400F6CB22 /* CommunityInsideViewController.swift */; };
 		412DDC8429858E3C00F6CB22 /* CommunityMemberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 412DDC8329858E3C00F6CB22 /* CommunityMemberViewController.swift */; };
 		412DDC8629858E5F00F6CB22 /* WaitMemberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 412DDC8529858E5F00F6CB22 /* WaitMemberViewController.swift */; };
 		86C3C2B1296858370035CFFE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C3C2B0296858370035CFFE /* AppDelegate.swift */; };
@@ -29,6 +28,7 @@
 		86C3C2D0296E694B0035CFFE /* AddBookBarcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C3C2CE296E694B0035CFFE /* AddBookBarcode.swift */; };
 		86C3C2D1296E694B0035CFFE /* BarcodeReaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C3C2CF296E694B0035CFFE /* BarcodeReaderView.swift */; };
 		86C3C2D3296E69630035CFFE /* ConfirmBookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C3C2D2296E69630035CFFE /* ConfirmBookViewController.swift */; };
+		E832390829879ABC00DC83C2 /* CommunityInsideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E832390729879ABC00DC83C2 /* CommunityInsideViewController.swift */; };
 		E8C2B4F1296A8915000E2030 /* MyLibTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8C2B4F0296A8915000E2030 /* MyLibTab.swift */; };
 		E8C2B4F5296A8A85000E2030 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8C2B4F4296A8A85000E2030 /* Colors.swift */; };
 		E8C2B4F7296A8CC5000E2030 /* OneLineTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8C2B4F6296A8CC5000E2030 /* OneLineTab.swift */; };
@@ -54,7 +54,6 @@
 		24A21A382976EA2400AE8BF9 /* DataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataClass.swift; sourceTree = "<group>"; };
 		24E794232971653C00E69633 /* ReadingTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingTime.swift; sourceTree = "<group>"; };
 		24E7942B2972BDD300E69633 /* CustomPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPopUp.swift; sourceTree = "<group>"; };
-		412DDC8129858E0400F6CB22 /* CommunityInsideViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CommunityInsideViewController.swift; path = ../../../../.Trash/Client/Community/CommunityInsideViewController.swift; sourceTree = "<group>"; };
 		412DDC8329858E3C00F6CB22 /* CommunityMemberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityMemberViewController.swift; sourceTree = "<group>"; };
 		412DDC8529858E5F00F6CB22 /* WaitMemberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitMemberViewController.swift; sourceTree = "<group>"; };
 		418EDADFB5CFEB9E1C9ADDE8 /* Pods-BookMark.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BookMark.debug.xcconfig"; path = "Target Support Files/Pods-BookMark/Pods-BookMark.debug.xcconfig"; sourceTree = "<group>"; };
@@ -73,6 +72,7 @@
 		86C3C2CF296E694B0035CFFE /* BarcodeReaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarcodeReaderView.swift; sourceTree = "<group>"; };
 		86C3C2D2296E69630035CFFE /* ConfirmBookViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmBookViewController.swift; sourceTree = "<group>"; };
 		CD50D9E346145F9EDEF00686 /* Pods-BookMark.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BookMark.release.xcconfig"; path = "Target Support Files/Pods-BookMark/Pods-BookMark.release.xcconfig"; sourceTree = "<group>"; };
+		E832390729879ABC00DC83C2 /* CommunityInsideViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommunityInsideViewController.swift; sourceTree = "<group>"; };
 		E8C2B4F0296A8915000E2030 /* MyLibTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLibTab.swift; sourceTree = "<group>"; };
 		E8C2B4F4296A8A85000E2030 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		E8C2B4F6296A8CC5000E2030 /* OneLineTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneLineTab.swift; sourceTree = "<group>"; };
@@ -191,9 +191,9 @@
 				E8D5C3D1298240C5003D1AD0 /* BookCommunitySettings */,
 				E8D5C3DB29827056003D1AD0 /* CreatePostViewController.swift */,
 				E8C2B4FA296A8F40000E2030 /* CommunityTab.swift */,
+				E832390729879ABC00DC83C2 /* CommunityInsideViewController.swift */,
 				245FED692983965800EE02B6 /* SearchCommunity.swift */,
 				245FED6D2983971100EE02B6 /* JoinCommunityRequest.swift */,
-				412DDC8129858E0400F6CB22 /* CommunityInsideViewController.swift */,
 				412DDC8329858E3C00F6CB22 /* CommunityMemberViewController.swift */,
 				412DDC8529858E5F00F6CB22 /* WaitMemberViewController.swift */,
 			);
@@ -377,11 +377,11 @@
 				E8C2B4FB296A8F40000E2030 /* CommunityTab.swift in Sources */,
 				245FED6E2983971100EE02B6 /* JoinCommunityRequest.swift in Sources */,
 				86C3C2D1296E694B0035CFFE /* BarcodeReaderView.swift in Sources */,
+				E832390829879ABC00DC83C2 /* CommunityInsideViewController.swift in Sources */,
 				E8D5C3DC29827056003D1AD0 /* CreatePostViewController.swift in Sources */,
 				E8C2B51329743975000E2030 /* Network.swift in Sources */,
 				86C3C2C5296D77EB0035CFFE /* BookDetailViewController.swift in Sources */,
 				E8C2B4FF296A8F8C000E2030 /* MyPageTab.swift in Sources */,
-				412DDC8229858E0400F6CB22 /* CommunityInsideViewController.swift in Sources */,
 				412DDC8629858E5F00F6CB22 /* WaitMemberViewController.swift in Sources */,
 				24E794242971653C00E69633 /* ReadingTime.swift in Sources */,
 				E8C2B4F5296A8A85000E2030 /* Colors.swift in Sources */,
