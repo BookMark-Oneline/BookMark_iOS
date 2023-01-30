@@ -14,7 +14,6 @@ class CommunityTab: UIViewController {
     
     let mainView = CommunityTabView()
     
-    
     var communities = ((UIApplication.shared.delegate as? AppDelegate)?.communities)!
 
 
@@ -156,53 +155,76 @@ class CommunityTabView: UIView {
     let descriptLabel: UILabel = {
         let label = UILabel()
         
+        label.frame = CGRect(x: 0, y: 0, width: 227, height: 63)
+        label.textColor = .black
+        label.text = "모임을 생성하거나\n검색하여 다양한 사람들과\n소통해보세요"
+        label.font = .boldSystemFont(ofSize: 26)
+        label.numberOfLines = 3
+        
+        let attributedStr = NSMutableAttributedString(string: label.text!)
+        attributedStr.addAttribute(.foregroundColor, value: UIColor.textOrange, range: (label.text! as NSString).range(of: "소통"))
+        label.attributedText = attributedStr
+        
+        
         return label
     }()
     
     func initViews(view: UIView) {
-        view.addSubviews(titleView, collectView)
+        view.addSubview(titleView)
         
+        view.addSubview(collectView)
+        
+//        view.addSubview(descriptLabel)
+
         titleView.snp.makeConstraints() { make in
             make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             make.top.equalTo(view.safeAreaLayoutGuide)
             make.height.equalTo(44)
         }
         
+//        descriptLabel.snp.makeConstraints() { make in
+//            make.width.equalToSuperview().offset(-23)
+//            make.height.equalTo(95)
+//            make.leading.equalTo(view.safeAreaLayoutGuide).offset(23)
+//            make.top.equalTo(titleView.snp.bottom).offset(43)
+//        }
+
         titleView.addSubviews(titleLabel, titleLine, searchButton, addButton)
-        
+
         titleLabel.snp.makeConstraints() { make in
             make.leading.equalToSuperview().offset(23)
             make.centerY.equalToSuperview()
             make.width.equalTo(150)
             make.height.equalTo(22)
         }
-        
+
         titleLine.snp.makeConstraints() { make in
             make.leading.trailing.equalToSuperview()
             make.bottom.equalTo(titleView)
             make.height.equalTo(1)
         }
-                
+
         addButton.snp.makeConstraints() { make in
             make.trailing.equalToSuperview().offset(-24)
             make.centerY.equalToSuperview()
             make.width.equalTo(20)
             make.height.equalTo(20)
         }
-        
+
         searchButton.snp.makeConstraints() { make in
             make.trailing.equalTo(addButton.snp.leading).offset(-23)
             make.centerY.equalToSuperview()
             make.width.equalTo(20)
             make.height.equalTo(20)
         }
-        
+
         collectView.snp.makeConstraints() { make in
             make.leading.trailing.bottom.equalToSuperview()
             make.top.equalTo(titleView.snp.bottom)
         }
-        
+
         collection.initView(view: collectView)
+
     }
     
 }
