@@ -23,7 +23,7 @@ class CommunityInsideViewController: UIViewController, UITableViewDelegate, UITa
     }
     
     @objc func pushCreatePostViewController(_ sender: UIButton) {
-        self.present(CreatePostViewController(), animated: true)
+        self.navigationController?.pushViewController(CreatePostViewController(), animated: true)
     }
     
     //NavigationView
