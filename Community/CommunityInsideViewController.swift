@@ -18,9 +18,13 @@ class CommunityInsideViewController: UIViewController, UITableViewDelegate, UITa
         layout_post.initViews(view: self.view)
         layout_post.layout_posts.delegate = self
         layout_post.layout_posts.dataSource = self
-        
+
+        layout_post.btn_posting.addTarget(self, action: #selector(pushCreatePostViewController), for: .touchUpInside)
     }
     
+    @objc func pushCreatePostViewController(_ sender: UIButton) {
+        self.present(CreatePostViewController(), animated: true)
+    }
     
     //NavigationView
     func naviLayout() {
