@@ -18,9 +18,13 @@ class CommunityInsideViewController: UIViewController, UITableViewDelegate, UITa
         layout_post.initViews(view: self.view)
         layout_post.layout_posts.delegate = self
         layout_post.layout_posts.dataSource = self
-        
+
+        layout_post.btn_posting.addTarget(self, action: #selector(pushCreatePostViewController), for: .touchUpInside)
     }
     
+    @objc func pushCreatePostViewController(_ sender: UIButton) {
+        self.navigationController?.pushViewController(CreatePostViewController(), animated: true)
+    }
     
     //NavigationView
     func naviLayout() {
@@ -38,6 +42,14 @@ class CommunityInsideViewController: UIViewController, UITableViewDelegate, UITa
         spacer2.width = 5
         
         self.navigationItem.rightBarButtonItems = [settingBtn, spacer1, memberBtn, spacer2]
+    }
+    
+    @objc func pushCommunitySettingViewController(_ sender: UIBarButtonItem) {
+        self.navigationController?.pushViewController(SetCommunityViewController(), animated: true)
+    }
+    
+    @objc func pushCommunityMemberViewController(_ sender: UIBarButtonItem) {
+        self.navigationController?.pushViewController(CommunityMemberViewController(), animated: true)
     }
 
 }
