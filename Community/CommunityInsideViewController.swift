@@ -43,6 +43,14 @@ class CommunityInsideViewController: UIViewController, UITableViewDelegate, UITa
         
         self.navigationItem.rightBarButtonItems = [settingBtn, spacer1, memberBtn, spacer2]
     }
+    
+    @objc func pushCommunitySettingViewController(_ sender: UIBarButtonItem) {
+        self.navigationController?.pushViewController(SetCommunityViewController(), animated: true)
+    }
+    
+    @objc func pushCommunityMemberViewController(_ sender: UIBarButtonItem) {
+        self.navigationController?.pushViewController(CommunityMemberViewController(), animated: true)
+    }
 
 }
 

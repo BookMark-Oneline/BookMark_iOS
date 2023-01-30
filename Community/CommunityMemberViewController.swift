@@ -17,7 +17,7 @@ class CommunityMemberViewController: UIViewController, UITableViewDelegate, UITa
         layout_member.initViews(view: self.view)
         layout_member.layout_members.dataSource = self
         layout_member.layout_members.delegate = self
-       
+        
     }
     
     // NavigationView
