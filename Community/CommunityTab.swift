@@ -25,11 +25,13 @@ class CommunityTab: UIViewController {
         mainView.collection.communities.delegate = self
         mainView.collection.communities.dataSource = self
         setNavigation()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = true
         mainView.collection.communities.reloadData()
+        reloadData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -44,6 +46,11 @@ class CommunityTab: UIViewController {
     func setNavigation() {
         let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
         self.navigationItem.backBarButtonItem = backBarButtonItem
+    }
+    
+    func reloadData() {
+        self.communities = ((UIApplication.shared.delegate as? AppDelegate)?.communities)!
+        mainView.collection.communities.reloadData()
     }
     
     @objc func searchButtonPress() {

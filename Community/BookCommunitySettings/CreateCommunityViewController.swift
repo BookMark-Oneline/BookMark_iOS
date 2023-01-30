@@ -48,5 +48,11 @@ class CreateCommunityViewController: CommunitySettingBaseViewController {
     
     @objc func goBackCommunityTab(_ sender: UIBarButtonItem) {
         print("ok")
+        
+        if let appdel = UIApplication.shared.delegate as? AppDelegate {
+            appdel.communities.append(["myeongsoo", "책과 무스비"])
+        }
+        
+        self.navigationController?.popToRootViewController(animated: true)
     }
 }
