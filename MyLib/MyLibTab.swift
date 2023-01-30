@@ -35,6 +35,7 @@ class MyLibTab: UIViewController, UICollectionViewDelegate, UICollectionViewDele
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.navigationController?.isNavigationBarHidden = false
+        self.tabBarController?.tabBar.isHidden = true
     }
     
     func dataReload(status: Int = 1, img_url: String = "", title: String = "", author: String = "") {
