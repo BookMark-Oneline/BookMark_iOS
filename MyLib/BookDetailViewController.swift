@@ -24,6 +24,7 @@ class BookDetailViewController: UIViewController {
         setNavCustom()
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(pageInput(_:)))
         layout_bookdetail.btn_pageinput.addGestureRecognizer(tapGestureRecognizer)
+        pageInputPopUp.submitButton.addTarget(self, action: #selector(submitPopUp), for: .touchUpInside)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -32,9 +33,37 @@ class BookDetailViewController: UIViewController {
     
     // 페이지 입력
     @objc func pageInput(_ sender: UITapGestureRecognizer) {
+        pageInputPopUp.allPageTextField.text = "354"
         pageInputPopUp.showPopUp(with: "책갈피",
                               message: "몇 페이지까지 읽으셨나요?",
                               on: self)
+    }
+    
+    // 페이지 닫기
+    @objc func submitPopUp() {
+        // 페이지 수 전달
+        UIView.animate(withDuration: 0.25,
+                       animations: {
+            self.pageInputPopUp.popUpView.frame = CGRect(x: 40,
+                                                         y: self.view.frame.size.height,
+                                                         width: self.view.frame.size.width-80,
+                                                         height: 200)
+        }, completion: { done in
+            if done {
+                UIView.animate(withDuration: 0.25, animations: {
+                    self.pageInputPopUp.backgroundView.alpha = 0
+                }, completion: { done in
+                    self.pageInputPopUp.popUpView.removeFromSuperview()
+                    self.pageInputPopUp.backgroundView.removeFromSuperview()
+                    
+                    guard let page = self.pageInputPopUp.currentPageTextField.text else {return}
+                    if (page.isEmpty) {return}
+                    self.layout_bookdetail.label_nowpage_data.text = page
+                    
+                    self.setProgress(readingPage: Int(self.layout_bookdetail.label_nowpage_data.text ?? "0") ?? 10, animated: true)
+                })
+            }
+        })
     }
     
     func setNavCustom() {
@@ -71,16 +100,17 @@ class BookDetailViewController: UIViewController {
         self.layout_bookdetail.label_totaltime_data.text = String(describing: bookData?.ave_reading_time ?? 0)
         self.layout_bookdetail.label_nowpage_data.text = String(describing: bookData?.ave_reading_page ?? 0)
         
-        setProgress(readingPage: bookData?.ave_reading_page ?? 10)
+        setProgress(readingPage: bookData?.ave_reading_page ?? 10, animated: false)
     }
+
     
     
-    private func setProgress(readingPage: Int, totalPage: Int = 354) {
+    private func setProgress(readingPage: Int, totalPage: Int = 354, animated: Bool) {
         let progress = Int(Double(readingPage) / Double(totalPage) * 100)
         self.layout_bookdetail.label_untilFin_data.text = "\(progress)%"
         
         let percent = Float(Double(progress) / Double(100))
-        self.layout_bookdetail.layout_progress.setProgress(percent, animated: false)
+        self.layout_bookdetail.layout_progress.setProgress(percent, animated: animated)
     }
 }
 
