@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import Charts
+import Kingfisher
 
 // MARK: - 책 세부 내용 화면 뷰 컨트롤러
 class BookDetailViewController: UIViewController {
@@ -92,7 +93,8 @@ class BookDetailViewController: UIViewController {
         self.layout_bookdetail.label_author.text = bookData?.author
 
         if let url = bookData?.img_url {
-            self.layout_bookdetail.img_book.setImageUrl(url: url)
+            self.layout_bookdetail.img_book.kf.setImage(with: URL(string: url))
+            //self.layout_bookdetail.img_book.setImageUrl(url: url)
         }
         else {
             self.layout_bookdetail.img_book.image = UIImage(named: "noBookImg")
