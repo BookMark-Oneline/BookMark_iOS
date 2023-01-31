@@ -66,3 +66,33 @@ extension UINavigationController {
         self.pushViewController(viewController, animated: animated)
     }
 }
+
+// MARK: - navigation controller custom
+extension UIViewController {
+    func setNavigationCustom(title: String, tintColor: UIColor) {
+        self.navigationItem.title = title
+        self.navigationController?.navigationBar.backItem?.title = ""
+        self.navigationController?.navigationBar.tintColor = tintColor
+        self.navigationController?.navigationBar.barTintColor = .white
+        self.navigationController?.navigationBar.backgroundColor = .white
+        self.navigationController?.navigationBar.isTranslucent = false
+    }
+    
+    func setNavigationImageButton(imageName: [String], action: [Selector]) {
+        var arr: [UIBarButtonItem] = []
+        for i in 0..<imageName.count {
+            let btn = UIBarButtonItem(image: UIImage(named: imageName[i]), style: .plain, target: self, action: action[i])
+            btn.width = 27
+            arr.insert(btn, at: arr.startIndex)
+        }
+        
+        self.navigationItem.rightBarButtonItems = arr
+    }
+    
+    func setNavigationLabelButton(title: String, action: Selector) {
+        let btn = UIBarButtonItem(title: title, style: .plain, target: self, action: action)
+        btn.tintColor = .textOrange
+        
+        self.navigationItem.rightBarButtonItem = btn
+    }
+}
