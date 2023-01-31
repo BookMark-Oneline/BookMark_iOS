@@ -96,6 +96,10 @@ extension CommunityTab: UICollectionViewDelegate, UICollectionViewDelegateFlowLa
         self.navigationController?.pushViewController(CommunityInsideViewController(), animated: true)
         
     }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: mainView.collectView.bounds.width-46, height: 150)
+    }
 }
 
 class CommunityTabView: UIView {
@@ -254,7 +258,6 @@ class Communities {
     let communities: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.itemSize = CGSize(width: 344, height: 150)
         
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
         view.backgroundColor = .white
@@ -354,15 +357,13 @@ class CommunitiesCell: UICollectionViewCell {
         addSubviews(communityImageView, communityDetailView)
         
         communityImageView.snp.makeConstraints() { make in
-            make.leading.top.equalToSuperview()
-            make.width.equalTo(344)
+            make.leading.top.trailing.equalToSuperview()
             make.height.equalTo(110)
         }
         
         communityDetailView.snp.makeConstraints() { make in
-            make.leading.equalToSuperview()
+            make.leading.trailing.equalToSuperview()
             make.top.equalTo(communityImageView.snp.bottom).offset(1)
-            make.width.equalTo(344)
             make.height.equalTo(40)
         }
         
