@@ -66,8 +66,7 @@ class SearchCommunity: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setLayouts()
-        self.view.backgroundColor = .systemBackground
-        setNavigation()
+        self.setNavigationCustom(title: "모임 검색하기")
     }
     
     @objc func searchButtonPress() {
@@ -111,12 +110,7 @@ extension SearchCommunity {
             make.top.equalTo(tfLine.snp.bottom).offset(25)
         }
     }
-    
-    func setNavigation() {
-        self.title = "모임 검색하기"
-        self.navigationController?.navigationBar.tintColor = .black
-    }
-    
+
 //    func lineFillAnimation() { // UIView Extension에 추가해야 함.
 //        let layer = CAGradientLayer()
 //        let startLocations = [0, 0]

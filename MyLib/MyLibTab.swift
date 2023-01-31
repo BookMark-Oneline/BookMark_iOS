@@ -20,7 +20,6 @@ class MyLibTab: UIViewController, UICollectionViewDelegate, UICollectionViewDele
         super.viewDidLoad()
         getShelfData()
 
-        self.view.backgroundColor = .systemBackground
         layout.initViews(view: self.view)
         layout.layout_collection.layout_books.delegate = self
         layout.layout_collection.layout_books.dataSource = self
@@ -165,7 +164,7 @@ class MyLibTabView {
             make.centerY.equalToSuperview()
         }
         label_title.textColor = .black
-        label_title.text = "책갈피: 오늘 한줄"
+        label_title.text = "책갈피 : 오늘 한줄"
         label_title.font = UIFont.boldSystemFont(ofSize: 18)
         
         layout_scroll.translatesAutoresizingMaskIntoConstraints = false

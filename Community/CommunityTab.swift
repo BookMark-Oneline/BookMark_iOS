@@ -20,11 +20,9 @@ class CommunityTab: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         mainView.initViews(view: self.view)
-        self.view.backgroundColor = .systemBackground
         addTargets()
         mainView.collection.communities.delegate = self
         mainView.collection.communities.dataSource = self
-        setNavigation()
         
     }
     
@@ -43,23 +41,16 @@ class CommunityTab: UIViewController {
         mainView.addButton.addTarget(self, action: #selector(addButtonPress), for: .touchUpInside)
     }
     
-    func setNavigation() {
-        let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
-        self.navigationItem.backBarButtonItem = backBarButtonItem
-    }
-    
     func reloadData() {
         self.communities = ((UIApplication.shared.delegate as? AppDelegate)?.communities)!
         mainView.collection.communities.reloadData()
     }
     
     @objc func searchButtonPress() {
-        print("search button press")
         self.navigationController?.pushViewControllerTabHidden(SearchCommunity(), animated: true)
     }
 
     @objc func addButtonPress() {
-        print("add button press")
         self.navigationController?.pushViewControllerTabHidden(CreateCommunityViewController(), animated: false)
     }
 
@@ -89,9 +80,6 @@ extension CommunityTab: UICollectionViewDelegate, UICollectionViewDelegateFlowLa
         guard let item = collectionView.cellForItem(at: indexPath) as? CommunitiesCell else {
             return
         }
-        
-        // community 진입
-        //print(item.communityTitleLabel.text ?? "default", "진입")
         self.navigationController?.pushViewControllerTabHidden(CommunityInsideViewController(), animated: true)
         
     }

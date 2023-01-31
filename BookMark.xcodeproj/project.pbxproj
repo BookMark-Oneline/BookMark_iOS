@@ -164,6 +164,24 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		E832390929892E2300DC83C2 /* CommunityMember */ = {
+			isa = PBXGroup;
+			children = (
+				412DDC8329858E3C00F6CB22 /* CommunityMemberViewController.swift */,
+				412DDC8529858E5F00F6CB22 /* WaitMemberViewController.swift */,
+			);
+			path = CommunityMember;
+			sourceTree = "<group>";
+		};
+		E832390A29892E5700DC83C2 /* CommunityPost */ = {
+			isa = PBXGroup;
+			children = (
+				412B7ED82988DDF000B40AF3 /* PostDetailViewController.swift */,
+				E8D5C3DB29827056003D1AD0 /* CreatePostViewController.swift */,
+			);
+			path = CommunityPost;
+			sourceTree = "<group>";
+		};
 		E8C2B4F3296A8A66000E2030 /* MyLib */ = {
 			isa = PBXGroup;
 			children = (
@@ -190,15 +208,13 @@
 		E8D5C3DD29838269003D1AD0 /* Community */ = {
 			isa = PBXGroup;
 			children = (
+				E832390A29892E5700DC83C2 /* CommunityPost */,
+				E832390929892E2300DC83C2 /* CommunityMember */,
 				E8D5C3D1298240C5003D1AD0 /* BookCommunitySettings */,
-				E8D5C3DB29827056003D1AD0 /* CreatePostViewController.swift */,
 				E8C2B4FA296A8F40000E2030 /* CommunityTab.swift */,
 				E832390729879ABC00DC83C2 /* CommunityInsideViewController.swift */,
 				245FED692983965800EE02B6 /* SearchCommunity.swift */,
 				245FED6D2983971100EE02B6 /* JoinCommunityRequest.swift */,
-				412DDC8329858E3C00F6CB22 /* CommunityMemberViewController.swift */,
-				412DDC8529858E5F00F6CB22 /* WaitMemberViewController.swift */,
-				412B7ED82988DDF000B40AF3 /* PostDetailViewController.swift */,
 			);
 			path = Community;
 			sourceTree = "<group>";
@@ -555,11 +571,13 @@
 				DEVELOPMENT_TEAM = UKZF3A6P2B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BookMark/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "책 바코드 인식을 위해 카메라 접근을 허용해주세요.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -585,11 +603,13 @@
 				DEVELOPMENT_TEAM = UKZF3A6P2B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BookMark/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "책 바코드 인식을 위해 카메라 접근을 허용해주세요.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

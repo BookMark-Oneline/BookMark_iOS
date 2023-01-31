@@ -7,27 +7,21 @@
 
 import UIKit
 
-class PostDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+// MARK: - 게시글 확인 view controller
+class PostDetailViewController: UIViewController {
     
     let layout_postDetail = postDetail()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .systemBackground
+
         layout_postDetail.initView(view: self.view)
         layout_postDetail.layout_postDetail.delegate = self
         layout_postDetail.layout_postDetail.dataSource = self
-
     }
-    
-    func naviLayout() {
-        self.navigationItem.title = "게시물 확인"
-        self.navigationController?.navigationBar.tintColor = .black
-    }
-    
 }
 
-extension PostDetailViewController {
+extension PostDetailViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: MainPostCell.identifier, for: indexPath) as? MainPostCell else { return MainPostCell() }
@@ -61,7 +55,7 @@ class postDetail {
         layout_postDetail.translatesAutoresizingMaskIntoConstraints = false
         layout_postDetail.register(MainPostCell.self, forCellReuseIdentifier: MainPostCell.identifier)
         layout_postDetail.register(CommentCell.self, forCellReuseIdentifier: CommentCell.identfier)
-        layout_postDetail.backgroundColor = .systemBackground
+
         layout_postDetail.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         return layout_postDetail
     }()
@@ -103,6 +97,8 @@ class MainPostCell: UITableViewCell {
             make.width.equalTo(35)
             make.height.equalTo(35)
         }
+        layout_userImg.image = UIImage(named: "haerin.jpg")
+        layout_userImg.clipsToBounds = true
         layout_userImg.layer.cornerRadius = 17.5
         layout_userImg.backgroundColor = .gray
         
@@ -212,6 +208,8 @@ class CommentCell: UITableViewCell {
             make.left.equalToSuperview().offset(23)
             make.width.height.equalTo(29)
         }
+        layout_userImg.image = UIImage(named: "pepe.jpg")
+        layout_userImg.clipsToBounds = true
         layout_userImg.backgroundColor = .gray
         layout_userImg.layer.cornerRadius = 14.5
         

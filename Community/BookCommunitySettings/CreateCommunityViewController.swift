@@ -13,7 +13,6 @@ class CreateCommunityViewController: CommunitySettingBaseViewController {
     let layout_main = UIView()
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .systemBackground
         setBaseView()
         setNavCustom()
     }
@@ -37,14 +36,8 @@ class CreateCommunityViewController: CommunitySettingBaseViewController {
     }
     
     private func setNavCustom() {
-        self.navigationItem.title = "모임 생성"
-        self.navigationController?.navigationBar.backItem?.title = ""
-        self.navigationController?.navigationBar.tintColor = .black
-        
-        let okBtn = UIBarButtonItem(title: "완료", style: .done, target: self, action: #selector(goBackCommunityTab))
-        okBtn.tintColor = .textOrange
-        
-        self.navigationItem.rightBarButtonItems = [okBtn]
+        self.setNavigationCustom(title: "모임 생성")
+        self.setNavigationLabelButton(title: "완료", action: #selector(goBackCommunityTab))
     }
     
     @objc func goBackCommunityTab(_ sender: UIBarButtonItem) {

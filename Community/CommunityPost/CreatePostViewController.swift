@@ -18,7 +18,6 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UITextVie
         super.viewDidLoad()
         setNavCustom()
         layout_createPost.initViews(self.view)
-        self.view.backgroundColor = .systemBackground
         
         layout_createPost.txt_post.delegate = self
         
@@ -31,12 +30,8 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UITextVie
     }
     
     private func setNavCustom() {
-        self.navigationItem.title = "게시글 작성"
-        self.navigationController?.navigationBar.tintColor = .black
-        
-        let okBtn = UIBarButtonItem(title: "게시", style: .done, target: self, action: #selector(createPostViewController))
-        
-        self.navigationItem.rightBarButtonItems = [okBtn]
+        self.setNavigationCustom(title: "게시글 작성")
+        self.setNavigationLabelButton(title: "게시", action: #selector(createPostViewController))
     }
     
     @objc func createPostViewController(_ sender: UIBarButtonItem) {

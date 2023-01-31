@@ -14,12 +14,9 @@ class ConfirmBookViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.addSubview(scrollView)
-        self.view.backgroundColor = .systemBackground
-        scrollView.addSubview(contentView)
-        setUpContentView()
-        setConstraints()
-        setUpNavigationBar()
+
+        setUpView()
+        setConstraints()    
         getBookSearchAPI()
     }
 
@@ -52,12 +49,6 @@ class ConfirmBookViewController: UIViewController {
 }
 
 extension ConfirmBookViewController {
-    // Set Up Functions
-    func setUpView() {
-        self.view.addSubview(scrollView)
-        scrollView.addSubview(contentView)
-    }
-
     @objc func addToCell(_ selector: UIBarButtonItem) {
         // MARK: - todo: UIApplication에 데이터 저장할지 core data나 userDefaults 따로 쓸지
         if let appdel = UIApplication.shared.delegate as? AppDelegate {
@@ -74,22 +65,17 @@ extension ConfirmBookViewController {
 
 // MARK: - 레이아웃 용 extension
 extension ConfirmBookViewController {
-    func setUpContentView() {
-        contentView.addSubview(imageView)
-        contentView.addSubview(titleLabel)
-        contentView.addSubview(authorLabel)
-        contentView.addSubview(publisherLabel)
-        contentView.addSubview(descriptionTextView)
-        contentView.addSubview(showallButton)
-        contentView.addSubview(divideView)
-        contentView.addSubview(upperDivideView)
+    // Set Up Functions
+    func setUpView() {
+        self.view.addSubview(scrollView)
+        scrollView.addSubview(contentView)
+        contentView.addSubviews(imageView, titleLabel, authorLabel, publisherLabel, descriptionTextView, showallButton, divideView, upperDivideView)
+        setNavCustom()
     }
     
-    func setUpNavigationBar() {
-        self.navigationController?.navigationBar.tintColor = .black
-        let btn = UIBarButtonItem(title: "등록", style: .plain, target: self, action: #selector(addToCell))
-        btn.tintColor = .textOrange
-        self.navigationItem.rightBarButtonItem = btn
+    func setNavCustom() {
+        self.setNavigationCustom(title: "")
+        self.setNavigationLabelButton(title: "등록", action: #selector(addToCell))
     }
     
     func setConstraints() {

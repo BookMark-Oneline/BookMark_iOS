@@ -21,7 +21,6 @@ class BookDetailViewController: UIViewController {
         super.viewDidLoad()
         
         layout_bookdetail.initViews(view: self.view)
-        self.view.backgroundColor = .systemBackground
         setNavCustom()
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(pageInput(_:)))
         layout_bookdetail.btn_pageinput.addGestureRecognizer(tapGestureRecognizer)
@@ -38,36 +37,22 @@ class BookDetailViewController: UIViewController {
                               on: self)
     }
     
-    // set navigation view
     func setNavCustom() {
-        self.navigationController?.navigationItem.backBarButtonItem?.title = ""
-        self.navigationController?.navigationBar.backItem?.title = ""
-        self.navigationController?.navigationBar.tintColor = .black
-        
-        let heartBtn = UIBarButtonItem(image: UIImage(systemName: "heart"), style: .plain, target: self, action: #selector(tapHeart))
-        heartBtn.width = 27
-        let spacer1 = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
-        spacer1.width = 5
-        let stopwatchBtn = UIBarButtonItem(image: UIImage(systemName: "stopwatch"), style: .plain, target: self, action: #selector(tapStopwatch))
-        stopwatchBtn.width = 27
-        let spacer2 = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
-        spacer2.width = 5
-        
-        self.navigationItem.rightBarButtonItems = [stopwatchBtn, spacer1, heartBtn, spacer2]
+        self.setNavigationCustom(title: "")
+        self.setNavigationImageButton(imageName: ["heart_black_unfill", "stopwatch"], action: [#selector(tapHeart), #selector(tapStopwatch)])
     }
     
     @objc func tapHeart(_ selector: UIBarButtonItem) {
         isFavorite.toggle()
         if (isFavorite) {
-            selector.image = UIImage(systemName: "heart.fill")
+            selector.image = UIImage(named: "heart_black_fill")
         }
         else {
-            selector.image = UIImage(systemName: "heart")
+            selector.image = UIImage(systemName: "heart_black_unfill")
         }
     }
     
     @objc func tapStopwatch(_ selector: UIBarButtonItem) {
-        print("stopwatch")
         self.navigationController?.pushViewController(ReadingTime(), animated: true)
         
     }

@@ -13,20 +13,13 @@ class SetCommunityViewController: CommunitySettingBaseViewController {
     let layout_main = UIView()
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .systemBackground
         setBaseView()
         setNavCustom()
     }
     
     private func setNavCustom() {
-        self.navigationItem.title = "모임 설정"
-        self.navigationController?.navigationBar.backItem?.title = ""
-        self.navigationController?.navigationBar.tintColor = .black
-        
-        let okBtn = UIBarButtonItem(title: "수정", style: .done, target: self, action: #selector(popToCommunityInsideViewController))
-        okBtn.tintColor = .textOrange
-        
-        self.navigationItem.rightBarButtonItems = [okBtn]
+        self.setNavigationCustom(title: "모임 설정")
+        self.setNavigationLabelButton(title: "수정", action: #selector(popToCommunityInsideViewController))
     }
     
     @objc func popToCommunityInsideViewController(_ sender: UIBarButtonItem) {

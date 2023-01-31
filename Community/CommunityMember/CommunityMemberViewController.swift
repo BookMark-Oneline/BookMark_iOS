@@ -13,29 +13,20 @@ class CommunityMemberViewController: UIViewController, UITableViewDelegate, UITa
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        naviLayout()
+        setNavCustom()
         
         layout_member.initViews(view: self.view)
-        self.view.backgroundColor = .systemBackground
         layout_member.layout_members.dataSource = self
         layout_member.layout_members.delegate = self
         
     }
     
-    // NavigationView
-    func naviLayout() {
-        self.navigationItem.title = "모임 인원"
-        self.navigationController?.navigationBar.backItem?.title = ""
-        self.navigationController?.navigationBar.tintColor = .black
-        
-        let requestBtn = UIBarButtonItem(image: UIImage(named: "message"), style: .plain, target: self, action: #selector(pushJoinCommunityRequest))
-        requestBtn.width = 27
-        
-        self.navigationItem.rightBarButtonItem = requestBtn
+    func setNavCustom() {
+        self.setNavigationCustom(title: "모임 인원")
+        self.setNavigationImageButton(imageName: ["message"], action: [#selector(pushJoinCommunityRequest)])
     }
     
     @objc func pushJoinCommunityRequest(_ sender: UIBarButtonItem) {
-        
         self.navigationController?.pushViewController(WaitMemberViewController(), animated: true)
     }
 
@@ -82,6 +73,7 @@ class Members {
     }()
     
     func initViews(view: UIView) {
+        view.backgroundColor = .white
         view.addSubview(layout_members)
         
         layout_members.snp.makeConstraints { make in
@@ -110,7 +102,8 @@ class MemeberTableViewCell: UITableViewCell {
             make.centerY.equalToSuperview()
             make.left.equalToSuperview().offset(22)
         }
-        layout_avatarImg.image = UIImage(named: "haerin")
+        layout_avatarImg.image = UIImage(named: "haerin.jpg")
+        layout_avatarImg.clipsToBounds = true
         layout_avatarImg.backgroundColor = .gray
         layout_avatarImg.layer.cornerRadius = 30
         

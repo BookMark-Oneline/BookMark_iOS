@@ -69,13 +69,11 @@ extension UINavigationController {
 
 // MARK: - navigation controller custom
 extension UIViewController {
-    func setNavigationCustom(title: String, tintColor: UIColor) {
+    func setNavigationCustom(title: String, tintColor: UIColor = .black) {
         self.navigationItem.title = title
         self.navigationController?.navigationBar.backItem?.title = ""
         self.navigationController?.navigationBar.tintColor = tintColor
-        self.navigationController?.navigationBar.barTintColor = .white
-        self.navigationController?.navigationBar.backgroundColor = .white
-        self.navigationController?.navigationBar.isTranslucent = false
+        //self.navigationController?.navigationBar.isTranslucent = false
     }
     
     func setNavigationImageButton(imageName: [String], action: [Selector]) {
