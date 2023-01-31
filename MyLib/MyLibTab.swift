@@ -29,13 +29,11 @@ class MyLibTab: UIViewController, UICollectionViewDelegate, UICollectionViewDele
         super.viewWillAppear(animated)
         self.navigationController?.isNavigationBarHidden = true
         dataReload()
-        self.tabBarController?.tabBar.isHidden = false
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.navigationController?.isNavigationBarHidden = false
-        self.tabBarController?.tabBar.isHidden = true
     }
     
     func dataReload(status: Int = 1, img_url: String = "", title: String = "", author: String = "") {
@@ -109,7 +107,7 @@ extension MyLibTab {
         
         // 북 추가 화면 연결
         if (item.label_title.text == "" && item.label_author.text == "" && item.tag == 0) {
-            self.navigationController?.pushViewController(AddBookBarcode(), animated: false)
+            self.navigationController?.pushViewControllerTabHidden(AddBookBarcode(), animated: true)
         }
         
         // 책 세부 내용 화면 연결
@@ -122,7 +120,7 @@ extension MyLibTab {
                     if let book = book as? [BookDetail] {
                         vc.bookData = book[0]
                     }
-                    self.navigationController?.pushViewController(vc, animated: false)
+                    self.navigationController?.pushViewControllerTabHidden(vc, animated: true)
                 default:
                     print("failed")
                 }

@@ -31,12 +31,10 @@ class CommunityTab: UIViewController {
         self.navigationController?.isNavigationBarHidden = true
         mainView.collection.communities.reloadData()
         reloadData()
-        self.tabBarController?.tabBar.isHidden = false
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = false
-        self.tabBarController?.tabBar.isHidden = true
     }
     
     func addTargets() {
@@ -56,12 +54,12 @@ class CommunityTab: UIViewController {
     
     @objc func searchButtonPress() {
         print("search button press")
-        self.navigationController?.pushViewController(SearchCommunity(), animated: true)
+        self.navigationController?.pushViewControllerTabHidden(SearchCommunity(), animated: true)
     }
 
     @objc func addButtonPress() {
         print("add button press")
-        self.navigationController?.pushViewController(CreateCommunityViewController(), animated: false)
+        self.navigationController?.pushViewControllerTabHidden(CreateCommunityViewController(), animated: false)
     }
 
 }
@@ -93,7 +91,7 @@ extension CommunityTab: UICollectionViewDelegate, UICollectionViewDelegateFlowLa
         
         // community 진입
         //print(item.communityTitleLabel.text ?? "default", "진입")
-        self.navigationController?.pushViewController(CommunityInsideViewController(), animated: true)
+        self.navigationController?.pushViewControllerTabHidden(CommunityInsideViewController(), animated: true)
         
     }
     
