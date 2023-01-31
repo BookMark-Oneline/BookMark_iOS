@@ -135,6 +135,7 @@ class MyLibTabView {
     
     var layout_title = UIView()
     var label_title = UILabel()
+    var line1 = UIView()
     
     var layout_scroll = UIScrollView()
     
@@ -158,11 +159,19 @@ class MyLibTabView {
             make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             make.height.equalTo(44)
         }
-        layout_title.addSubview(label_title)
+        layout_title.addSubviews(label_title, line1)
         label_title.snp.makeConstraints() { make in
             make.leading.equalToSuperview().offset(23)
             make.centerY.equalToSuperview()
         }
+        
+        line1.snp.makeConstraints() { make in
+            make.bottom.equalToSuperview()
+            make.width.equalToSuperview()
+            make.height.equalTo(1)
+        }
+        line1.backgroundColor = .lightGray
+        
         label_title.textColor = .black
         label_title.text = "책갈피 : 오늘 한줄"
         label_title.font = UIFont.boldSystemFont(ofSize: 18)

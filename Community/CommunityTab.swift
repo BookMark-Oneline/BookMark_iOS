@@ -110,7 +110,7 @@ class CommunityTabView: UIView {
         let view = UIView()
 
         view.frame = CGRect(x: 0, y: 0, width: 338, height: 1)
-        view.backgroundColor = .semiLightGray
+        view.backgroundColor = .lightGray
 
         return view
     }()
