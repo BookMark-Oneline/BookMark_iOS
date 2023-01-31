@@ -96,6 +96,7 @@ class ReadingTime: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setLayouts()
+        self.view.backgroundColor = .systemBackground
         self.navigationItem.title = "스톱워치"
     }
 

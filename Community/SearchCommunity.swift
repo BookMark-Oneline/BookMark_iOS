@@ -66,6 +66,7 @@ class SearchCommunity: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setLayouts()
+        self.view.backgroundColor = .systemBackground
         setNavigation()
     }
     

@@ -13,6 +13,7 @@ class CreateCommunityViewController: CommunitySettingBaseViewController {
     let layout_main = UIView()
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = .systemBackground
         setBaseView()
         setNavCustom()
     }

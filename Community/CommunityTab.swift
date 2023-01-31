@@ -20,6 +20,7 @@ class CommunityTab: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         mainView.initViews(view: self.view)
+        self.view.backgroundColor = .systemBackground
         addTargets()
         mainView.collection.communities.delegate = self
         mainView.collection.communities.dataSource = self
