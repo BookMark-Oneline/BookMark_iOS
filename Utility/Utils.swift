@@ -58,3 +58,11 @@ extension UIImageView {
         self.load(url: imgURL!)
     }
 }
+
+// MARK: - Tab bar hidden 용 extension
+extension UINavigationController {
+    func pushViewControllerTabHidden(_ viewController: UIViewController, animated: Bool) {
+        viewController.hidesBottomBarWhenPushed = true
+        self.pushViewController(viewController, animated: animated)
+    }
+}
