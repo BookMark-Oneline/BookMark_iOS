@@ -41,11 +41,8 @@ class AddBookBarcode: UIViewController {
         super.viewDidLoad()
         setLayouts()
 
-        self.view.backgroundColor = .systemBackground
         self.readerView.delegate = self
-
-        self.navigationController?.navigationBar.tintColor = .black
-        self.navigationItem.title = "바코드 인식"
+        self.setNavigationCustom(title: "바코드 인식")
     }
     
     override func viewWillDisappear(_ animated: Bool) {

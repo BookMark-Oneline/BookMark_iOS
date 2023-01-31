@@ -24,7 +24,7 @@ class BookDetail: Decodable {
     let img_url: String
     let publisher: String
     let ave_reading_time: Int
-    let ave_reading_page: Int
+    var ave_reading_page: Int
 }
 
 

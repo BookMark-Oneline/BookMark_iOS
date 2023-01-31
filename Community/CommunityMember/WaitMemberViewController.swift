@@ -15,7 +15,6 @@ class WaitMemberViewController: UIViewController, UITableViewDataSource, UITable
         naviLayout()
         
         layout_waits.initView(view: self.view)
-        self.view.backgroundColor = .systemBackground
         layout_waits.layout_waits.delegate = self
         layout_waits.layout_waits.dataSource = self
     }
@@ -49,7 +48,6 @@ class WaitMembers {
     var layout_waits: UITableView = {
         let layout_waits = UITableView()
         layout_waits.register(WaitMemeberTableViewCell.self, forCellReuseIdentifier: WaitMemeberTableViewCell.identifier)
-        layout_waits.backgroundColor = .systemBackground
         layout_waits.translatesAutoresizingMaskIntoConstraints = false
         layout_waits.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
         return layout_waits
@@ -85,8 +83,10 @@ class WaitMemeberTableViewCell: UITableViewCell {
             make.centerY.equalToSuperview()
             make.left.equalToSuperview().offset(25)
         }
+        layout_avatarImg.image = UIImage(named: "haerin.jpg")
         layout_avatarImg.backgroundColor = .gray
         layout_avatarImg.layer.cornerRadius = 30
+        layout_avatarImg.clipsToBounds = true
         
         label_name.snp.makeConstraints{ make in
             make.width.equalTo(210)

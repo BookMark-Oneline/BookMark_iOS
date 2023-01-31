@@ -13,14 +13,14 @@ class CustomPopUp: NSObject {
     }
 
 //MARK: - Background and PopUp View
-    private let backgroundView: UIView = {
+    let backgroundView: UIView = {
         let view = UIView()
         view.backgroundColor = .black
         view.alpha = 0
         return view
     }()
     
-    private let popUpView: UIView = {
+    let popUpView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
         view.layer.masksToBounds = true
@@ -28,7 +28,7 @@ class CustomPopUp: NSObject {
         return view
     }()
     
-    private var myTargetView: UIView?
+    var myTargetView: UIView?
     
 //MARK: - Labels
     let titleLabel: UILabel = {
@@ -142,7 +142,6 @@ class CustomPopUp: NSObject {
         titleLabel.text = title
         messageLabel.text = message
         
-        submitButton.addTarget(self, action: #selector(submitPopUp), for: .touchUpInside)
         closeButton.addTarget(self, action: #selector(closePopUp), for: .touchUpInside)
 //        popUpView.addSubviews(titleLabel, messageLabel)
         
@@ -165,35 +164,35 @@ class CustomPopUp: NSObject {
         })
     }
     
-//MARK: objc FUNC: SubmitPopUp
-    @objc func submitPopUp() {
-        // 페이지 입력 완료
-        print("submit button pressed")
-        guard let targetView = myTargetView else {
-            return
-        }
-        
-        // 페이지 수 전달
-        
-        UIView.animate(withDuration: 0.25,
-                       animations: {
-            self.popUpView.frame = CGRect(x: 40,
-                                          y: targetView.frame.size.height,
-                                          width: targetView.frame.size.width-80,
-                                          height: 200)
-        }, completion: { done in
-            if done {
-                UIView.animate(withDuration: 0.25, animations: {
-                    self.backgroundView.alpha = 0
-                    print("dim view disappear")
-                }, completion: { done in
-                    self.popUpView.removeFromSuperview()
-                    self.backgroundView.removeFromSuperview()
-                    print("popUpView removed from superview")
-                })
-            }
-        })
-    }
+////MARK: objc FUNC: SubmitPopUp
+//    @objc func submitPopUp() {
+//        // 페이지 입력 완료
+//        print("submit button pressed")
+//        guard let targetView = myTargetView else {
+//            return
+//        }
+//
+//        // 페이지 수 전달
+//
+//        UIView.animate(withDuration: 0.25,
+//                       animations: {
+//            self.popUpView.frame = CGRect(x: 40,
+//                                          y: targetView.frame.size.height,
+//                                          width: targetView.frame.size.width-80,
+//                                          height: 200)
+//        }, completion: { done in
+//            if done {
+//                UIView.animate(withDuration: 0.25, animations: {
+//                    self.backgroundView.alpha = 0
+//                    print("dim view disappear")
+//                }, completion: { done in
+//                    self.popUpView.removeFromSuperview()
+//                    self.backgroundView.removeFromSuperview()
+//                    print("popUpView removed from superview")
+//                })
+//            }
+//        })
+//    }
     
 //MARK: objc FUNC: ClosePopUp
     @objc func closePopUp() {

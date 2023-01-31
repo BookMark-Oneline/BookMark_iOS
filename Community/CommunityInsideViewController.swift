@@ -14,9 +14,7 @@ class CommunityInsideViewController: UIViewController, UITableViewDelegate, UITa
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.view.backgroundColor = .systemBackground
-        naviLayout()
+        setNavCustom()
         layout_post.initViews(view: self.view)
         layout_post.layout_posts.delegate = self
         layout_post.layout_posts.dataSource = self
@@ -28,23 +26,9 @@ class CommunityInsideViewController: UIViewController, UITableViewDelegate, UITa
         self.navigationController?.pushViewController(CreatePostViewController(), animated: true)
     }
     
-    //NavigationView
-    func naviLayout() {
-        self.navigationItem.title = "책과 무스비"
-        self.navigationController?.navigationBar.backItem?.title = ""
-        self.navigationController?.navigationBar.tintColor = .black
-        
-//        self.navigationItem.title = "책과 무스비"
-//        self.navigationController?.navigationItem.backBarButtonItem?.title = ""
-//        self.navigationController?.navigationBar.backItem?.title = ""
-//        self.navigationController?.navigationBar.tintColor = .black
-        
-        let memberBtn = UIBarButtonItem(image: UIImage(named: "group_member"), style: .plain, target: self, action: #selector(pushCommunityMemberViewController))
-        memberBtn.width = 27
-        let settingBtn = UIBarButtonItem(image: UIImage(named: "group_setting"), style: .plain, target: self, action: #selector(pushCommunitySettingViewController))
-        settingBtn.width = 27
-        
-        self.navigationItem.rightBarButtonItems = [settingBtn, memberBtn]
+    func setNavCustom() {
+        self.setNavigationCustom(title: "책과 무스비")
+        self.setNavigationImageButton(imageName: ["group_member", "group_setting"], action: [#selector(pushCommunityMemberViewController), #selector(pushCommunitySettingViewController)])
     }
     
     @objc func pushCommunitySettingViewController(_ sender: UIBarButtonItem) {
@@ -84,7 +68,7 @@ extension CommunityInsideViewController{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // self.navigationController?.pushViewController(, animated: )
+        self.navigationController?.pushViewController(PostDetailViewController(), animated: true)
     }
 }
 
