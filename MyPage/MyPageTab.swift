@@ -12,6 +12,7 @@ class MyPageTab: UIViewController {
     let layout_myPageView = MyPageView()
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = .systemBackground
         layout_myPageView.initViews(self.view)
     }
     

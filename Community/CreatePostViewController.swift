@@ -18,6 +18,7 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UITextVie
         super.viewDidLoad()
         setNavCustom()
         layout_createPost.initViews(self.view)
+        self.view.backgroundColor = .systemBackground
         
         layout_createPost.txt_post.delegate = self
         

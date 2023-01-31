@@ -15,6 +15,7 @@
 		24E794242971653C00E69633 /* ReadingTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24E794232971653C00E69633 /* ReadingTime.swift */; };
 		24E7942C2972BDD300E69633 /* CustomPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24E7942B2972BDD300E69633 /* CustomPopUp.swift */; };
 		2DFD5D6E9DDEA6E09EEF3D46 /* Pods_BookMark.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5721549DEE181646370BC256 /* Pods_BookMark.framework */; };
+		412B7ED92988DDF000B40AF3 /* PostDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 412B7ED82988DDF000B40AF3 /* PostDetailViewController.swift */; };
 		412DDC8429858E3C00F6CB22 /* CommunityMemberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 412DDC8329858E3C00F6CB22 /* CommunityMemberViewController.swift */; };
 		412DDC8629858E5F00F6CB22 /* WaitMemberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 412DDC8529858E5F00F6CB22 /* WaitMemberViewController.swift */; };
 		86C3C2B1296858370035CFFE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C3C2B0296858370035CFFE /* AppDelegate.swift */; };
@@ -54,6 +55,7 @@
 		24A21A382976EA2400AE8BF9 /* DataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataClass.swift; sourceTree = "<group>"; };
 		24E794232971653C00E69633 /* ReadingTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingTime.swift; sourceTree = "<group>"; };
 		24E7942B2972BDD300E69633 /* CustomPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPopUp.swift; sourceTree = "<group>"; };
+		412B7ED82988DDF000B40AF3 /* PostDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailViewController.swift; sourceTree = "<group>"; };
 		412DDC8329858E3C00F6CB22 /* CommunityMemberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityMemberViewController.swift; sourceTree = "<group>"; };
 		412DDC8529858E5F00F6CB22 /* WaitMemberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitMemberViewController.swift; sourceTree = "<group>"; };
 		418EDADFB5CFEB9E1C9ADDE8 /* Pods-BookMark.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BookMark.debug.xcconfig"; path = "Target Support Files/Pods-BookMark/Pods-BookMark.debug.xcconfig"; sourceTree = "<group>"; };
@@ -196,6 +198,7 @@
 				245FED6D2983971100EE02B6 /* JoinCommunityRequest.swift */,
 				412DDC8329858E3C00F6CB22 /* CommunityMemberViewController.swift */,
 				412DDC8529858E5F00F6CB22 /* WaitMemberViewController.swift */,
+				412B7ED82988DDF000B40AF3 /* PostDetailViewController.swift */,
 			);
 			path = Community;
 			sourceTree = "<group>";
@@ -379,6 +382,7 @@
 				86C3C2D1296E694B0035CFFE /* BarcodeReaderView.swift in Sources */,
 				E832390829879ABC00DC83C2 /* CommunityInsideViewController.swift in Sources */,
 				E8D5C3DC29827056003D1AD0 /* CreatePostViewController.swift in Sources */,
+				412B7ED92988DDF000B40AF3 /* PostDetailViewController.swift in Sources */,
 				E8C2B51329743975000E2030 /* Network.swift in Sources */,
 				86C3C2C5296D77EB0035CFFE /* BookDetailViewController.swift in Sources */,
 				E8C2B4FF296A8F8C000E2030 /* MyPageTab.swift in Sources */,

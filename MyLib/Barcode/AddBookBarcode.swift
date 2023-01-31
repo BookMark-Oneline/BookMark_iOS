@@ -41,6 +41,7 @@ class AddBookBarcode: UIViewController {
         super.viewDidLoad()
         setLayouts()
 
+        self.view.backgroundColor = .systemBackground
         self.readerView.delegate = self
 
         self.navigationController?.navigationBar.tintColor = .black

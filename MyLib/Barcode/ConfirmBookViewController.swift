@@ -15,6 +15,7 @@ class ConfirmBookViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.addSubview(scrollView)
+        self.view.backgroundColor = .systemBackground
         scrollView.addSubview(contentView)
         setUpContentView()
         setConstraints()

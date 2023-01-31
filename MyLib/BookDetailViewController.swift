@@ -21,6 +21,7 @@ class BookDetailViewController: UIViewController {
         super.viewDidLoad()
         
         layout_bookdetail.initViews(view: self.view)
+        self.view.backgroundColor = .systemBackground
         setNavCustom()
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(pageInput(_:)))
         layout_bookdetail.btn_pageinput.addGestureRecognizer(tapGestureRecognizer)

@@ -25,6 +25,7 @@ class CommunitySettingBaseViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = .systemBackground
         setGestureRecognizer()
         setImgPicker()
     }

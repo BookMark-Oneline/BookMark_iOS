@@ -20,6 +20,7 @@ class MyLibTab: UIViewController, UICollectionViewDelegate, UICollectionViewDele
         super.viewDidLoad()
         getShelfData()
 
+        self.view.backgroundColor = .systemBackground
         layout.initViews(view: self.view)
         layout.layout_collection.layout_books.delegate = self
         layout.layout_collection.layout_books.dataSource = self

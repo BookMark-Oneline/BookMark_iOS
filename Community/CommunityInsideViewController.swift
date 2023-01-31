@@ -15,6 +15,7 @@ class CommunityInsideViewController: UIViewController, UITableViewDelegate, UITa
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.view.backgroundColor = .systemBackground
         naviLayout()
         layout_post.initViews(view: self.view)
         layout_post.layout_posts.delegate = self

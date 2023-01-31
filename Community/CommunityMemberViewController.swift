@@ -16,6 +16,7 @@ class CommunityMemberViewController: UIViewController, UITableViewDelegate, UITa
         naviLayout()
         
         layout_member.initViews(view: self.view)
+        self.view.backgroundColor = .systemBackground
         layout_member.layout_members.dataSource = self
         layout_member.layout_members.delegate = self
         

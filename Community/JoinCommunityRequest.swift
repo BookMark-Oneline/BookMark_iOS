@@ -103,6 +103,7 @@ class JoinCommunityRequest: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setBackgroundImage()
+        self.view.backgroundColor = .systemBackground
         setLayouts()
         setNavCustom()
     }
