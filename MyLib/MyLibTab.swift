@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Kingfisher
 
 // MARK: - 나의 서재 탭
 class MyLibTab: UIViewController, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
@@ -84,7 +85,8 @@ extension MyLibTab {
         }
         
         else {
-            cell.layout_img.setImageUrl(url: book[0])
+            cell.layout_img.kf.indicatorType = .activity
+                         cell.layout_img.kf.setImage(with: URL(string: book[0]), placeholder: nil, options: [.transition(.fade(1)), .cacheOriginalImage, .forceTransition], completionHandler: nil)
             cell.label_title.text = book[1]
             cell.label_author.text = book[2]
             cell.tag = 1
