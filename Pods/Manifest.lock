@@ -5,30 +5,38 @@ PODS:
   - Charts/Core (4.1.0):
     - SwiftAlgorithms (~> 1.0)
   - Kingfisher (7.5.0)
+  - Pastel (0.6.0)
   - SnapKit (5.6.0)
   - SwiftAlgorithms (1.0.0)
+  - Toast-Swift (5.0.1)
 
 DEPENDENCIES:
   - Alamofire
   - Charts
   - Kingfisher (~> 7.0)
+  - Pastel
   - SnapKit (~> 5.6)
+  - Toast-Swift (~> 5.0.1)
 
 SPEC REPOS:
   trunk:
     - Alamofire
     - Charts
     - Kingfisher
+    - Pastel
     - SnapKit
     - SwiftAlgorithms
+    - Toast-Swift
 
 SPEC CHECKSUMS:
   Alamofire: 1c4fb5369c3fe93d2857c780d8bbe09f06f97e7c
   Charts: 354f86803d11d9c35de280587fef50d1af063978
   Kingfisher: b9c2a4a4af2990a768445c277359b27bde287d71
+  Pastel: 814f081efbe2859c37e65ee44f396e6e5be88619
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   SwiftAlgorithms: 38dda4731d19027fdeee1125f973111bf3386b53
+  Toast-Swift: 9b6a70f28b3bf0b96c40d46c0c4b9d6639846711
 
-PODFILE CHECKSUM: b297794bf9ccdc956d40f30b55543cd0a9f7b93f
+PODFILE CHECKSUM: 2dfc9c79a57d25175e9a21ae4f4dc92dec28cd6f
 
 COCOAPODS: 1.8.4

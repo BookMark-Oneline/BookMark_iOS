@@ -29,6 +29,10 @@
 		86C3C2D0296E694B0035CFFE /* AddBookBarcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C3C2CE296E694B0035CFFE /* AddBookBarcode.swift */; };
 		86C3C2D1296E694B0035CFFE /* BarcodeReaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C3C2CF296E694B0035CFFE /* BarcodeReaderView.swift */; };
 		86C3C2D3296E69630035CFFE /* ConfirmBookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C3C2D2296E69630035CFFE /* ConfirmBookViewController.swift */; };
+		E82079442990B6E800B36FC9 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82079432990B6E800B36FC9 /* LoginViewController.swift */; };
+		E82079462990B72A00B36FC9 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82079452990B72A00B36FC9 /* LoginView.swift */; };
+		E820794C2990BDB500B36FC9 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = E820794B2990BDB500B36FC9 /* back.png */; };
+		E820794E2990C68C00B36FC9 /* ribon.png in Resources */ = {isa = PBXBuildFile; fileRef = E820794D2990C68C00B36FC9 /* ribon.png */; };
 		E832390829879ABC00DC83C2 /* CommunityInsideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E832390729879ABC00DC83C2 /* CommunityInsideViewController.swift */; };
 		E8C2B4F1296A8915000E2030 /* MyLibTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8C2B4F0296A8915000E2030 /* MyLibTab.swift */; };
 		E8C2B4F5296A8A85000E2030 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8C2B4F4296A8A85000E2030 /* Colors.swift */; };
@@ -74,6 +78,10 @@
 		86C3C2CF296E694B0035CFFE /* BarcodeReaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarcodeReaderView.swift; sourceTree = "<group>"; };
 		86C3C2D2296E69630035CFFE /* ConfirmBookViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmBookViewController.swift; sourceTree = "<group>"; };
 		CD50D9E346145F9EDEF00686 /* Pods-BookMark.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BookMark.release.xcconfig"; path = "Target Support Files/Pods-BookMark/Pods-BookMark.release.xcconfig"; sourceTree = "<group>"; };
+		E82079432990B6E800B36FC9 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		E82079452990B72A00B36FC9 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		E820794B2990BDB500B36FC9 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
+		E820794D2990C68C00B36FC9 /* ribon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ribon.png; sourceTree = "<group>"; };
 		E832390729879ABC00DC83C2 /* CommunityInsideViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommunityInsideViewController.swift; sourceTree = "<group>"; };
 		E8C2B4F0296A8915000E2030 /* MyLibTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLibTab.swift; sourceTree = "<group>"; };
 		E8C2B4F4296A8A85000E2030 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
@@ -116,6 +124,7 @@
 		86C3C2A4296858370035CFFE = {
 			isa = PBXGroup;
 			children = (
+				E82079422990B6D500B36FC9 /* Login */,
 				E8D5C3E129838303003D1AD0 /* Utility */,
 				E8D5C3E0298382C1003D1AD0 /* MyPage */,
 				E8D5C3DF298382B3003D1AD0 /* Scrap */,
@@ -162,6 +171,17 @@
 				5721549DEE181646370BC256 /* Pods_BookMark.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E82079422990B6D500B36FC9 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				E820794D2990C68C00B36FC9 /* ribon.png */,
+				E820794B2990BDB500B36FC9 /* back.png */,
+				E82079432990B6E800B36FC9 /* LoginViewController.swift */,
+				E82079452990B72A00B36FC9 /* LoginView.swift */,
+			);
+			path = Login;
 			sourceTree = "<group>";
 		};
 		E832390929892E2300DC83C2 /* CommunityMember */ = {
@@ -334,6 +354,8 @@
 			files = (
 				245FED722983976400EE02B6 /* haerin.jpg in Resources */,
 				245FED712983976400EE02B6 /* myeongsoo.png in Resources */,
+				E820794C2990BDB500B36FC9 /* back.png in Resources */,
+				E820794E2990C68C00B36FC9 /* ribon.png in Resources */,
 				86C3C2BD296858380035CFFE /* LaunchScreen.storyboard in Resources */,
 				86C3C2CD296D8CCC0035CFFE /* book.png in Resources */,
 				86C3C2BA296858380035CFFE /* Assets.xcassets in Resources */,
@@ -404,6 +426,7 @@
 				E8C2B4FF296A8F8C000E2030 /* MyPageTab.swift in Sources */,
 				412DDC8629858E5F00F6CB22 /* WaitMemberViewController.swift in Sources */,
 				24E794242971653C00E69633 /* ReadingTime.swift in Sources */,
+				E82079442990B6E800B36FC9 /* LoginViewController.swift in Sources */,
 				E8C2B4F5296A8A85000E2030 /* Colors.swift in Sources */,
 				86C3C2B1296858370035CFFE /* AppDelegate.swift in Sources */,
 				245FED6A2983965800EE02B6 /* SearchCommunity.swift in Sources */,
@@ -420,6 +443,7 @@
 				86C3C2D0296E694B0035CFFE /* AddBookBarcode.swift in Sources */,
 				E8D5C3D9298269E7003D1AD0 /* CommunitySettingBaseViewController.swift in Sources */,
 				E8C2B4F7296A8CC5000E2030 /* OneLineTab.swift in Sources */,
+				E82079462990B72A00B36FC9 /* LoginView.swift in Sources */,
 				E8C2B4F1296A8915000E2030 /* MyLibTab.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

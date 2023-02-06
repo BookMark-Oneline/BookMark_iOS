@@ -9,4 +9,6 @@ target 'BookMark' do
 	pod 'SnapKit', '~> 5.6'
 	pod 'Charts'
 	pod 'Kingfisher', '~> 7.0'
+	pod "Pastel"
+	pod 'Toast-Swift', '~> 5.0.1'
 end
