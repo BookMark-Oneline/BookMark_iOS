@@ -13,6 +13,7 @@ import SnapKit
 class CommunityTab: UIViewController {
     
     let mainView = CommunityTabView()
+    let createCommunityVC = CreateCommunityViewController()
     
     var communities = ((UIApplication.shared.delegate as? AppDelegate)?.communities)!
 
@@ -51,7 +52,7 @@ class CommunityTab: UIViewController {
     }
 
     @objc func addButtonPress() {
-        self.navigationController?.pushViewControllerTabHidden(CreateCommunityViewController(), animated: false)
+        self.navigationController?.pushViewControllerTabHidden(createCommunityVC, animated: true)
     }
 
 }
