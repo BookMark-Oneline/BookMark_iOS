@@ -11,6 +11,8 @@ import SnapKit
 // MARK: - Custom Alert 뷰 컨트롤러
 class CustomAlertViewController: UIViewController {
     let alertView = CustomAlertView()
+    var cancelCompletion: (() -> Void)?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         alertView.initViews(self.view)
@@ -37,18 +39,19 @@ class CustomAlertViewController: UIViewController {
     
     // MARK: - Actions
     @objc private func didTapOkButton() {
-        self.closeModal()
+        self.closeModal(self.cancelCompletion)
     }
     
     @objc private func didTapCancelButton() {
         self.closeModal()
     }
     
-    private func closeModal() {
+    private func closeModal(_ completed: (() -> Void)? = nil) {
         UIView.animate(withDuration: 0.3) {
             self.view.backgroundColor = .clear
         } completion: { _ in
             self.dismiss(animated: true)
+            completed?()
         }
     }
 }
@@ -72,7 +75,6 @@ class CustomAlertView {
         }
         layout_main.backgroundColor = .white
         layout_main.layer.shadowColor = UIColor.black.cgColor
-        //layout_main.layer.masksToBounds = false
         layout_main.layer.shadowOffset = CGSize(width: 5, height: 5)
         layout_main.layer.shadowOpacity = 0.3
         layout_main.layer.shadowRadius = 20
