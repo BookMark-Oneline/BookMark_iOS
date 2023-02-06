@@ -146,6 +146,8 @@ class MyLibTabView {
     var img_profile = UIImageView()
     var label_name = UILabel()
     
+    var line2 = UIView()
+    
     var label_books = UILabel()
     var label_bookcount = UILabel()
     var label_time = UILabel()
@@ -175,7 +177,7 @@ class MyLibTabView {
         line1.backgroundColor = .lightGray
         
         label_title.textColor = .black
-        label_title.text = "책갈피 : 오늘 한줄"
+        label_title.text = "책갈피 : 나의 서재"
         label_title.font = UIFont.boldSystemFont(ofSize: 18)
         
         layout_scroll.translatesAutoresizingMaskIntoConstraints = false
@@ -193,7 +195,7 @@ class MyLibTabView {
             make.size.equalToSuperview()
         }
         
-        layout_main.addSubviews(layout_profile, layout_collectionview)
+        layout_main.addSubviews(layout_profile, line2, layout_collectionview)
         layout_profile.snp.makeConstraints() { make in
             make.top.equalTo(layout_title.snp.bottom)
             make.leading.trailing.equalToSuperview()
@@ -265,9 +267,16 @@ class MyLibTabView {
         label_timecount.textColor = .black
         label_timecount.sizeToFit()
         
+        line2.snp.makeConstraints() { make in
+            make.top.equalTo(layout_profile.snp.bottom)
+            make.width.equalToSuperview()
+            make.height.equalTo(15)
+        }
+        line2.backgroundColor = .lightLightOrange
+        
         layout_collectionview.snp.makeConstraints() { make in
             make.leading.trailing.bottom.equalToSuperview()
-            make.top.equalTo(layout_profile.snp.bottom)
+            make.top.equalTo(line2.snp.bottom)
         }
         layout_collection.initViews(view: layout_collectionview)
         
