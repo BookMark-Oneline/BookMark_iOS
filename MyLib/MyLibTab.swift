@@ -272,7 +272,7 @@ class MyLibTabView {
             make.width.equalToSuperview()
             make.height.equalTo(15)
         }
-        line2.backgroundColor = .lightLightOrange
+        line2.backgroundColor = .lightGray
         
         layout_collectionview.snp.makeConstraints() { make in
             make.leading.trailing.bottom.equalToSuperview()
