@@ -11,16 +11,18 @@ class ReadingTime: UIViewController {
 // MARK: - Network
     let network = Network()
 
+    let stopwatchView = StopwatchView()
+    
 // MARK: - Timer Components
     let timerView: UIView = {
         let view = UIView()
 
         view.frame = CGRect(x: 0, y: 0, width: 258, height: 258)
-        view.layer.borderColor = UIColor.textOrange.cgColor
-        view.layer.borderWidth = 10
-        view.layer.masksToBounds = true
-        view.layer.cornerRadius = 129
-
+//        view.layer.borderColor = UIColor.textOrange.cgColor
+//        view.layer.borderWidth = 10
+//        view.layer.masksToBounds = true
+//        view.layer.cornerRadius = 129
+        
         return view
     }()
 
@@ -107,18 +109,21 @@ extension ReadingTime {
     @objc func timerButtonAction(_ sender: UIButton) {
 // MARK: - TimerStart POST
         if (shouldPostTimerStart) {
+            stopwatchView.circleAnimate()
             shouldPostTimerStart = false
             network.timerStart(completion: {
                 print("---[POST] TIMER START---")
             })
         }
         if (timerRunning) {
+            stopwatchView.pauseAnimation()
             timerButton.isSelected = false
             timerRunning = false
             shouldPostTimerStart = false
             timer.invalidate()
         }
         else {
+            stopwatchView.resumeAnimation()
             timerButton.isSelected = true
             timerRunning = true
             timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerCounter), userInfo: nil, repeats: true)
@@ -126,6 +131,9 @@ extension ReadingTime {
     }
 
     @objc func stopButtonAction(_ sender: UIButton) {
+        stopwatchView.stopAnimation()
+        timerRunning = false
+        timerButton.isSelected = false
         shouldPostTimerStart = true
         self.timeHistories.append(self.timeCount)
         print("--TIMER STOP--")
@@ -207,6 +215,8 @@ extension ReadingTime {
 //            make.height.equalTo(241)
 //
 //        }
+        
+        stopwatchView.initViews(view: timerView)
 
         timerView.addSubview(timerLabel)
 
@@ -218,5 +228,65 @@ extension ReadingTime {
         }
 
 
+    }
+}
+
+class StopwatchView: UIView {
+    
+    let shape = CAShapeLayer()
+    
+    let trackShape = CAShapeLayer()
+    
+    func initViews(view: UIView) {
+        let circlePath = UIBezierPath(arcCenter: view.center,
+                                      radius: 150,
+                                      startAngle: .pi * (5/6),
+                                      endAngle: .pi * (1/6),
+                                      clockwise: true)
+        trackShape.path = circlePath.cgPath
+        trackShape.fillColor = UIColor.clear.cgColor
+        trackShape.lineWidth = 10
+        trackShape.strokeColor = UIColor.lightGray.cgColor
+        trackShape.lineCap = CAShapeLayerLineCap.round
+        
+        view.layer.addSublayer(trackShape)
+        
+        shape.path = circlePath.cgPath
+        shape.lineWidth = 10
+        shape.strokeColor = UIColor.textOrange.cgColor
+        shape.fillColor = UIColor.clear.cgColor
+        shape.strokeEnd = 0
+        shape.lineCap = CAShapeLayerLineCap.round
+        
+        view.layer.addSublayer(shape)
+    }
+    
+    func circleAnimate() {
+        let animation = CABasicAnimation(keyPath: "strokeEnd")
+        animation.toValue = 1
+        // 아래의 목표시간 현재 10초, 나중에 변경해야 함 (단위 : 초)
+        animation.duration = 10
+        animation.isRemovedOnCompletion = false
+        animation.fillMode = .forwards
+        shape.add(animation, forKey: "animation")
+    }
+    
+    func pauseAnimation() {
+        var pausedTime = shape.convertTime(CACurrentMediaTime(), from: nil)
+        shape.speed = 0.0
+        shape.timeOffset = pausedTime
+    }
+    
+    func resumeAnimation() {
+        var pausedTime = shape.timeOffset
+        shape.speed = 1.0
+        shape.timeOffset = 0.0
+        shape.beginTime = 0.0
+        let timeSincePause = shape.convertTime(CACurrentMediaTime(), from: nil) - pausedTime
+        shape.beginTime = timeSincePause
+    }
+    
+    func stopAnimation() {
+        shape.removeAllAnimations()
     }
 }
