@@ -94,3 +94,21 @@ extension UIViewController {
         self.navigationItem.rightBarButtonItem = btn
     }
 }
+
+// MARK: - UIButton extension
+extension UIButton {
+    func setTitle(_ title: String, size: CGFloat, weight: UIFont.Weight, color: UIColor) {
+        if #available(iOS 15.0, *) {
+            var attributedTitle = AttributedString(title)
+            attributedTitle.font = .systemFont(ofSize: size, weight: weight)
+            attributedTitle.foregroundColor = color
+            var configuration = self.configuration ?? .plain()
+            configuration.attributedTitle = attributedTitle
+            self.configuration = configuration
+        } else {
+            self.setTitle(title, for: .normal)
+            self.titleLabel?.font = .systemFont(ofSize: size, weight: weight)
+            self.setTitleColor(color, for: .normal)
+        }
+    }
+}
