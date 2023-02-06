@@ -101,7 +101,7 @@ class CustomAlertView {
             make.top.equalTo(label_title.snp.bottom).offset(9)
             make.centerX.equalToSuperview()
         }
-        label_subtitle.text = "삭제한 기록은 복구가 불가합니다."
+        label_subtitle.text = "정말로 삭제하시겠습니까?"
         label_subtitle.textColor = .textBoldGray
         label_subtitle.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         

@@ -18,6 +18,26 @@ class PostDetailViewController: UIViewController {
         layout_postDetail.initView(view: self.view)
         layout_postDetail.layout_postDetail.delegate = self
         layout_postDetail.layout_postDetail.dataSource = self
+        
+        setNavCustom()
+    }
+    
+    func setNavCustom() {
+        self.setNavigationCustom(title: "")
+        self.setNavigationImageButton(imageName: ["list"], action: [#selector(removePostButton)])
+    }
+    
+    @objc func removePostButton(_ sender: UIBarButtonItem) {
+        let alert = UIAlertController(title: "", message: "", preferredStyle: .actionSheet)
+        let report = UIAlertAction(title: "신고하기", style: .default)
+        let remove = UIAlertAction(title: "삭제하기", style: .default, handler: { _ in
+            // MARK: - todo 삭제 로직 구현
+        })
+        let cancel = UIAlertAction(title: "취소", style: .cancel)
+        alert.addAction(report)
+        alert.addAction(remove)
+        alert.addAction(cancel)
+        self.present(alert, animated: true)
     }
 }
 
@@ -68,10 +88,6 @@ class postDetail {
         }
     }
 }
-
-
-
-
 
 class MainPostCell: UITableViewCell {
     
@@ -189,8 +205,6 @@ class MainPostCell: UITableViewCell {
 
 
 class CommentCell: UITableViewCell {
-    
-    
     static let identfier = "commentCell"
     let layout_userImg = UIImageView()
     let label_author = UILabel()
