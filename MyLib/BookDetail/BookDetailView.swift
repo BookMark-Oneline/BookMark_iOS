@@ -1,134 +1,13 @@
 //
-//  BookDetailViewController.swift
+//  BookDetailView.swift
 //  BookMark
 //
-//  Created by JOSUEYEON on 2023/01/10.
+//  Created by JOSUEYEON on 2023/02/06.
 //
 
 import UIKit
-import SnapKit
 import Charts
-
-// MARK: - 책 세부 내용 화면 뷰 컨트롤러
-class BookDetailViewController: UIViewController {
-    var layout_bookdetail = BookDetailView()
-    var bookData: BookDetail?
-    var isFavorite: Bool = false
-    // 페이지 입력 팝업 뷰용
-    let pageInputPopUp = CustomPopUp()
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        layout_bookdetail.initViews(view: self.view)
-        setNavCustom()
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(pageInput(_:)))
-        layout_bookdetail.btn_pageinput.addGestureRecognizer(tapGestureRecognizer)
-        pageInputPopUp.submitButton.addTarget(self, action: #selector(submitPopUp), for: .touchUpInside)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        setBookData()
-    }
-    
-    // MARK: 책 세부 내용 데이터 바인딩
-    func setBookData() {
-        self.layout_bookdetail.label_title.text = bookData?.title
-        self.layout_bookdetail.label_author.text = bookData?.author
-        
-        if let url = bookData?.img_url {
-            self.layout_bookdetail.img_book.setImageUrl(url: url)
-        }
-        else {
-            self.layout_bookdetail.img_book.image = UIImage(named: "noBookImg")
-        }
-        self.layout_bookdetail.label_totaltime_data.text = String(describing: bookData?.ave_reading_time ?? 0)
-        self.layout_bookdetail.label_nowpage_data.text = String(describing: bookData?.ave_reading_page ?? 0)
-        
-        setProgress(readingPage: bookData?.ave_reading_page ?? 10, animated: false)
-    }
-    
-    private func setProgress(readingPage: Int, totalPage: Int = 354, animated: Bool) {
-        let progress = Int(Double(readingPage) / Double(totalPage) * 100)
-        self.layout_bookdetail.label_untilFin_data.text = "\(progress)%"
-        
-        let percent = Float(Double(progress) / Double(100))
-        self.layout_bookdetail.layout_progress.setProgress(percent, animated: animated)
-    }
-    
-    // 페이지 입력
-    @objc func pageInput(_ sender: UITapGestureRecognizer) {
-        pageInputPopUp.allPageTextField.text = "354"
-        pageInputPopUp.showPopUp(with: "책갈피",
-                              message: "몇 페이지까지 읽으셨나요?",
-                              on: self)
-    }
-    
-    // 페이지 닫기
-    @objc func submitPopUp() {
-        // 페이지 수 전달
-        UIView.animate(withDuration: 0.25,
-                       animations: {
-            self.pageInputPopUp.popUpView.frame = CGRect(x: 40,
-                                                         y: self.view.frame.size.height,
-                                                         width: self.view.frame.size.width-80,
-                                                         height: 200)
-        }, completion: { done in
-            if done {
-                UIView.animate(withDuration: 0.25, animations: {
-                    self.pageInputPopUp.backgroundView.alpha = 0
-                }, completion: { done in
-                    self.pageInputPopUp.popUpView.removeFromSuperview()
-                    self.pageInputPopUp.backgroundView.removeFromSuperview()
-                    
-                    guard let page = self.pageInputPopUp.currentPageTextField.text else {return}
-                    if (page.isEmpty) {return}
-                    self.layout_bookdetail.label_nowpage_data.text = page
-                    
-                    self.setProgress(readingPage: Int(self.layout_bookdetail.label_nowpage_data.text ?? "0") ?? 10, animated: true)
-                })
-            }
-        })
-    }
-}
-
-// MARK: - 책 세부 내용 네비게이션 버튼 처리
-extension BookDetailViewController {
-    func setNavCustom() {
-        self.setNavigationCustom(title: "")
-        self.setNavigationImageButton(imageName: ["trash", "heart_black_unfill", "stopwatch"], action: [#selector(tapTrash), #selector(tapHeart), #selector(tapStopwatch)])
-    }
-    
-    @objc func tapHeart(_ selector: UIBarButtonItem) {
-        isFavorite.toggle()
-        if (isFavorite) {
-            selector.image = UIImage(named: "heart_black_fill")
-        }
-        else {
-            selector.image = UIImage(named: "heart_black_unfill")
-        }
-    }
-    
-    @objc func tapStopwatch(_ selector: UIBarButtonItem) {
-        self.navigationController?.pushViewController(ReadingTime(), animated: true)
-        
-    }
-    
-    @objc func tapTrash(_ selector: UIBarButtonItem) {
-        let deletion = CustomAlertViewController()
-        deletion.modalPresentationStyle = .overFullScreen
-        deletion.cancelCompletion = { [weak self] in
-            self?.deleteBookFromLib()
-        }
-        deletion.setAlertLabel(title: "책 삭제", subtitle: "읽던 책을 정말로 삭제하시겠습니까?")
-        self.present(deletion, animated: true)
-    }
-    
-    // MARK: - todo: 삭제 로직
-    private func deleteBookFromLib() {
-        print("delete tab")
-    }
-}
+import SnapKit
 
 // MARK: - 책 세부 내용 화면 layout class
 class BookDetailView {
@@ -172,15 +51,6 @@ class BookDetailView {
     var barchart = BarChartView()
     var chartEntry: [BarChartDataEntry] = []
     
-    var layout_lastLine = UIView()
-    
-    var label_summary = UILabel()
-    var label_summary_data = UILabel()
-    
-    var layout_showall = UIView()
-    var label_showall = UILabel()
-    var img_showall = UIImageView()
-    
     func initViews(view: UIView) {
         initViews_part1(view: view)
         initViews_part2(view: view)
@@ -196,7 +66,7 @@ class BookDetailView {
         }
         layout_scroll.contentLayoutGuide.snp.makeConstraints() { make in
             make.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(1300)
+            make.height.equalTo(1050)
         }
         
         layout_scroll.addSubview(layout_main)
@@ -410,7 +280,7 @@ class BookDetailView {
     }
 
     private func initViews_part3(view: UIView) {
-        layout_main.addSubviews(label_myTime, label_myTimeDescription, layout_barchart,  layout_lastLine, label_summary, label_summary_data, layout_showall)
+        layout_main.addSubviews(label_myTime, label_myTimeDescription, layout_barchart)
         label_myTime.snp.makeConstraints() { make in
             make.top.equalTo(btn_pageinput.snp.bottom).offset(39)
             make.leading.equalToSuperview().offset(23)
@@ -456,64 +326,6 @@ class BookDetailView {
             make.edges.equalToSuperview()
         }
         setChartAttribute()
-        
-        layout_lastLine.snp.makeConstraints() { make in
-            make.top.equalTo(layout_barchart.snp.bottom).offset(40)
-            make.centerX.equalToSuperview()
-            make.width.equalTo(344)
-            make.height.equalTo(1)
-        }
-        layout_lastLine.layer.cornerRadius = 3
-        layout_lastLine.clipsToBounds = false
-        layout_lastLine.layer.borderColor = UIColor.black.cgColor
-        layout_lastLine.backgroundColor = UIColor(Hex: 0xDFDFDF)
-        
-        label_summary.snp.makeConstraints() { make in
-            make.top.equalTo(layout_lastLine.snp.bottom).offset(28)
-            make.leading.equalToSuperview().offset(23)
-        }
-        label_summary.text = "줄거리"
-        label_summary.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
-        label_summary.textColor = .black
-        label_summary.sizeToFit()
-        
-        label_summary_data.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(23)
-            make.trailing.equalToSuperview().offset(-23)
-            make.top.equalTo(label_summary.snp.bottom).offset(10)
-            make.height.equalTo(75)
-        }
-        label_summary_data.text = "줄거리 정보가 없습니다."
-        label_summary_data.font = .systemFont(ofSize: 14)
-        label_summary_data.textColor = .black
-        label_summary_data.textAlignment = .justified
-        label_summary_data.lineBreakMode = .byTruncatingTail
-        label_summary_data.numberOfLines = 0
-        
-        layout_showall.snp.makeConstraints() { make in
-            make.top.equalTo(label_summary_data.snp.bottom).offset(12)
-            make.width.equalTo(51)
-            make.height.equalTo(16)
-            make.trailing.equalToSuperview().offset(-23)
-        }
-        
-        layout_showall.addSubviews(label_showall, img_showall)
-        label_showall.snp.makeConstraints() { make in
-            make.leading.equalToSuperview()
-            make.centerY.equalToSuperview()
-        }
-        label_showall.sizeToFit()
-        label_showall.text = "전체보기"
-        label_showall.textColor = .textBoldGray
-        label_showall.font = UIFont.systemFont(ofSize: 11, weight: .medium)
-        
-        img_showall.snp.makeConstraints() { make in
-            make.leading.equalTo(label_showall.snp.trailing).offset(4)
-            make.centerY.equalToSuperview()
-            make.width.equalTo(8)
-            make.height.equalTo(4)
-        }
-        img_showall.image = UIImage(named: "down")
     }
     
     private func setChartAttribute(_ data: [Int] = [62, 34, 13, 43, 46, 43, 11, 98, 23, 50], _ dates: [String] = ["12/1", "12/2", "12/3", "12/4", "12/5", "12/6", "12/7", "12/8", "12/9", "12/10"]) {
