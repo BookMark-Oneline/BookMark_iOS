@@ -17,6 +17,7 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UITextVie
     override func viewDidLoad() {
         super.viewDidLoad()
         setNavCustom()
+        self.view.backgroundColor = .white
         layout_createPost.initViews(self.view)
         
         layout_createPost.txt_post.delegate = self

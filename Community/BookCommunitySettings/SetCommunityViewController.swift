@@ -9,11 +9,15 @@ import UIKit
 import SnapKit
 
 // MARK: - 모임 설정 view controller
-class SetCommunityViewController: CommunitySettingBaseViewController {
+class SetCommunityViewController: UIViewController {
     let layout_main = UIView()
+    let layout_SetCommunity = CommunitySettingView()
+    let imgPicker = UIImagePickerController()
     override func viewDidLoad() {
         super.viewDidLoad()
-        setBaseView()
+        self.view.backgroundColor = .white
+        layout_SetCommunity.initViews(self.view)
+        setImgPicker()
         setNavCustom()
     }
     
@@ -25,12 +29,34 @@ class SetCommunityViewController: CommunitySettingBaseViewController {
     @objc func popToCommunityInsideViewController(_ sender: UIBarButtonItem) {
         self.navigationController?.popViewController(animated: true)
     }
+}
+
+// MARK: - 이미지 피커 컨트롤러 extension
+extension SetCommunityViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    private func setBaseView() {
-        view.addSubview(layout_main)
-        layout_main.snp.makeConstraints() { make in
-            make.edges.equalTo(view.safeAreaLayoutGuide)
+    private func setImgPicker() {
+        imgPicker.sourceType = .photoLibrary
+        imgPicker.allowsEditing = true
+        imgPicker.delegate = self
+    }
+    
+    @objc func imagePicker(_ sender: UITapGestureRecognizer) {
+        present(self.imgPicker, animated: true)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        var newImage: UIImage? = nil
+        
+        if let possibleImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
+            newImage = possibleImage
+        } else if let possibleImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            newImage = possibleImage
         }
-        layout_SetCommunity.initViews(layout_main)
+        
+        self.layout_SetCommunity.layout_img.image = newImage
+        picker.dismiss(animated: true, completion: {
+            self.layout_SetCommunity.img_iconIMG.isHighlighted = true
+        })
     }
 }

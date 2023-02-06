@@ -17,6 +17,7 @@ class BookDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = .white
         
         layout_bookdetail.initViews(view: self.view)
         setNavCustom()
