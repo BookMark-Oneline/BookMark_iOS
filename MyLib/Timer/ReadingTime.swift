@@ -99,6 +99,7 @@ class ReadingTime: UIViewController, UITableViewDelegate, UITableViewDataSource 
 // MARK: - viewDidLoad()
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = .white
         setLayouts()
         setNav()
         timeHistroyTable.initView(view: timeHistoryView)
