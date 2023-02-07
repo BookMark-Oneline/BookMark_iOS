@@ -9,10 +9,42 @@ import UIKit
 
 // MARK: - 마이 페이지 탭
 class MyPageTab: UIViewController {
-    let layout_myPageView = MyPageView()
+    let label_title = UILabel()
+    let line = UIView()
+    private let tableView: UITableView = UITableView(frame: .zero)
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        layout_myPageView.initViews(self.view)
+        setUpBase()
+    }
+    
+    private func setUpBase() {
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        self.registerCells()
+        self.view.addSubviews(label_title, line, tableView)
+        self.tableView.separatorStyle = .none
+        
+        label_title.snp.makeConstraints() { make in
+            make.top.equalTo(self.view.safeAreaLayoutGuide)
+            make.leading.equalToSuperview().offset(23)
+            make.width.equalToSuperview()
+            make.height.equalTo(44)
+        }
+        label_title.text = "마이페이지"
+        label_title.font = UIFont.systemFont(ofSize: 18, weight: .bold)
+
+        line.snp.makeConstraints() { make in
+            make.top.equalTo(label_title.snp.bottom)
+            make.width.equalToSuperview()
+            make.height.equalTo(1)
+        }
+        line.backgroundColor = .lightGray
+
+        self.tableView.snp.makeConstraints { make in
+            make.top.equalTo(line.snp.bottom).offset(10)
+            make.leading.trailing.bottom.equalToSuperview()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -24,69 +56,109 @@ class MyPageTab: UIViewController {
         super.viewWillDisappear(animated)
         self.navigationController?.isNavigationBarHidden = false
     }
-
+    
 }
 
-// MARK: - 마이 페이지 뷰
-class MyPageView {
-    let layout_main = UIView()
+extension MyPageTab: UITableViewDataSource, UITableViewDelegate {
+    private func registerCells() {
+        self.tableView.register(ProfileCell.self, forCellReuseIdentifier: "ProfileCell")
+        self.tableView.register(MyPageCell.self, forCellReuseIdentifier: "MyPageCell")
+    }
     
-    let label_title = UILabel()
-    let line1 = UIView()
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        9
+    }
     
-    var layout_profile = UIView()
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        switch indexPath.row {
+        case 0:
+            return tableView.dequeueReusableCell(withIdentifier: "ProfileCell") ?? UITableViewCell()
+        case 1:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "MyPageCell") else { return UITableViewCell() }
+            setCellAttribute(cell, title: "알림 설정", isButton: true, isSwitch: false)
+            return cell
+        case 2:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "MyPageCell") else { return UITableViewCell() }
+            self.setCellAttribute(cell, title: "정보 공유 설정", isButton: true, isSwitch: false)
+            return cell
+        case 3:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "MyPageCell") else { return UITableViewCell() }
+            self.setCellAttribute(cell, title: "목표 독서 시간 설정", isButton: true, isSwitch: false)
+            return cell
+        case 4:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "MyPageCell") else { return UITableViewCell() }
+            self.setCellAttribute(cell, title: "구독 내역", isButton: true, isSwitch: false)
+            return cell
+        case 5:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "MyPageCell") else { return UITableViewCell() }
+            self.setCellAttribute(cell, title: "계정 비공개", isButton: false, isSwitch: true)
+            return cell
+        case 6:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "MyPageCell") else { return UITableViewCell() }
+            self.setCellAttribute(cell, title: "개인 정보 보호", isButton: false, isSwitch: false)
+            return cell
+        case 7:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "MyPageCell") else { return UITableViewCell() }
+            self.setCellAttribute(cell, title: "로그아웃", isButton: false, isSwitch: false)
+            return cell
+        case 8:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "MyPageCell") else { return UITableViewCell() }
+            self.setCellAttribute(cell, title: "회원 탈퇴", isButton: false, isSwitch: false, txtColor: .red)
+            return cell
+            
+        default:
+            return UITableViewCell()
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch indexPath.row {
+        case 3:
+            self.navigationController?.pushViewControllerTabHidden(SetTimeGoalViewController(), animated: true)
+        default:
+            return
+        }
+    }
+    
+    private func setCellAttribute(_ sender: UITableViewCell, title: String, isButton: Bool, isSwitch: Bool, txtColor: UIColor = .black) {
+        guard let cell = sender as? MyPageCell else {return}
+        cell.selectionStyle = .none
+        cell.title.text = title
+        cell.title.textColor = txtColor
+        if (isButton && !isSwitch) {
+            cell.switchs.isHidden = true
+        }
+        else if (!isButton && isSwitch) {
+            cell.btn.isHidden = true
+        }
+        else {
+            cell.btn.isHidden = true
+            cell.switchs.isHidden = true
+        }
+    }
+}
+
+// MARK: - 프로필 cell
+class ProfileCell: UITableViewCell {
     var layout_circle = UIView()
     var img_profile = UIImageView()
-    
     var label_name = UILabel()
     var label_message = UILabel()
-    
     let btn_settingProfile = UIButton()
+    let line = UIView()
+     
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: "ProfileCell")
+        setBaseView()
+    }
     
-    let line2 = UIView()
-    
-    let layout_table = UIView()
-    let cell_alarm = ProfileSettingCell()
-    let cell_share = ProfileSettingCell()
-    let cell_subscription = ProfileSettingCell()
-    let cell_isPrivate = ProfileSettingCell()
-    let cell_privacy = ProfileSettingCell()
-    let cell_logout = ProfileSettingCell()
-    let cell_withdraw = ProfileSettingCell()
-    
-    let line3 = UIView()
-
-    func initViews(_ superView: UIView) {
-        superView.addSubview(layout_main)
-        layout_main.snp.makeConstraints() { make in
-            make.edges.equalTo(superView.safeAreaLayoutGuide)
-        }
-        
-        layout_main.addSubviews(label_title, line1, layout_table)
-        label_title.snp.makeConstraints() { make in
-            make.top.equalToSuperview()
-            make.leading.equalToSuperview().offset(23)
-            make.width.equalToSuperview()
-            make.height.equalTo(44)
-        }
-        label_title.text = "마이페이지"
-        label_title.font = UIFont.systemFont(ofSize: 18, weight: .bold)
-        
-        line1.snp.makeConstraints() { make in
-            make.top.equalTo(label_title.snp.bottom)
-            make.width.equalToSuperview()
-            make.height.equalTo(1)
-        }
-        line1.backgroundColor = .lightGray
-        
-        layout_main.addSubviews(layout_profile)
-        layout_profile.snp.makeConstraints() { make in
-            make.top.equalTo(line1.snp.bottom)
+    private func setBaseView() {
+        self.contentView.snp.makeConstraints() { make in
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(150)
+            make.height.equalTo(175)
         }
+        self.contentView.addSubviews(layout_circle, img_profile, label_name, label_message, btn_settingProfile, line)
         
-        layout_profile.addSubviews(layout_circle, label_name, label_message, btn_settingProfile, line2)
         layout_circle.snp.makeConstraints() { make in
             make.top.equalToSuperview().offset(20)
             make.leading.equalToSuperview().offset(23)
@@ -139,113 +211,61 @@ class MyPageView {
         btn_settingProfile.layer.borderColor = UIColor.semiLightGray.cgColor
         btn_settingProfile.layer.cornerRadius = 6
         
-        line2.snp.makeConstraints() { make in
-            make.top.equalTo(btn_settingProfile.snp.bottom).offset(25)
-            make.width.equalToSuperview()
+        line.snp.makeConstraints() { make in
+            make.bottom.equalToSuperview()
+            make.leading.trailing.equalToSuperview().inset(16)
             make.height.equalTo(1)
         }
-        line2.backgroundColor = .lightGray
-        
-        layout_main.addSubview(layout_table)
-        layout_table.snp.makeConstraints() { make in
-            make.top.equalTo(layout_profile.snp.bottom).offset(20)
-            make.leading.trailing.bottom.equalToSuperview()
-        }
-        
-        layout_table.addSubviews(cell_alarm, cell_share, cell_subscription, cell_isPrivate, line3, cell_privacy, cell_logout, cell_withdraw)
-        cell_alarm.snp.makeConstraints() { make in
-            make.top.equalToSuperview().offset(15)
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(57)
-        }
-        cell_alarm.initViews(isBtn: true, isSwitch: false, txt: "알림 설정", txtColor: .black)
-        
-        cell_share.snp.makeConstraints() { make in
-            make.top.equalTo(cell_alarm.snp.bottom)
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(57)
-        }
-        cell_share.initViews(isBtn: true, isSwitch: false, txt: "정보 공유 설정", txtColor: .black)
-        
-        cell_subscription.snp.makeConstraints() { make in
-            make.top.equalTo(cell_share.snp.bottom)
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(57)
-        }
-        cell_subscription.initViews(isBtn: true, isSwitch: false, txt: "구독 내역", txtColor: .black)
-        
-        cell_isPrivate.snp.makeConstraints() { make in
-            make.top.equalTo(cell_subscription.snp.bottom)
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(57)
-        }
-        cell_isPrivate.initViews(isBtn: false, isSwitch: true, txt: "계정 비공개", txtColor: .black)
-        
-        line3.snp.makeConstraints() { make in
-            make.top.equalTo(cell_isPrivate.snp.bottom).offset(10)
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(1)
-        }
-        line3.backgroundColor = .lightGray
-        
-        cell_privacy.snp.makeConstraints() { make in
-            make.top.equalTo(line3.snp.bottom).offset(10)
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(57)
-        }
-        cell_privacy.initViews(isBtn: false, isSwitch: false, txt: "개인정보 보호", txtColor: .black)
-        
-        cell_logout.snp.makeConstraints() { make in
-            make.top.equalTo(cell_privacy.snp.bottom)
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(57)
-        }
-        cell_logout.initViews(isBtn: false, isSwitch: false, txt: "로그아웃", txtColor: .black)
-        
-        cell_withdraw.snp.makeConstraints() { make in
-            make.top.equalTo(cell_logout.snp.bottom)
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(57)
-        }
-        cell_withdraw.initViews(isBtn: false, isSwitch: false, txt: "회원 탈퇴", txtColor: .red)
-        
+        line.backgroundColor = .lightGray
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 
-// MARK: Cell 커스텀
-class ProfileSettingCell: UIView {
+// MARK: - 마이 페이지 table cell
+class MyPageCell: UITableViewCell {
     let title = UILabel()
     let btn = UIImageView()
     let switchs = UISwitch()
     
-    func initViews(isBtn: Bool, isSwitch: Bool, txt: String, txtColor: UIColor) {
-        if (isBtn && !isSwitch) {
-            self.addSubview(btn)
-          
-            btn.snp.makeConstraints() { make in
-                make.centerY.equalToSuperview()
-                make.width.equalTo(6)
-                make.height.equalTo(12)
-                make.right.equalToSuperview().offset(-24)
-            }
-            btn.image = UIImage(named: "right")
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: "MyPageCell")
+        setBaseView()
+    }
+    
+    private func setBaseView() {
+        self.contentView.snp.makeConstraints() { make in
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(57)
         }
-        
-        else if (!isBtn && isSwitch) {
-            self.addSubview(switchs)
-            switchs.snp.makeConstraints() { make in
-                make.centerY.equalToSuperview()
-                make.right.equalToSuperview().offset(-25)
-            }
-            switchs.onTintColor = .lightOrange
+        self.contentView.addSubviews(btn, switchs, title)
+
+        btn.snp.makeConstraints() { make in
+            make.centerY.equalToSuperview()
+            make.width.equalTo(6)
+            make.height.equalTo(12)
+            make.right.equalToSuperview().offset(-24)
         }
-        self.addSubview(title)
+        btn.image = UIImage(named: "right")
+
+        switchs.snp.makeConstraints() { make in
+            make.centerY.equalToSuperview()
+            make.right.equalToSuperview().offset(-25)
+        }
+        switchs.onTintColor = .lightOrange
+
         title.snp.makeConstraints() { make in
             make.leading.equalToSuperview().offset(23)
             make.centerY.equalToSuperview()
         }
-        title.text = txt
-        title.textColor = txtColor
+        title.text = ""
+        title.textColor = .black
         title.font = UIFont.systemFont(ofSize: 17, weight: .medium)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
