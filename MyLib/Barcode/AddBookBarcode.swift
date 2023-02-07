@@ -12,10 +12,25 @@ class AddBookBarcode: UIViewController {
     
 //    let network = Network()
 
+// MARK: - ToDo - ReaderView 좌표...
     let readerView: BarcodeReaderView = {
-        let view = BarcodeReaderView(frame: CGRect(x: 0, y: 0, width: 286, height: 137))
+        let view = BarcodeReaderView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
         view.backgroundColor = .white
         view.layer.masksToBounds = true
+        return view
+    }()
+    
+    let dimView: UIView = {
+        let view = UIView()
+        let dimColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.4).cgColor
+        
+        view.layer.borderColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.4).cgColor
+        view.layer.borderWidth = 50
+//        view.addTopBorder(width: 244)
+//        view.addBottomBorder(width: 244)
+//        view.addLeftBorder(width: 50)
+//        view.addRightBorder(width: 50)
+        
         return view
     }()
     
@@ -56,14 +71,16 @@ class AddBookBarcode: UIViewController {
 
 extension AddBookBarcode {
     @objc func scanButtonAction(_ sender: UIButton) {
-        self.navigationController?.pushViewController(ConfirmBookViewController(), animated: true)
+//        self.navigationController?.pushViewController(ConfirmBookViewController(), animated: true)
 //
-//        if self.readerView.isRunning {
-//            self.readerView.stop(isButtonTap: true)
-//        } else {
-//            self.readerView.start()
-//        }
-//
+        if self.readerView.isRunning {
+            self.readerView.stop(isButtonTap: true)
+            readButton.isSelected = false
+        } else {
+            self.readerView.start()
+            readButton.isSelected = true
+        }
+
 //        sender.isSelected = self.readerView.isRunning
         
 // MARK: - [GET] 책 검색
@@ -87,18 +104,26 @@ extension AddBookBarcode {
     }
     
     func setLayouts() {
+        self.view.backgroundColor = .white
         self.view.addSubviews(layout_main, readerView, readButton, layout_redLine)
         layout_main.snp.makeConstraints() { make in
             make.edges.equalTo(self.view.safeAreaLayoutGuide)
         }
-        layout_main.backgroundColor = UIColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)
+        layout_main.backgroundColor = .systemRed
         
         readerView.snp.makeConstraints() { make in
-            make.width.equalTo(286)
-            make.height.equalTo(137)
-            make.centerX.equalToSuperview()
-            make.centerY.equalToSuperview()
+//            make.width.equalTo(286)
+//            make.height.equalTo(137)
+//            make.centerX.equalToSuperview()
+//            make.centerY.equalToSuperview()
+            make.edges.equalTo(self.view.safeAreaLayoutGuide)
         }
+        
+//        readerView.addSubview(dimView)
+//        
+//        dimView.snp.makeConstraints() { make in
+//            make.edges.equalTo(readerView)
+//        }
         
         readButton.snp.makeConstraints() { make in
             make.width.equalTo(200)
@@ -108,7 +133,8 @@ extension AddBookBarcode {
         }
         
         layout_redLine.snp.makeConstraints() { make in
-            make.width.equalTo(286)
+            make.leading.equalToSuperview().offset(50)
+            make.trailing.equalToSuperview().offset(-50)
             make.height.equalTo(1)
             make.centerX.equalToSuperview()
             make.centerY.equalToSuperview()
