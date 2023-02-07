@@ -7,7 +7,7 @@
 import UIKit
 import SnapKit
 
-class ReadingTime: UIViewController {
+class ReadingTime: UIViewController, UITableViewDelegate, UITableViewDataSource {
 // MARK: - Network
     let network = Network()
 
@@ -93,14 +93,68 @@ class ReadingTime: UIViewController {
 
         return view
     }()
+    
+    let timeHistroyTable = Histories()
 
 // MARK: - viewDidLoad()
     override func viewDidLoad() {
         super.viewDidLoad()
         setLayouts()
+        setNav()
+        timeHistroyTable.initView(view: timeHistoryView)
+        timeHistroyTable.timeHistoryTableView.dataSource = self
+        timeHistroyTable.timeHistoryTableView.delegate = self
+    }
+    
+// MARK: - setLayouts()
+    func setLayouts() {
+        view.addSubviews(timerView, timerButton, stopButton, timeHistoryView)
+            
+        // History View 뺀 버전
+//        view.addSubviews(timerView, timerButton, stopButton)
+
+        timerView.snp.makeConstraints() { make in
+            make.width.equalTo(258)
+            make.height.equalTo(258)
+            make.centerX.equalToSuperview()
+            make.bottom.equalTo(self.view.snp.centerY)
+        }
+        
+        timerButton.snp.makeConstraints() { make in
+            make.width.equalTo(66)
+            make.height.equalTo(66)
+            make.top.equalTo(timerView.snp.bottom).offset(-20)
+            make.leading.equalTo(self.view.snp.centerX).offset(30)
+        }
+
+        stopButton.snp.makeConstraints() { make in
+            make.width.equalTo(66)
+            make.height.equalTo(66)
+            make.top.equalTo(timerView.snp.bottom).offset(-20)
+            make.trailing.equalTo(self.view.snp.centerX).offset(-30)
+        }
+
+        timeHistoryView.snp.makeConstraints() { make in
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.top.equalTo(timerButton.snp.bottom).offset(53)
+            make.bottom.equalToSuperview()
+        }
+            
+        stopwatchView.initViews(view: timerView)
+        timerView.addSubview(timerLabel)
+
+        timerLabel.snp.makeConstraints() { make in
+            make.width.equalTo(250)
+            make.height.equalTo(100)
+            make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview()
+        }
+    }
+    
+    func setNav() {
         self.navigationItem.title = "스톱워치"
     }
-
 }
 
 extension ReadingTime {
@@ -179,56 +233,39 @@ extension ReadingTime {
         
         return str
     }
+}
 
-// MARK: - setLayouts()
-    func setLayouts() {
-//        view.addSubviews(timerView, timerButton, stopButton, timeHistoryView)
-        
-        // History View 뺀 버전
-        view.addSubviews(timerView, timerButton, stopButton)
-
-        timerView.snp.makeConstraints() { make in
-            make.width.equalTo(258)
-            make.height.equalTo(258)
-            make.centerX.equalToSuperview()
-            make.bottom.equalTo(self.view.snp.centerY)
-        }
-
-        timerButton.snp.makeConstraints() { make in
-            make.width.equalTo(66)
-            make.height.equalTo(66)
-            make.top.equalTo(self.view.snp.centerY).offset(20)
-            make.leading.equalTo(self.view.snp.centerX).offset(30)
-        }
-
-        stopButton.snp.makeConstraints() { make in
-            make.width.equalTo(66)
-            make.height.equalTo(66)
-            make.top.equalTo(self.view.snp.centerY).offset(20)
-            make.trailing.equalTo(self.view.snp.centerX).offset(-30)
-        }
-
-//        timeHistoryView.snp.makeConstraints() { make in
-//            make.leading.equalToSuperview()
-//            make.trailing.equalToSuperview()
-//            make.bottom.equalToSuperview()
-//            make.height.equalTo(241)
-//
-//        }
-        
-        stopwatchView.initViews(view: timerView)
-
-        timerView.addSubview(timerLabel)
-
-        timerLabel.snp.makeConstraints() { make in
-            make.width.equalTo(250)
-            make.height.equalTo(100)
-            make.centerX.equalToSuperview()
-            make.centerY.equalToSuperview()
-        }
-
-
+extension ReadingTime {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 10
+        // change
     }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.row == 0 {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: DeleteAllCell.identifier, for: indexPath) as? DeleteAllCell else { return DeleteAllCell() }
+            
+            cell.selectionStyle = .none
+            
+            return cell
+
+        } else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: TimeHistoryCell.identifier, for: indexPath) as? TimeHistoryCell else { return TimeHistoryCell() }
+            
+            cell.selectionStyle = .none
+            
+            return cell
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.row == 0 {
+            return 60
+        } else {
+            return 50
+        }
+    }
+
 }
 
 class StopwatchView: UIView {
@@ -289,4 +326,103 @@ class StopwatchView: UIView {
     func stopAnimation() {
         shape.removeAllAnimations()
     }
+}
+
+class Histories {
+    let timeHistoryTableView: UITableView = {
+        let tbView = UITableView()
+        tbView.backgroundColor = .white
+        tbView.register(DeleteAllCell.self, forCellReuseIdentifier: DeleteAllCell
+            .identifier)
+        tbView.register(TimeHistoryCell.self, forCellReuseIdentifier: TimeHistoryCell.identifier)
+        tbView.translatesAutoresizingMaskIntoConstraints = false
+        return tbView
+    }()
+    
+    func initView(view: UIView) {
+        view.backgroundColor = .white
+        view.addSubview(timeHistoryTableView)
+        
+        timeHistoryTableView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+    }
+}
+
+class DeleteAllCell: UITableViewCell {
+    static let identifier = "DeleteAllCell"
+    
+    let deleteAllButton = UIButton()
+
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        addSubview(deleteAllButton)
+        
+        deleteAllButton.snp.makeConstraints{ make in
+            make.width.equalTo(30)
+            make.height.equalTo(30)
+            make.centerY.equalToSuperview()
+            make.trailing.equalToSuperview().offset(-25)
+        }
+        
+        deleteAllButton.setImage(UIImage(named: "seeMore"), for: .normal)
+        deleteAllButton.contentMode = .scaleAspectFit
+
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+}
+
+
+class TimeHistoryCell: UITableViewCell {
+    static let identifier = "TimeHistoryCell"
+    
+    let dateLabel = UILabel()
+    let timeLabel = UILabel()
+    let deleteButton = UIButton()
+
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        addSubviews(dateLabel, timeLabel, deleteButton)
+        
+        dateLabel.snp.makeConstraints{ make in
+            make.width.equalTo(100)
+            make.height.equalTo(22)
+            make.centerY.equalToSuperview()
+            make.leading.equalToSuperview().offset(23)
+        }
+        
+        dateLabel.text = "23. 02. 05"
+        dateLabel.font = .systemFont(ofSize: 18)
+        dateLabel.textColor = .textGray
+        
+        timeLabel.snp.makeConstraints{ make in
+            make.width.equalTo(70)
+            make.height.equalTo(24)
+            make.centerY.equalToSuperview()
+            make.trailing.equalToSuperview().offset(-54)
+        }
+        
+        timeLabel.text = "2h 10m"
+        timeLabel.font = .boldSystemFont(ofSize: 19)
+        timeLabel.textAlignment = .right
+        
+        deleteButton.snp.makeConstraints{ make in
+            make.width.equalTo(12.5)
+            make.height.equalTo(12.5)
+            make.centerY.equalToSuperview()
+            make.trailing.equalToSuperview().offset(-25)
+        }
+        
+        deleteButton.setImage(UIImage(named: "historyDelete"), for: .normal)
+
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
 }
