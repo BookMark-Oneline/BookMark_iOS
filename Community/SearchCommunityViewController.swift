@@ -1,5 +1,5 @@
 //
-//  SearchCommunity.swift
+//  SearchCommunityViewController.swift
 //  BookMark
 //
 //  Created by BoMin on 2023/01/27.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SearchCommunity: UIViewController {
+class SearchCommunityViewController: UIViewController {
     
     var inputCommunityID: String = "default"
     
@@ -77,7 +77,7 @@ class SearchCommunity: UIViewController {
     
 }
 
-extension SearchCommunity {
+extension SearchCommunityViewController {
     func setLayouts() {
         view.backgroundColor = .white
         view.addSubviews(descriptLabel, inputIDtextField, tfLine, searchButton)
@@ -132,7 +132,7 @@ extension SearchCommunity {
 //    }
 }
 
-extension SearchCommunity: UITextFieldDelegate {
+extension SearchCommunityViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         self.searchButtonPress()

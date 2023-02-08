@@ -14,7 +14,7 @@ enum ReaderStatus {
     case stop(_ isButtonTap: Bool)
 }
 
-protocol BarcodeReaderViewDelegate: class {
+protocol BarcodeReaderViewDelegate: AnyObject {
     func readerComplete(status: ReaderStatus)
 }
 
@@ -90,7 +90,6 @@ class BarcodeReaderView: UIView {
             self.fail()
             return
         }
-        
         self.setPreviewLayer()
         self.setDimView()
     }
@@ -111,9 +110,9 @@ class BarcodeReaderView: UIView {
     
     private func setDimView() {
 // MARK: - ToDo - DimView 좌표...
-        let path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: self.bounds.size.width, height: self.bounds.size.height), cornerRadius: 0)
-        let shapePath = UIBezierPath(rect: CGRect(x: 50, y: self.bounds.size.height / 2 - 165, width: self.frame.size.width - 100, height: 137))
-//        path.append(circlePath)
+        let path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: self.layer.frame.width, height: self.layer.frame.height), cornerRadius: 0)
+        let shapePath = UIBezierPath(rect: CGRect(x: 50, y: self.layer.frame.height / 2 - 75, width: self.layer.frame.width - 100, height: 150))
+
         path.append(shapePath)
         path.usesEvenOddFillRule = true
 
@@ -121,7 +120,7 @@ class BarcodeReaderView: UIView {
         fillLayer.path = path.cgPath
         fillLayer.fillRule = .evenOdd
         fillLayer.fillColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.6).cgColor
-//        fillLayer.opacity = 0.5
+
         self.layer.addSublayer(fillLayer)
     }
 
@@ -129,7 +128,9 @@ class BarcodeReaderView: UIView {
 
 extension BarcodeReaderView {
     func start() {
-        self.captureSession?.startRunning()
+        DispatchQueue.global().async {
+            self.captureSession?.startRunning()
+        }
     }
     
     func stop(isButtonTap: Bool) {

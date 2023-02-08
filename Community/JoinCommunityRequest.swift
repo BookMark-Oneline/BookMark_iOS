@@ -1,5 +1,5 @@
 //
-//  JoinCommunityRequest.swift
+//  JoinCommunityRequestViewController.swift
 //  BookMark
 //
 //  Created by BoMin on 2023/01/26.
@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class JoinCommunityRequest: UIViewController {
+class JoinCommunityRequestViewController: UIViewController {
     
     let backgroundImageView: UIImageView = {
         let view = UIImageView()
@@ -112,7 +112,7 @@ class JoinCommunityRequest: UIViewController {
     }
 }
 
-extension JoinCommunityRequest {
+extension JoinCommunityRequestViewController {
     func setBackgroundImage() {
         view.addSubview(backgroundImageView)
         backgroundImageView.snp.makeConstraints() { make in
