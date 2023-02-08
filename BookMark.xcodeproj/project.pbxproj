@@ -7,11 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		245FED6A2983965800EE02B6 /* SearchCommunity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245FED692983965800EE02B6 /* SearchCommunity.swift */; };
 		245FED6E2983971100EE02B6 /* JoinCommunityRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245FED6D2983971100EE02B6 /* JoinCommunityRequest.swift */; };
 		245FED712983976400EE02B6 /* myeongsoo.png in Resources */ = {isa = PBXBuildFile; fileRef = 245FED6F2983976400EE02B6 /* myeongsoo.png */; };
 		245FED722983976400EE02B6 /* haerin.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 245FED702983976400EE02B6 /* haerin.jpg */; };
 		24A21A392976EA2400AE8BF9 /* DataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A21A382976EA2400AE8BF9 /* DataClass.swift */; };
+		24D01FC5299395AE0045DC68 /* SearchCommunityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D01FC4299395AE0045DC68 /* SearchCommunityViewController.swift */; };
+		24D01FC7299395BE0045DC68 /* AddBookBarcodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D01FC6299395BE0045DC68 /* AddBookBarcodeViewController.swift */; };
+		24D01FCB299395DB0045DC68 /* BookDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D01FC9299395DB0045DC68 /* BookDetailView.swift */; };
+		24D01FCC299395DB0045DC68 /* BookDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D01FCA299395DB0045DC68 /* BookDetailViewController.swift */; };
+		24D01FCE299395F40045DC68 /* CustomAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D01FCD299395F40045DC68 /* CustomAlertViewController.swift */; };
+		24D01FD02993966E0045DC68 /* SetTimeGoalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D01FCF2993966E0045DC68 /* SetTimeGoalViewController.swift */; };
 		24E794242971653C00E69633 /* ReadingTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24E794232971653C00E69633 /* ReadingTime.swift */; };
 		24E7942C2972BDD300E69633 /* CustomPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24E7942B2972BDD300E69633 /* CustomPopUp.swift */; };
 		2DFD5D6E9DDEA6E09EEF3D46 /* Pods_BookMark.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5721549DEE181646370BC256 /* Pods_BookMark.framework */; };
@@ -24,9 +29,7 @@
 		86C3C2B8296858370035CFFE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 86C3C2B6296858370035CFFE /* Main.storyboard */; };
 		86C3C2BA296858380035CFFE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 86C3C2B9296858380035CFFE /* Assets.xcassets */; };
 		86C3C2BD296858380035CFFE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 86C3C2BB296858380035CFFE /* LaunchScreen.storyboard */; };
-		86C3C2C5296D77EB0035CFFE /* BookDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C3C2C4296D77EB0035CFFE /* BookDetailViewController.swift */; };
 		86C3C2CD296D8CCC0035CFFE /* book.png in Resources */ = {isa = PBXBuildFile; fileRef = 86C3C2CC296D8CCC0035CFFE /* book.png */; };
-		86C3C2D0296E694B0035CFFE /* AddBookBarcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C3C2CE296E694B0035CFFE /* AddBookBarcode.swift */; };
 		86C3C2D1296E694B0035CFFE /* BarcodeReaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C3C2CF296E694B0035CFFE /* BarcodeReaderView.swift */; };
 		86C3C2D3296E69630035CFFE /* ConfirmBookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C3C2D2296E69630035CFFE /* ConfirmBookViewController.swift */; };
 		E82079442990B6E800B36FC9 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82079432990B6E800B36FC9 /* LoginViewController.swift */; };
@@ -52,11 +55,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		245FED692983965800EE02B6 /* SearchCommunity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCommunity.swift; sourceTree = "<group>"; };
 		245FED6D2983971100EE02B6 /* JoinCommunityRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinCommunityRequest.swift; sourceTree = "<group>"; };
 		245FED6F2983976400EE02B6 /* myeongsoo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = myeongsoo.png; sourceTree = "<group>"; };
 		245FED702983976400EE02B6 /* haerin.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = haerin.jpg; sourceTree = "<group>"; };
 		24A21A382976EA2400AE8BF9 /* DataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataClass.swift; sourceTree = "<group>"; };
+		24D01FC4299395AE0045DC68 /* SearchCommunityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchCommunityViewController.swift; path = Community/SearchCommunityViewController.swift; sourceTree = SOURCE_ROOT; };
+		24D01FC6299395BE0045DC68 /* AddBookBarcodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddBookBarcodeViewController.swift; sourceTree = "<group>"; };
+		24D01FC9299395DB0045DC68 /* BookDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookDetailView.swift; sourceTree = "<group>"; };
+		24D01FCA299395DB0045DC68 /* BookDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookDetailViewController.swift; sourceTree = "<group>"; };
+		24D01FCD299395F40045DC68 /* CustomAlertViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAlertViewController.swift; sourceTree = "<group>"; };
+		24D01FCF2993966E0045DC68 /* SetTimeGoalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetTimeGoalViewController.swift; sourceTree = "<group>"; };
 		24E794232971653C00E69633 /* ReadingTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingTime.swift; sourceTree = "<group>"; };
 		24E7942B2972BDD300E69633 /* CustomPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPopUp.swift; sourceTree = "<group>"; };
 		412B7ED82988DDF000B40AF3 /* PostDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailViewController.swift; sourceTree = "<group>"; };
@@ -72,9 +80,7 @@
 		86C3C2B9296858380035CFFE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		86C3C2BC296858380035CFFE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		86C3C2BE296858380035CFFE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		86C3C2C4296D77EB0035CFFE /* BookDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookDetailViewController.swift; sourceTree = "<group>"; };
 		86C3C2CC296D8CCC0035CFFE /* book.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = book.png; sourceTree = "<group>"; };
-		86C3C2CE296E694B0035CFFE /* AddBookBarcode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddBookBarcode.swift; sourceTree = "<group>"; };
 		86C3C2CF296E694B0035CFFE /* BarcodeReaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarcodeReaderView.swift; sourceTree = "<group>"; };
 		86C3C2D2296E69630035CFFE /* ConfirmBookViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmBookViewController.swift; sourceTree = "<group>"; };
 		CD50D9E346145F9EDEF00686 /* Pods-BookMark.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BookMark.release.xcconfig"; path = "Target Support Files/Pods-BookMark/Pods-BookMark.release.xcconfig"; sourceTree = "<group>"; };
@@ -112,6 +118,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		24D01FC8299395DB0045DC68 /* BookDetail */ = {
+			isa = PBXGroup;
+			children = (
+				24D01FC9299395DB0045DC68 /* BookDetailView.swift */,
+				24D01FCA299395DB0045DC68 /* BookDetailViewController.swift */,
+			);
+			path = BookDetail;
+			sourceTree = "<group>";
+		};
 		650C55764473948B3B1476E4 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -205,11 +220,11 @@
 		E8C2B4F3296A8A66000E2030 /* MyLib */ = {
 			isa = PBXGroup;
 			children = (
+				24D01FC8299395DB0045DC68 /* BookDetail */,
 				E8D5C3E329838352003D1AD0 /* Barcode */,
 				E8D5C3E229838329003D1AD0 /* Timer */,
 				E8C2B4F0296A8915000E2030 /* MyLibTab.swift */,
 				24E7942B2972BDD300E69633 /* CustomPopUp.swift */,
-				86C3C2C4296D77EB0035CFFE /* BookDetailViewController.swift */,
 			);
 			path = MyLib;
 			sourceTree = "<group>";
@@ -233,8 +248,8 @@
 				E8D5C3D1298240C5003D1AD0 /* BookCommunitySettings */,
 				E8C2B4FA296A8F40000E2030 /* CommunityTab.swift */,
 				E832390729879ABC00DC83C2 /* CommunityInsideViewController.swift */,
-				245FED692983965800EE02B6 /* SearchCommunity.swift */,
 				245FED6D2983971100EE02B6 /* JoinCommunityRequest.swift */,
+				24D01FC4299395AE0045DC68 /* SearchCommunityViewController.swift */,
 			);
 			path = Community;
 			sourceTree = "<group>";
@@ -259,6 +274,7 @@
 			isa = PBXGroup;
 			children = (
 				E8C2B4FE296A8F8C000E2030 /* MyPageTab.swift */,
+				24D01FCF2993966E0045DC68 /* SetTimeGoalViewController.swift */,
 			);
 			path = MyPage;
 			sourceTree = "<group>";
@@ -266,6 +282,7 @@
 		E8D5C3E129838303003D1AD0 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				24D01FCD299395F40045DC68 /* CustomAlertViewController.swift */,
 				E8C2B51229743975000E2030 /* Network.swift */,
 				E8C2B4F4296A8A85000E2030 /* Colors.swift */,
 				24A21A382976EA2400AE8BF9 /* DataClass.swift */,
@@ -285,7 +302,7 @@
 		E8D5C3E329838352003D1AD0 /* Barcode */ = {
 			isa = PBXGroup;
 			children = (
-				86C3C2CE296E694B0035CFFE /* AddBookBarcode.swift */,
+				24D01FC6299395BE0045DC68 /* AddBookBarcodeViewController.swift */,
 				86C3C2CF296E694B0035CFFE /* BarcodeReaderView.swift */,
 				86C3C2D2296E69630035CFFE /* ConfirmBookViewController.swift */,
 			);
@@ -413,34 +430,37 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				24D01FD02993966E0045DC68 /* SetTimeGoalViewController.swift in Sources */,
 				86C3C2B5296858370035CFFE /* ViewController.swift in Sources */,
 				24A21A392976EA2400AE8BF9 /* DataClass.swift in Sources */,
+				24D01FCC299395DB0045DC68 /* BookDetailViewController.swift in Sources */,
 				E8C2B4FB296A8F40000E2030 /* CommunityTab.swift in Sources */,
 				245FED6E2983971100EE02B6 /* JoinCommunityRequest.swift in Sources */,
 				86C3C2D1296E694B0035CFFE /* BarcodeReaderView.swift in Sources */,
 				E832390829879ABC00DC83C2 /* CommunityInsideViewController.swift in Sources */,
 				E8D5C3DC29827056003D1AD0 /* CreatePostViewController.swift in Sources */,
+				24D01FCE299395F40045DC68 /* CustomAlertViewController.swift in Sources */,
 				412B7ED92988DDF000B40AF3 /* PostDetailViewController.swift in Sources */,
 				E8C2B51329743975000E2030 /* Network.swift in Sources */,
-				86C3C2C5296D77EB0035CFFE /* BookDetailViewController.swift in Sources */,
 				E8C2B4FF296A8F8C000E2030 /* MyPageTab.swift in Sources */,
 				412DDC8629858E5F00F6CB22 /* WaitMemberViewController.swift in Sources */,
 				24E794242971653C00E69633 /* ReadingTime.swift in Sources */,
 				E82079442990B6E800B36FC9 /* LoginViewController.swift in Sources */,
 				E8C2B4F5296A8A85000E2030 /* Colors.swift in Sources */,
 				86C3C2B1296858370035CFFE /* AppDelegate.swift in Sources */,
-				245FED6A2983965800EE02B6 /* SearchCommunity.swift in Sources */,
 				E8C2B4F9296A8D6D000E2030 /* MainTabBarController.swift in Sources */,
 				24E7942C2972BDD300E69633 /* CustomPopUp.swift in Sources */,
 				86C3C2B3296858370035CFFE /* SceneDelegate.swift in Sources */,
+				24D01FCB299395DB0045DC68 /* BookDetailView.swift in Sources */,
 				E8D5C3D529824126003D1AD0 /* CreateCommunityViewController.swift in Sources */,
 				412DDC8429858E3C00F6CB22 /* CommunityMemberViewController.swift in Sources */,
 				E8C2B501296A93C2000E2030 /* Utils.swift in Sources */,
 				E8D5C3D329824114003D1AD0 /* SetCommunityViewController.swift in Sources */,
 				E8D5C3D729824130003D1AD0 /* CommunitySettingView.swift in Sources */,
+				24D01FC7299395BE0045DC68 /* AddBookBarcodeViewController.swift in Sources */,
+				24D01FC5299395AE0045DC68 /* SearchCommunityViewController.swift in Sources */,
 				86C3C2D3296E69630035CFFE /* ConfirmBookViewController.swift in Sources */,
 				E8C2B4FD296A8F6A000E2030 /* ScrapTab.swift in Sources */,
-				86C3C2D0296E694B0035CFFE /* AddBookBarcode.swift in Sources */,
 				E8D5C3D9298269E7003D1AD0 /* CommunitySettingBaseViewController.swift in Sources */,
 				E8C2B4F7296A8CC5000E2030 /* OneLineTab.swift in Sources */,
 				E82079462990B72A00B36FC9 /* LoginView.swift in Sources */,

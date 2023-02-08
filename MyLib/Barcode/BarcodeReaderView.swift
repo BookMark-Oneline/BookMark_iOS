@@ -11,7 +11,7 @@ import AVFoundation
 enum ReaderStatus {
     case success(_ code: String?)
     case fail
-    case stop(_ isButtonTap: Bool)
+//    case stop(_ isButtonTap: Bool)
 }
 
 protocol BarcodeReaderViewDelegate: AnyObject {
