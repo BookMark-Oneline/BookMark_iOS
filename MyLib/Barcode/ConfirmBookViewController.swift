@@ -56,6 +56,11 @@ extension ConfirmBookViewController {
             appdel.books.append([self.bookImageURL, self.bookTitle, self.bookAuthor])
         }
        
+        if (self.bookTitle.isEmpty || self.bookAuthor.isEmpty) {
+            self.view.makeToast("책 정보가 정확하지 않습니다.", duration: 2, position: .bottom)
+            return
+        }
+        
         network.registerBooks(title: self.bookTitle, img_url: self.bookImageURL, author: self.bookAuthor, pubilsher: self.bookPublisher, isbn: self.bookIsbn, completion: {
                 self.navigationController?.popToRootViewController(animated: true)
         })
@@ -213,18 +218,17 @@ extension ConfirmBookViewController {
                     self.bookIsbn = data.myData[0].isbn
                     
                     self.showContents()
-                    
-//                    print(data.myData[0].title)
-//                    print(self.bookTitle)
                 }
             case .requestErr(let message):
-                print("requestErr", message)
+                print("requestErr: \(message)")
             case .pathErr:
                 print("pathErr")
             case .serverErr:
                 print("serverErr")
             case .networkFail:
                 print("networkFail")
+            case .decodeFail:
+                print("decodeFail")
             }
         }
     }

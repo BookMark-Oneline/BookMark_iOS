@@ -14,6 +14,7 @@ enum NetworkResult<T> {
     case pathErr
     case serverErr
     case networkFail
+    case decodeFail
 }
 
 // MARK: - 책 세부내용 data class
@@ -30,6 +31,11 @@ class BookDetail: Decodable {
 
 // MARK: - 서재 data class
 class Shelf: Decodable {
+    let ok: Bool
+    let data: [BookInfo]
+}
+
+class BookInfo: Decodable {
     let book_id: Int
     let title: String
     let author: String

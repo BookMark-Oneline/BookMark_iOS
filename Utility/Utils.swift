@@ -55,7 +55,8 @@ extension UIImageView {
     
     func setImageUrl(url: String) {
         let imgURL = URL(string: url)
-        self.load(url: imgURL!)
+        guard let url = imgURL else {return}
+        self.load(url: url)
     }
 }
 

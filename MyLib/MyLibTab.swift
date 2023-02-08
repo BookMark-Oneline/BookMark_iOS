@@ -15,13 +15,11 @@ class MyLibTab: UIViewController, UICollectionViewDelegate, UICollectionViewDele
     let layout = MyLibTabView()
     let network = Network()
     
-    // MARK: - todo: UIApplication에 데이터 저장할지 core data나 userDefaults 따로 쓸지
-    var books = ((UIApplication.shared.delegate as? AppDelegate)?.books)!
+    var books: [[String]] = [["0", "addbook", "", ""]]
     override func viewDidLoad() {
         super.viewDidLoad()
         getShelfData()
 
-        layout.initViews(view: self.view)
         layout.layout_collection.layout_books.delegate = self
         layout.layout_collection.layout_books.dataSource = self
     }
@@ -37,15 +35,18 @@ class MyLibTab: UIViewController, UICollectionViewDelegate, UICollectionViewDele
         self.navigationController?.isNavigationBarHidden = false
     }
     
-    func dataReload(status: Int = 1, img_url: String = "", title: String = "", author: String = "") {
+    func dataReload(status: Int = 1) {
         // 데이터 새로 추가
         if (status == 0) {
             if let appdel = UIApplication.shared.delegate as? AppDelegate {
-                appdel.books.append([img_url, title, author])
+                appdel.books = self.books
             }
+            layout.bookCount = self.books.count
+            layout.initViews(view: self.view)
         }
-        
-        self.books = ((UIApplication.shared.delegate as? AppDelegate)?.books)!
+        else {
+            self.books = ((UIApplication.shared.delegate as? AppDelegate)?.books)!
+        }
         layout.layout_collection.layout_books.reloadData()
     }
 }
@@ -57,10 +58,12 @@ extension MyLibTab {
         network.getShelf { response in
             switch response {
             case .success(let shelf):
-                if let book = shelf as? [Shelf] {
+                if let book = (shelf as? Shelf)?.data {
                     book.forEach({ item in
-                        self.dataReload(status: 0, img_url: item.img_url, title: item.title, author: item.author)
+                        self.books.append(["\(item.book_id)", item.img_url, item.title, item.author])
+                        self.layout.layout_collection.layout_books.reloadData()
                     })
+                    self.dataReload(status: 0)
                 }
             default:
                 print("failed")
@@ -76,8 +79,9 @@ extension MyLibTab {
             return BookCollectionCell()
         }
         let book = self.books[indexPath.row]
+        print(book)
         
-        if (book[0] == "addbook") {
+        if (book[0] == "0" && book[1] == "addbook") {
             cell.layout_img.image = UIImage(named: "addBook")
             cell.label_title.text = ""
             cell.label_author.text = ""
@@ -86,9 +90,10 @@ extension MyLibTab {
         
         else {
             cell.layout_img.kf.indicatorType = .activity
-                         cell.layout_img.kf.setImage(with: URL(string: book[0]), placeholder: nil, options: [.transition(.fade(1)), .cacheOriginalImage, .forceTransition], completionHandler: nil)
-            cell.label_title.text = book[1]
-            cell.label_author.text = book[2]
+                         cell.layout_img.kf.setImage(with: URL(string: book[1]), placeholder: nil, options: [.transition(.fade(1)), .cacheOriginalImage, .forceTransition], completionHandler: nil)
+            cell.bookid = book[0]
+            cell.label_title.text = book[2]
+            cell.label_author.text = book[3]
             cell.tag = 1
         }
         
@@ -116,7 +121,7 @@ extension MyLibTab {
         else {
             let vc = BookDetailViewController()
             
-            network.getBookDetail(bookId: indexPath.row, completion: { response in
+            network.getBookDetail(bookId: item.bookid, completion: { response in
                 switch response {
                 case .success(let book):
                     if let book = book as? [BookDetail] {
@@ -134,6 +139,7 @@ extension MyLibTab {
 // MARK: - layout class
 class MyLibTabView {
     var layout_main = UIView()
+    var bookCount: Int = 0
     
     var layout_title = UIView()
     var label_title = UILabel()
@@ -244,7 +250,7 @@ class MyLibTabView {
             make.centerX.equalTo(label_books)
             make.top.equalTo(label_books.snp.bottom).offset(10)
         }
-        label_bookcount.text = "36"
+        label_bookcount.text = "\(bookCount)"
         label_bookcount.font = UIFont.boldSystemFont(ofSize: 16)
         label_bookcount.textColor = .black
         label_bookcount.sizeToFit()
@@ -274,6 +280,7 @@ class MyLibTabView {
         }
         line2.backgroundColor = .lightGray
         
+        layout_collection.bookCount = self.bookCount
         layout_collectionview.snp.makeConstraints() { make in
             make.leading.trailing.bottom.equalToSuperview()
             make.top.equalTo(line2.snp.bottom)
@@ -287,6 +294,7 @@ class MyLibTabView {
 
 // MARK: - scroll view + collection view
 class Books {
+    var bookCount: Int = 0
     var label_mylib = UILabel()
     var label_bookcount = UILabel()
     var layout_books: UICollectionView = {
@@ -321,7 +329,7 @@ class Books {
         }
         label_bookcount.font = UIFont.systemFont(ofSize: 14)
         label_bookcount.textColor = .textGray
-        label_bookcount.text = "36"
+        label_bookcount.text = "\(bookCount)"
         
         layout_books.snp.makeConstraints() { make in
             make.leading.equalToSuperview().offset(15)
@@ -337,6 +345,7 @@ class Books {
 // MARK: - scroll view cell class
 class BookCollectionCell: UICollectionViewCell {
     static let identifier = "bookcell"
+    var bookid = ""
     let layout_img = UIImageView()
     let label_title = UILabel()
     let label_author = UILabel()

@@ -9,7 +9,7 @@ import UIKit
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    var books = [["addbook", "", ""]]
+    var books = [["0", "addbook", "", ""]]
     
     var communities = [
         ["myeongsoo", "책과 무스비"],

@@ -24,19 +24,19 @@ class Network {
             switch response.result {
             case .success:
                 print("ok")
+                //MARK: todo - completion에 NetworkResult<AnyObject>으로 추가하기 나중에
+                completion()
             case .failure(let e):
                 print("failed")
                 print(e)
             }
-            //MARK: todo - completion에 NetworkResult<AnyObject>으로 추가하기 나중에
-            completion()
         })
     }
     
     // 책 세부내용 조회 GET
-    func getBookDetail(bookId: Int, completion: @escaping (NetworkResult<Any>) -> Void) {
+    func getBookDetail(bookId: String, completion: @escaping (NetworkResult<Any>) -> Void) {
   
-        let URL = baseUrl + "/shelf/book/\(bookId)"
+        let URL = baseUrl + "/shelf/book/" + bookId
         let datarequest = AF.request(URL, method: .get, encoding: JSONEncoding.default)
         
         datarequest.responseData(completionHandler: { res in
@@ -89,10 +89,7 @@ class Network {
         dataRequest.responseData { dataResponse in
             switch dataResponse.result {
             case .success:
-                print("SUCCESS")
                 guard let statusCode = dataResponse.response?.statusCode else { return }
-                
-                print(statusCode)
 
                 guard let value = dataResponse.value else { return }
 
@@ -187,16 +184,16 @@ extension Network {
         let decoder = JSONDecoder()
         
         guard let decodedData = try? decoder.decode(BookSearch.self, from: data) else {
-            return .pathErr }
+            return .decodeFail }
     
         return .success(decodedData)
     }
     
     private func isValidData_Shelf(data: Data) -> NetworkResult<Any> {
         let decoder = JSONDecoder()
-        
-        guard let decodedData = try? decoder.decode([Shelf].self, from: data) else {
-            return .pathErr }
+
+        guard let decodedData = try? decoder.decode(Shelf.self, from: data) else {
+            return .decodeFail }
         
         return .success(decodedData)
     }
@@ -205,7 +202,7 @@ extension Network {
         let decoder = JSONDecoder()
         
         guard let decodedData = try? decoder.decode([BookDetail].self, from: data) else {
-            return .pathErr
+            return .decodeFail
         }
 
         return .success(decodedData)
