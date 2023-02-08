@@ -92,7 +92,7 @@ class BarcodeReaderView: UIView {
         }
         
         self.setPreviewLayer()
-        self.setCenterGuideLineView()
+        self.setDimView()
     }
 
     private func setPreviewLayer() {
@@ -108,22 +108,23 @@ class BarcodeReaderView: UIView {
 
         self.previewLayer = previewLayer
     }
+    
+    private func setDimView() {
+// MARK: - ToDo - DimView 좌표...
+        let path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: self.bounds.size.width, height: self.bounds.size.height), cornerRadius: 0)
+        let shapePath = UIBezierPath(rect: CGRect(x: 50, y: self.bounds.size.height / 2 - 165, width: self.frame.size.width - 100, height: 137))
+//        path.append(circlePath)
+        path.append(shapePath)
+        path.usesEvenOddFillRule = true
 
-    private func setCenterGuideLineView() {
-        let centerGuideLineView = UIView()
-        centerGuideLineView.translatesAutoresizingMaskIntoConstraints = false
-        // 바코드 인식 가이드라인 색상 설정
-        centerGuideLineView.backgroundColor = UIColor(red: 0.975, green: 0.565, blue: 0.187, alpha: 1)
-        self.addSubview(centerGuideLineView)
-        self.bringSubviewToFront(centerGuideLineView)
-
-        centerGuideLineView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
-        centerGuideLineView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-        centerGuideLineView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        centerGuideLineView.heightAnchor.constraint(equalToConstant: 1).isActive = true
-
-        self.centerGuideLineView = centerGuideLineView
+        let fillLayer = CAShapeLayer()
+        fillLayer.path = path.cgPath
+        fillLayer.fillRule = .evenOdd
+        fillLayer.fillColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.6).cgColor
+//        fillLayer.opacity = 0.5
+        self.layer.addSublayer(fillLayer)
     }
+
 }
 
 extension BarcodeReaderView {
