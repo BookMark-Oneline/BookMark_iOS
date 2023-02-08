@@ -98,7 +98,7 @@ extension UIViewController {
 
 // MARK: - UIButton extension
 extension UIButton {
-    func setTitle(_ title: String, size: CGFloat, weight: UIFont.Weight, color: UIColor) {
+    func setTitle(_ title: String, size: CGFloat, weight: UIFont.Weight, color: UIColor, when: UIControl.State = .normal) {
         if #available(iOS 15.0, *) {
             var attributedTitle = AttributedString(title)
             attributedTitle.font = .systemFont(ofSize: size, weight: weight)
@@ -107,9 +107,18 @@ extension UIButton {
             configuration.attributedTitle = attributedTitle
             self.configuration = configuration
         } else {
-            self.setTitle(title, for: .normal)
+            self.setTitle(title, for: when)
             self.titleLabel?.font = .systemFont(ofSize: size, weight: weight)
-            self.setTitleColor(color, for: .normal)
+            self.setTitleColor(color, for: when)
         }
+    }
+}
+
+// MARK: - UILabel extension
+extension UILabel {
+    func setTxtAttribute(_ title: String, size: CGFloat, weight: UIFont.Weight, txtColor: UIColor) {
+        self.text = title
+        self.font = UIFont.systemFont(ofSize: size, weight: weight)
+        self.textColor = txtColor
     }
 }

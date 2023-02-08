@@ -79,7 +79,7 @@ class Network {
     }
     
     // 책 검색(바코드) GET
-    func getBookSearch(isbn: String = "9788995151204", completion: @escaping (NetworkResult<Any>) -> Void) {
+    func getBookSearch(isbn: String, completion: @escaping (NetworkResult<Any>) -> Void) {
         let URL = baseUrl + "/search/book/1/?query=" + isbn
    
         let dataRequest = AF.request( URL,
