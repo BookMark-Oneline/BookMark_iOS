@@ -38,6 +38,7 @@ class ConfirmBookViewController: UIViewController {
     
     let network = Network()
     
+    var isbnValue: String = ""
     var bookTitle: String = ""
     var bookImageURL: String = ""
     var bookAuthor: String = ""
@@ -199,7 +200,7 @@ extension ConfirmBookViewController {
 // MARK: - 네트워크 용 extension
 extension ConfirmBookViewController {
     func getBookSearchAPI() {
-        network.getBookSearch { response in
+        network.getBookSearch(isbn: self.isbnValue) { response in
             switch response {
             case .success(let bookSearchData):
                 if let data = bookSearchData as? BookSearch {
