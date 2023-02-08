@@ -109,7 +109,7 @@ extension MyLibTab {
         
         // 북 추가 화면 연결
         if (item.label_title.text == "" && item.label_author.text == "" && item.tag == 0) {
-            self.navigationController?.pushViewControllerTabHidden(AddBookBarcode(), animated: true)
+            self.navigationController?.pushViewControllerTabHidden(AddBookBarcodeViewController(), animated: true)
         }
         
         // 책 세부 내용 화면 연결
