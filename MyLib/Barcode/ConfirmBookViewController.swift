@@ -6,8 +6,8 @@
 // Merge Again
 
 import SnapKit
-
 import UIKit
+import Kingfisher
 
 // MARK: - 책 확인 view controller
 class ConfirmBookViewController: UIViewController {
@@ -19,11 +19,12 @@ class ConfirmBookViewController: UIViewController {
         setConstraints()    
         getBookSearchAPI()
     }
-
+    let layout_book = UIView()
     let imageView = UIImageView()
     let titleLabel = UILabel()
     let authorLabel = UILabel()
     let publisherLabel = UILabel()
+    let label_summary = UILabel()
     let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -32,13 +33,14 @@ class ConfirmBookViewController: UIViewController {
     }()
     let descriptionTextView = UILabel()
     let showallButton = UIButton()
+    let showShortButton = UIButton()
     let contentView = UIView()
     let divideView = UIView()
     let upperDivideView = UIView()
     
     let network = Network()
     
-    var isbnValue: String = ""
+    var isbnValue: String = "9788995151204"
     var bookTitle: String = ""
     var bookImageURL: String = ""
     var bookAuthor: String = ""
@@ -49,21 +51,48 @@ class ConfirmBookViewController: UIViewController {
 
 }
 
+// MARK: - event 처리용 extension
 extension ConfirmBookViewController {
     @objc func addToCell(_ selector: UIBarButtonItem) {
-        // MARK: - todo: UIApplication에 데이터 저장할지 core data나 userDefaults 따로 쓸지
-        if let appdel = UIApplication.shared.delegate as? AppDelegate {
-            appdel.books.append([self.bookImageURL, self.bookTitle, self.bookAuthor])
-        }
-       
-        if (self.bookTitle.isEmpty || self.bookAuthor.isEmpty) {
+    if (self.bookTitle.isEmpty || self.bookAuthor.isEmpty) {
             self.view.makeToast("책 정보가 정확하지 않습니다.", duration: 2, position: .bottom)
             return
         }
         
         network.registerBooks(title: self.bookTitle, img_url: self.bookImageURL, author: self.bookAuthor, pubilsher: self.bookPublisher, isbn: self.bookIsbn, completion: {
-                self.navigationController?.popToRootViewController(animated: true)
+            if let appdel = UIApplication.shared.delegate as? AppDelegate {
+                // MARK: - BOOK ID 어떻게 처리 할지
+                appdel.books.append(["\(appdel.books.count + 1)", self.bookImageURL, self.bookTitle, self.bookAuthor])
+            }
+            self.navigationController?.popToRootViewController(animated: true)
         })
+    }
+    
+    @objc func didTapShowAll(_ sender: UIButton) {
+        self.showShortButton.isHidden = false
+        sender.isHidden = true
+        self.descriptionTextView.snp.remakeConstraints() { make in
+            make.leading.trailing.equalToSuperview().inset(23)
+            make.top.equalTo(label_summary.snp.bottom).offset(15)
+            make.height.equalTo(self.descriptionTextView.intrinsicContentSize.height)
+        }
+        scrollView.contentLayoutGuide.snp.remakeConstraints() { make in
+            make.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            make.height.equalTo(self.scrollView.frame.height + self.descriptionTextView.frame.height + 30)
+        }
+    }
+    
+    @objc func didTapShowShort(_ sender: UIButton) {
+        self.showallButton.isHidden = false
+        sender.isHidden = true
+        self.descriptionTextView.snp.remakeConstraints() { make in
+            make.leading.trailing.equalToSuperview().inset(23)
+            make.top.equalTo(label_summary.snp.bottom).offset(15)
+            make.height.equalTo(100)
+        }
+        scrollView.contentLayoutGuide.snp.remakeConstraints() { make in
+            make.edges.equalTo(self.view.safeAreaLayoutGuide)
+        }
     }
 
 }
@@ -74,8 +103,9 @@ extension ConfirmBookViewController {
     // Set Up Functions
     func setUpView() {
         self.view.addSubview(scrollView)
+        self.view.backgroundColor = .white
         scrollView.addSubview(contentView)
-        contentView.addSubviews(imageView, titleLabel, authorLabel, publisherLabel, descriptionTextView, showallButton, divideView, upperDivideView)
+        contentView.addSubviews(layout_book, titleLabel, authorLabel, publisherLabel, descriptionTextView, showallButton, showShortButton, divideView, upperDivideView, label_summary)
         setNavCustom()
     }
     
@@ -85,36 +115,53 @@ extension ConfirmBookViewController {
     }
     
     func setConstraints() {
-        scrollView.snp.makeConstraints { make in
-            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
-            make.bottom.equalTo(self.view.snp.bottom)
-            make.leading.equalTo(self.view.snp.leading)
-            make.trailing.equalTo(self.view.snp.trailing)
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.snp.makeConstraints() { make in
+            make.edges.equalTo(self.view.safeAreaLayoutGuide)
         }
-        scrollView.backgroundColor = UIColor(red: 0.961, green: 0.961, blue: 0.961, alpha: 1)
+        scrollView.contentLayoutGuide.snp.makeConstraints() { make in
+            make.edges.equalTo(self.view.safeAreaLayoutGuide)
+        }
+
+        contentView.snp.makeConstraints() { make in
+            make.edges.equalTo(scrollView.contentLayoutGuide)
+        }
         
         upperDivideView.snp.makeConstraints { make in
-            make.width.equalTo(83)
-            make.height.equalTo(4)
+            make.width.equalTo(50)
+            make.height.equalTo(5)
             make.top.equalTo(contentView.snp.top).offset(32)
             make.centerX.equalTo(contentView.snp.centerX)
         }
         upperDivideView.layer.cornerRadius = 2
         upperDivideView.backgroundColor = UIColor(red: 0.875, green: 0.875, blue: 0.875, alpha: 1)
         
-        imageView.snp.makeConstraints { make in
+        layout_book.snp.makeConstraints() { make in
+            make.top.equalTo(upperDivideView.snp.bottom).offset(11)
             make.width.equalTo(222)
             make.height.equalTo(307)
-            make.top.equalTo(upperDivideView.snp.bottom).offset(11)
-            make.centerX.equalTo(self.view.safeAreaLayoutGuide)
+            make.centerX.equalToSuperview()
         }
-        imageView.image = UIImage(named: "noBookImg")
-        imageView.backgroundColor = .systemBlue
-        imageView.layer.shadowColor = UIColor.black.cgColor
-        imageView.layer.masksToBounds = false
-        imageView.layer.shadowOffset = CGSize(width: 0, height: 4)
-        imageView.layer.shadowOpacity = 0.3
+        layout_book.layer.borderWidth = 1
+        layout_book.layer.borderColor = UIColor.clear.cgColor
+        layout_book.backgroundColor = .lightGray
+        layout_book.layer.cornerRadius = 6
+        layout_book.layer.shadowColor = UIColor.darkGray.cgColor
+        layout_book.layer.shadowRadius = 3
+        layout_book.layer.shadowOffset = CGSize(width: 1, height: 3)
+        layout_book.layer.masksToBounds = false
+        layout_book.layer.shadowOpacity = 0.5
+        layout_book.addSubview(imageView)
+        
+        imageView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+            make.size.equalToSuperview()
+        }
         imageView.layer.cornerRadius = 6
+        imageView.clipsToBounds = true
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFill
+        imageView.backgroundColor = .textLightGray
         
         titleLabel.snp.makeConstraints { make in
             make.width.equalTo(260)
@@ -140,34 +187,12 @@ extension ConfirmBookViewController {
         publisherLabel.snp.makeConstraints { make in
             make.width.equalTo(260)
             make.centerX.equalTo(authorLabel.snp.centerX)
-            make.top.equalTo(authorLabel.snp.bottom).offset(6)
+            make.top.equalTo(authorLabel.snp.bottom).offset(8)
         }
         publisherLabel.text = "출판사 정보가 없습니다."
         publisherLabel.font = .systemFont(ofSize: 14)
         publisherLabel.textColor = UIColor(red: 113/256, green: 113/256, blue: 113/256, alpha: 1)
         publisherLabel.textAlignment = .center
-        
-        descriptionTextView.snp.makeConstraints { make in
-            make.width.equalTo(344)
-            make.top.equalTo(publisherLabel.snp.bottom).offset(88)
-            make.centerX.equalTo(contentView.snp.centerX)
-        }
-        descriptionTextView.text = "설명이 없습니다."
-        descriptionTextView.font = .systemFont(ofSize: 14)
-        descriptionTextView.textColor = .black
-        descriptionTextView.textAlignment = .justified
-        descriptionTextView.numberOfLines = 4
-        
-        
-        contentView.snp.makeConstraints { make in
-            make.leading.equalTo(scrollView.snp.leading)
-            make.trailing.equalTo(scrollView.snp.trailing)
-            make.top.equalTo(scrollView.snp.top)
-            make.bottom.equalTo(scrollView.snp.bottom)
-            make.width.equalTo(scrollView.snp.width)
-            make.height.equalTo(670)
-        }
-        contentView.backgroundColor = .white
         
         divideView.snp.makeConstraints { make in
             make.leading.equalTo(contentView)
@@ -177,16 +202,38 @@ extension ConfirmBookViewController {
         }
         divideView.backgroundColor = UIColor(red: 0.961, green: 0.961, blue: 0.961, alpha: 1)
         
+        label_summary.snp.makeConstraints() { make in
+            make.top.equalTo(divideView.snp.bottom).offset(20)
+            make.leading.equalToSuperview().offset(23)
+        }
+        label_summary.sizeToFit()
+        label_summary.numberOfLines = 0
+        label_summary.setTxtAttribute("줄거리", size: 15, weight: .semibold, txtColor: .textBoldGray)
+        
+        descriptionTextView.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview().inset(23)
+            make.top.equalTo(label_summary.snp.bottom).offset(15)
+            make.height.equalTo(100)
+        }
+        descriptionTextView.sizeToFit()
+        descriptionTextView.setTxtAttribute("설명이 없습니다", size: 14, weight: .regular, txtColor: .black)
+        descriptionTextView.textAlignment = .justified
+        descriptionTextView.numberOfLines = 0
+        
         showallButton.snp.makeConstraints { make in
             make.trailing.equalTo(descriptionTextView.snp.trailing)
             make.top.equalTo(descriptionTextView.snp.bottom).offset(7)
-            
         }
-        showallButton.setTitle("전체 보기", for: .normal)
+        showallButton.setTitle("전체보기", size: 11, weight: .medium, color: .textGray)
+        showallButton.addTarget(self, action: #selector(didTapShowAll), for: .touchUpInside)
         
-        showallButton.setTitleColor(.gray, for: .normal)
-        showallButton.titleLabel?.font = .systemFont(ofSize: 11)
-
+        showShortButton.snp.makeConstraints() { make in
+            make.trailing.equalTo(descriptionTextView.snp.trailing)
+            make.top.equalTo(descriptionTextView.snp.bottom).offset(7)
+        }
+        showShortButton.setTitle("닫기", size: 11, weight: .medium, color: .textGray)
+        showShortButton.addTarget(self, action: #selector(didTapShowShort), for: .touchUpInside)
+        showShortButton.isHidden = true
     }
     
     func showContents() {
@@ -195,10 +242,12 @@ extension ConfirmBookViewController {
         
         bookDate.insert(".", at: bookDate.index(bookDate.startIndex, offsetBy: 4))
         bookDate.insert(".", at: bookDate.index(bookDate.startIndex, offsetBy: 7))
-        publisherLabel.text = "출판사 " + self.bookPublisher + "     발행일 " + bookDate
+        publisherLabel.text = "출판사  " + self.bookPublisher + "     발행일  " + bookDate
         
         descriptionTextView.text = self.bookDes
-        imageView.setImageUrl(url: self.bookImageURL)
+        imageView.kf.indicatorType = .activity
+        imageView.kf.setImage(with: URL(string: self.bookImageURL), placeholder: nil, options: [.transition(.fade(0.5)), .forceRefresh], completionHandler: nil)
+        //imageView.setImageUrl(url: self.bookImageURL)
     }
 }
 

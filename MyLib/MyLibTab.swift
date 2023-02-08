@@ -79,7 +79,6 @@ extension MyLibTab {
             return BookCollectionCell()
         }
         let book = self.books[indexPath.row]
-        print(book)
         
         if (book[0] == "0" && book[1] == "addbook") {
             cell.layout_img.image = UIImage(named: "addBook")
@@ -361,6 +360,7 @@ class BookCollectionCell: UICollectionViewCell {
         }
         layout_img.backgroundColor = .lightLightGray
         layout_img.layer.cornerRadius = 3
+        layout_img.clipsToBounds = true
         
         label_title.snp.makeConstraints() { make in
             make.leading.equalToSuperview().offset(4)
