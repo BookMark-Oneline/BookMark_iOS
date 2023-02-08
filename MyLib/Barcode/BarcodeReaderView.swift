@@ -11,7 +11,7 @@ import AVFoundation
 enum ReaderStatus {
     case success(_ code: String?)
     case fail
-//    case stop(_ isButtonTap: Bool)
+    case stop(_ isButtonTap: Bool)
 }
 
 protocol BarcodeReaderViewDelegate: AnyObject {
@@ -34,7 +34,6 @@ class BarcodeReaderView: UIView {
         return captureSession.isRunning
     }
 
-    // 입력 데이터 형태 : (미정, 바코드 종류 모름)
     let metadataObjectTypes: [AVMetadataObject.ObjectType] = [.upce, .code39, .code39Mod43, .code93, .code128, .ean8, .ean13, .aztec, .pdf417, .itf14, .dataMatrix, .interleaved2of5, .qr]
 
     override init(frame: CGRect) {
@@ -51,7 +50,6 @@ class BarcodeReaderView: UIView {
     
     private func initialSetupView() {
         self.clipsToBounds = true
-        // 캡처 세션 불러옴
         self.captureSession = AVCaptureSession()
         
         guard let videoCaptureDevice = AVCaptureDevice.default(for: .video) else {
@@ -109,7 +107,6 @@ class BarcodeReaderView: UIView {
     }
     
     private func setDimView() {
-// MARK: - ToDo - DimView 좌표...
         let path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: self.layer.frame.width, height: self.layer.frame.height), cornerRadius: 0)
         let shapePath = UIBezierPath(rect: CGRect(x: 50, y: self.layer.frame.height / 2 - 75, width: self.layer.frame.width - 100, height: 150))
 
@@ -119,7 +116,7 @@ class BarcodeReaderView: UIView {
         let fillLayer = CAShapeLayer()
         fillLayer.path = path.cgPath
         fillLayer.fillRule = .evenOdd
-        fillLayer.fillColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.6).cgColor
+        fillLayer.fillColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.3).cgColor
 
         self.layer.addSublayer(fillLayer)
     }
@@ -135,8 +132,7 @@ extension BarcodeReaderView {
     
     func stop(isButtonTap: Bool) {
         self.captureSession?.stopRunning()
-        
-        self.delegate?.readerComplete(status: .stop(isButtonTap))
+        self.delegate?.readerComplete(status: .stop(false))
     }
     
     func fail() {
