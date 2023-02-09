@@ -47,9 +47,13 @@ extension PostDetailViewController: UITableViewDelegate, UITableViewDataSource {
         if indexPath.row == 0 {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: MainPostCell.identifier, for: indexPath) as? MainPostCell else { return MainPostCell() }
             
+            cell.selectionStyle = .none
+            
             return cell
         } else {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: CommentCell.identfier, for: indexPath) as? CommentCell else { return CommentCell() }
+            
+            cell.selectionStyle = .none
             
             return cell
         }

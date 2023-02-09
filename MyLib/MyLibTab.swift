@@ -257,6 +257,7 @@ class MyLibTabView {
         label_time.snp.makeConstraints() { make in
             make.leading.equalTo(layout_circle.snp.trailing).offset(41)
             make.centerY.equalTo(label_books)
+            make.width.equalTo(72)
         }
         label_time.text = "연속"
         label_time.font = UIFont.systemFont(ofSize: 13)
@@ -267,8 +268,9 @@ class MyLibTabView {
         label_timecount.snp.makeConstraints() { make in
             make.centerX.equalTo(label_time)
             make.centerY.equalTo(label_bookcount)
+            make.width.equalTo(60)
         }
-        label_timecount.text = "15일"
+        label_timecount.text = "15일째"
         label_timecount.font = UIFont.boldSystemFont(ofSize: 16)
         label_timecount.textColor = .black
         label_timecount.textAlignment = .center

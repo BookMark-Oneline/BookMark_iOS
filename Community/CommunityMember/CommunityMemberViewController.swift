@@ -37,10 +37,14 @@ extension CommunityMemberViewController {
         if indexPath.row == 0 {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: GroupIdTableViewCell.identifier, for: indexPath) as? GroupIdTableViewCell else { return GroupIdTableViewCell() }
             
+            cell.selectionStyle = .none
+            
             return cell
             
         } else {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: MemeberTableViewCell.identifier, for: indexPath) as? MemeberTableViewCell else { return MemeberTableViewCell() }
+            
+            cell.selectionStyle = .none
             
             return cell
             
