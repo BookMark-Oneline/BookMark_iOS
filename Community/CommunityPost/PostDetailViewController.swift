@@ -24,7 +24,7 @@ class PostDetailViewController: UIViewController {
     
     func setNavCustom() {
         self.setNavigationCustom(title: "")
-        self.setNavigationImageButton(imageName: ["list"], action: [#selector(removePostButton)])
+        self.setNavigationImageButton(imageName: ["seeMore"], action: [#selector(removePostButton)])
     }
     
     @objc func removePostButton(_ sender: UIBarButtonItem) {
