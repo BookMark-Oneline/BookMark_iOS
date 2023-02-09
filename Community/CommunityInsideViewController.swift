@@ -11,6 +11,14 @@ import UIKit
 class CommunityInsideViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     let layout_post = Posts()
+    var selectedIndexPath = 0
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let selectedIndexPath = layout_post.layout_posts.indexPathForSelectedRow {
+            layout_post.layout_posts.deselectRow(at: selectedIndexPath, animated: animated)
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
