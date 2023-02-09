@@ -36,6 +36,9 @@
 		E82079462990B72A00B36FC9 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82079452990B72A00B36FC9 /* LoginView.swift */; };
 		E820794C2990BDB500B36FC9 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = E820794B2990BDB500B36FC9 /* back.png */; };
 		E820794E2990C68C00B36FC9 /* ribon.png in Resources */ = {isa = PBXBuildFile; fileRef = E820794D2990C68C00B36FC9 /* ribon.png */; };
+		E82079742994795800B36FC9 /* OneLineTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82079732994795800B36FC9 /* OneLineTabView.swift */; };
+		E82079762994797900B36FC9 /* CreateOneLineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82079752994797900B36FC9 /* CreateOneLineViewController.swift */; };
+		E820797829947DBC00B36FC9 /* backImg.png in Resources */ = {isa = PBXBuildFile; fileRef = E820797729947DBC00B36FC9 /* backImg.png */; };
 		E832390829879ABC00DC83C2 /* CommunityInsideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E832390729879ABC00DC83C2 /* CommunityInsideViewController.swift */; };
 		E8C2B4F1296A8915000E2030 /* MyLibTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8C2B4F0296A8915000E2030 /* MyLibTab.swift */; };
 		E8C2B4F5296A8A85000E2030 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8C2B4F4296A8A85000E2030 /* Colors.swift */; };
@@ -50,7 +53,6 @@
 		E8D5C3D329824114003D1AD0 /* SetCommunityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D5C3D229824114003D1AD0 /* SetCommunityViewController.swift */; };
 		E8D5C3D529824126003D1AD0 /* CreateCommunityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D5C3D429824126003D1AD0 /* CreateCommunityViewController.swift */; };
 		E8D5C3D729824130003D1AD0 /* CommunitySettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D5C3D629824130003D1AD0 /* CommunitySettingView.swift */; };
-		E8D5C3D9298269E7003D1AD0 /* CommunitySettingBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D5C3D8298269E7003D1AD0 /* CommunitySettingBaseViewController.swift */; };
 		E8D5C3DC29827056003D1AD0 /* CreatePostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D5C3DB29827056003D1AD0 /* CreatePostViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -88,6 +90,9 @@
 		E82079452990B72A00B36FC9 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		E820794B2990BDB500B36FC9 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
 		E820794D2990C68C00B36FC9 /* ribon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ribon.png; sourceTree = "<group>"; };
+		E82079732994795800B36FC9 /* OneLineTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneLineTabView.swift; sourceTree = "<group>"; };
+		E82079752994797900B36FC9 /* CreateOneLineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOneLineViewController.swift; sourceTree = "<group>"; };
+		E820797729947DBC00B36FC9 /* backImg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backImg.png; sourceTree = "<group>"; };
 		E832390729879ABC00DC83C2 /* CommunityInsideViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommunityInsideViewController.swift; sourceTree = "<group>"; };
 		E8C2B4F0296A8915000E2030 /* MyLibTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLibTab.swift; sourceTree = "<group>"; };
 		E8C2B4F4296A8A85000E2030 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
@@ -102,7 +107,6 @@
 		E8D5C3D229824114003D1AD0 /* SetCommunityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetCommunityViewController.swift; sourceTree = "<group>"; };
 		E8D5C3D429824126003D1AD0 /* CreateCommunityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCommunityViewController.swift; sourceTree = "<group>"; };
 		E8D5C3D629824130003D1AD0 /* CommunitySettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitySettingView.swift; sourceTree = "<group>"; };
-		E8D5C3D8298269E7003D1AD0 /* CommunitySettingBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitySettingBaseViewController.swift; sourceTree = "<group>"; };
 		E8D5C3DB29827056003D1AD0 /* CreatePostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePostViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -234,7 +238,6 @@
 			children = (
 				E8D5C3D229824114003D1AD0 /* SetCommunityViewController.swift */,
 				E8D5C3D429824126003D1AD0 /* CreateCommunityViewController.swift */,
-				E8D5C3D8298269E7003D1AD0 /* CommunitySettingBaseViewController.swift */,
 				E8D5C3D629824130003D1AD0 /* CommunitySettingView.swift */,
 			);
 			path = BookCommunitySettings;
@@ -257,7 +260,10 @@
 		E8D5C3DE29838299003D1AD0 /* OneLine */ = {
 			isa = PBXGroup;
 			children = (
+				E820797729947DBC00B36FC9 /* backImg.png */,
 				E8C2B4F6296A8CC5000E2030 /* OneLineTab.swift */,
+				E82079732994795800B36FC9 /* OneLineTabView.swift */,
+				E82079752994797900B36FC9 /* CreateOneLineViewController.swift */,
 			);
 			path = OneLine;
 			sourceTree = "<group>";
@@ -369,6 +375,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E820797829947DBC00B36FC9 /* backImg.png in Resources */,
 				245FED722983976400EE02B6 /* haerin.jpg in Resources */,
 				245FED712983976400EE02B6 /* myeongsoo.png in Resources */,
 				E820794C2990BDB500B36FC9 /* back.png in Resources */,
@@ -452,16 +459,17 @@
 				24E7942C2972BDD300E69633 /* CustomPopUp.swift in Sources */,
 				86C3C2B3296858370035CFFE /* SceneDelegate.swift in Sources */,
 				24D01FCB299395DB0045DC68 /* BookDetailView.swift in Sources */,
+				E82079762994797900B36FC9 /* CreateOneLineViewController.swift in Sources */,
 				E8D5C3D529824126003D1AD0 /* CreateCommunityViewController.swift in Sources */,
 				412DDC8429858E3C00F6CB22 /* CommunityMemberViewController.swift in Sources */,
 				E8C2B501296A93C2000E2030 /* Utils.swift in Sources */,
 				E8D5C3D329824114003D1AD0 /* SetCommunityViewController.swift in Sources */,
 				E8D5C3D729824130003D1AD0 /* CommunitySettingView.swift in Sources */,
+				E82079742994795800B36FC9 /* OneLineTabView.swift in Sources */,
 				24D01FC7299395BE0045DC68 /* AddBookBarcodeViewController.swift in Sources */,
 				24D01FC5299395AE0045DC68 /* SearchCommunityViewController.swift in Sources */,
 				86C3C2D3296E69630035CFFE /* ConfirmBookViewController.swift in Sources */,
 				E8C2B4FD296A8F6A000E2030 /* ScrapTab.swift in Sources */,
-				E8D5C3D9298269E7003D1AD0 /* CommunitySettingBaseViewController.swift in Sources */,
 				E8C2B4F7296A8CC5000E2030 /* OneLineTab.swift in Sources */,
 				E82079462990B72A00B36FC9 /* LoginView.swift in Sources */,
 				E8C2B4F1296A8915000E2030 /* MyLibTab.swift in Sources */,
@@ -615,10 +623,13 @@
 				DEVELOPMENT_TEAM = UKZF3A6P2B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BookMark/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "책갈피";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.books";
 				INFOPLIST_KEY_NSCameraUsageDescription = "책 바코드 인식을 위해 카메라 접근을 허용해주세요.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
@@ -647,10 +658,13 @@
 				DEVELOPMENT_TEAM = UKZF3A6P2B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BookMark/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "책갈피";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.books";
 				INFOPLIST_KEY_NSCameraUsageDescription = "책 바코드 인식을 위해 카메라 접근을 허용해주세요.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
