@@ -10,9 +10,9 @@ import UIKit
 
 //MARK: - 색 extension
 extension UIColor {
-    convenience init(red: Int, green: Int, blue:Int, a:Int = 0xFF){
+    convenience init(red: Int, green: Int, blue:Int, a:Int = 1){
         self.init(red: CGFloat(red) / 255.0, green: CGFloat(green) / 255.0,
-                  blue: CGFloat(blue) / 255.0, alpha: CGFloat(a) / 255.0)
+                  blue: CGFloat(blue) / 255.0, alpha: CGFloat(a))
     }
     
     convenience init(Hex: Int){

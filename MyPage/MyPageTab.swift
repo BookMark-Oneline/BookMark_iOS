@@ -153,6 +153,7 @@ class ProfileCell: UITableViewCell {
     }
     
     private func setBaseView() {
+        self.contentView.translatesAutoresizingMaskIntoConstraints = true
         self.contentView.snp.makeConstraints() { make in
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(175)

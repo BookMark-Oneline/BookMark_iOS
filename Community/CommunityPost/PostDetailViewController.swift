@@ -32,6 +32,7 @@ class PostDetailViewController: UIViewController {
         let report = UIAlertAction(title: "신고하기", style: .default)
         let remove = UIAlertAction(title: "삭제하기", style: .default, handler: { _ in
             // MARK: - todo 삭제 로직 구현
+            
         })
         let cancel = UIAlertAction(title: "취소", style: .cancel)
         alert.addAction(report)

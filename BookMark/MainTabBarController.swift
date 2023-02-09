@@ -24,7 +24,7 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
     }
     
     private func toastWelcomeMsg() {
-        self.view.makeToast("\(username)님 환영합니다!", duration: 1.5, point: CGPoint(x: (tabBar.frame.minX + tabBar.frame.maxX) / 2, y: tabBar.frame.minY - tabBar.frame.height - 30), title: nil, image: nil, completion: nil)
+        self.view.makeToast("\(username)님 환영합니다!", duration: 1.5, point: CGPoint(x: (tabBar.frame.minX + tabBar.frame.maxX) / 2, y: tabBar.frame.minY - tabBar.frame.height - 70), title: nil, image: nil, completion: nil)
     }
     
     // 탭 뷰 컨트롤러 설정
@@ -39,7 +39,7 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
         second.tabBarItem = secondBarItem
         second.tabBarItem.selectedImage = UIImage(named: "community_tab")
         
-        let third = OneLineTab()
+        let third = UINavigationController(rootViewController: OneLineTab())
         let thirdBarItem = UITabBarItem(title: "오늘 한줄", image: UIImage(named: "oneline_normal"), tag: 3)
         third.tabBarItem = thirdBarItem
         third.tabBarItem.selectedImage = UIImage(named: "oneline_tab")
@@ -55,6 +55,7 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
         fifth.tabBarItem.selectedImage = UIImage(named: "mypage_tab")
         
         self.viewControllers = [first, second, third, fourth, fifth]
+        self.selectedIndex = 2
     }
 
 }
