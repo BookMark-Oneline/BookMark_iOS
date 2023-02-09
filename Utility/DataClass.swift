@@ -33,6 +33,8 @@ class BookDetail: Decodable {
 class Shelf: Decodable {
     let ok: Bool
     let data: [BookInfo]
+//    let bookData: [BookInfo]
+//    let userData: [UserInfo]
 }
 
 class BookInfo: Decodable {
@@ -41,6 +43,14 @@ class BookInfo: Decodable {
     let author: String
     let img_url: String
 }
+
+//class UserInfo: Decodable {
+//    let user_id: Int
+//    let img_url: String
+//    let total_book: Int
+//    let streak: Int
+//    let goal: Int
+//}
 
 
 // MARK: - 책 검색 data struct
