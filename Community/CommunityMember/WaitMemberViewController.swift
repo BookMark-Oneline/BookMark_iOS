@@ -31,6 +31,8 @@ extension WaitMemberViewController {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "WaitMemberCell", for: indexPath) as? WaitMemeberTableViewCell else { return WaitMemeberTableViewCell() }
         
+        cell.selectionStyle = .none
+        
         return cell
     }
     
