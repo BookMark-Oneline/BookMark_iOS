@@ -59,12 +59,22 @@ extension MyLibTab {
             switch response {
             case .success(let shelf):
                 if let book = (shelf as? Shelf)?.data {
+//                if let book = (shelf as? Shelf)?.bookData {
                     book.forEach({ item in
                         self.books.append(["\(item.book_id)", item.img_url, item.title, item.author])
                         self.layout.layout_collection.layout_books.reloadData()
                     })
                     self.dataReload(status: 0)
                 }
+//                if let user = (shelf as? Shelf)?.userData {
+//                    user.forEach({ item in
+//                        print(item.goal)
+//                        print(item.img_url)
+//                        print(item.streak)
+//                        print(item.total_book)
+//                    })
+//                    self.dataReload(status: 0)
+//                }
             default:
                 print("failed")
             }
@@ -271,6 +281,7 @@ class MyLibTabView {
             make.width.equalTo(60)
         }
         label_timecount.text = "15일째"
+//        label_timecount.text = "\(streak)"
         label_timecount.font = UIFont.boldSystemFont(ofSize: 16)
         label_timecount.textColor = .black
         label_timecount.textAlignment = .center
