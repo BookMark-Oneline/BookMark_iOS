@@ -39,12 +39,16 @@ class SetTimeGoalViewController: UIViewController {
         self.timeGoalView.btn_update.isHidden = false
         sender.isHidden = true
         
+        UserDefaults.standard.set(time, forKey: "timeGoal")
+        UserDefaults.standard.synchronize()
+        
         self.view.makeToast("변경되었습니다", duration: 2, position: .bottom)
     }
 }
 
 // MARK: - 목표 독서 시간 설정 view
 class SetTimeGoalView {
+    var time: String = "0시간 0분"
     let layout_main = UIView()
     let line = UIView()
     let label_title = UILabel()
@@ -100,11 +104,13 @@ class SetTimeGoalView {
         
         label_nowGoal.snp.makeConstraints() { make in
             make.top.equalTo(label_subtitle.snp.bottom).offset(30)
-            //make.top.equalTo(timePicker.snp.bottom).offset(30)
             make.centerX.equalToSuperview()
         }
+        if let goal = UserDefaults.standard.string(forKey: "timeGoal") {
+            self.time = goal
+        }
         label_nowGoal.font = UIFont.systemFont(ofSize: 24, weight: .bold)
-        label_nowGoal.text = "현재 목표 독서 시간 : 4H 30M"
+        label_nowGoal.text = "현재 목표 독서 시간 : " + self.time
         
         btn_update.snp.makeConstraints() { make in
             make.top.equalTo(label_nowGoal.snp.bottom).offset(50)
