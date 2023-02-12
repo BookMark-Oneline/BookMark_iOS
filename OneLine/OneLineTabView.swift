@@ -91,7 +91,7 @@ class OneLineTabView {
         }
         label_name.sizeToFit()
         label_name.layer.zPosition = 999
-        label_name.setTxtAttribute("주먹밥쿵야", size: 14, weight: .semibold, txtColor: .white)
+        label_name.setTxtAttribute(UserInfo.shared.userName ?? "", size: 14, weight: .semibold, txtColor: .white)
 
         label_time.snp.makeConstraints() { make in
             make.centerY.equalTo(label_name)

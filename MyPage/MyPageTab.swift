@@ -160,7 +160,7 @@ class ProfileCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: "ProfileCell")
         setBaseView()
     }
-    
+
     private func setBaseView() {
         self.contentView.addSubviews(layout_circle, img_profile, label_name, label_message, btn_settingProfile, line)
         
@@ -188,7 +188,7 @@ class ProfileCell: UITableViewCell {
             make.top.equalToSuperview().offset(43)
             make.leading.equalTo(layout_circle.snp.trailing).offset(14)
         }
-        label_name.text = "독서왕페페"
+        label_name.text = UserInfo.shared.userName
         label_name.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         label_name.sizeToFit()
         
