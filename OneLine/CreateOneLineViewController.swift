@@ -34,13 +34,12 @@ class CreateOneLineViewController: UIViewController {
     }
     
     @objc func didTapPostButton(_ sender: UIBarButtonItem) {
-        self.createOneLineview.img_backgound.removeFromSuperview()
         self.userTextData = self.createOneLineview.txt_mainV.text
         if let rootVC = navigationController?.viewControllers.first as? OneLineTab {
             rootVC.txtUserData = self.userTextData
             rootVC.imgUserData = self.userImageData
         }
-        self.navigationController?.popToRootViewController(animated: true)
+        self.navigationController?.popToRootViewController(animated: false)
     }
     
     @objc func didTapSetImgButton(_ sender: UIButton) {
@@ -92,7 +91,6 @@ extension CreateOneLineViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        self.createOneLineview.img_backgound.removeFromSuperview()
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
@@ -162,7 +160,6 @@ class CreateOneLineView {
         img_backgound.snp.makeConstraints() { make in
             make.edges.equalToSuperview()
         }
-        img_backgound.backgroundColor = .clear
         img_backgound.contentMode = .scaleAspectFill
         img_backgound.layer.opacity = 0.8
         

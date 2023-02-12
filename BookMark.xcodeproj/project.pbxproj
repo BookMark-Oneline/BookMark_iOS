@@ -26,6 +26,7 @@
 		86C3C2B1296858370035CFFE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C3C2B0296858370035CFFE /* AppDelegate.swift */; };
 		86C3C2B3296858370035CFFE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C3C2B2296858370035CFFE /* SceneDelegate.swift */; };
 		86C3C2B5296858370035CFFE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C3C2B4296858370035CFFE /* ViewController.swift */; };
+		86C3C2B8296858370035CFFE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 86C3C2B6296858370035CFFE /* Main.storyboard */; };
 		86C3C2BA296858380035CFFE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 86C3C2B9296858380035CFFE /* Assets.xcassets */; };
 		86C3C2BD296858380035CFFE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 86C3C2BB296858380035CFFE /* LaunchScreen.storyboard */; };
 		86C3C2CD296D8CCC0035CFFE /* book.png in Resources */ = {isa = PBXBuildFile; fileRef = 86C3C2CC296D8CCC0035CFFE /* book.png */; };
@@ -39,7 +40,6 @@
 		E82079762994797900B36FC9 /* CreateOneLineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82079752994797900B36FC9 /* CreateOneLineViewController.swift */; };
 		E820797829947DBC00B36FC9 /* backImg.png in Resources */ = {isa = PBXBuildFile; fileRef = E820797729947DBC00B36FC9 /* backImg.png */; };
 		E832390829879ABC00DC83C2 /* CommunityInsideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E832390729879ABC00DC83C2 /* CommunityInsideViewController.swift */; };
-		E8C0535F299896A400CA5D8E /* UserClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8C0535E299896A400CA5D8E /* UserClass.swift */; };
 		E8C2B4F1296A8915000E2030 /* MyLibTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8C2B4F0296A8915000E2030 /* MyLibTab.swift */; };
 		E8C2B4F5296A8A85000E2030 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8C2B4F4296A8A85000E2030 /* Colors.swift */; };
 		E8C2B4F7296A8CC5000E2030 /* OneLineTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8C2B4F6296A8CC5000E2030 /* OneLineTab.swift */; };
@@ -78,6 +78,7 @@
 		86C3C2B0296858370035CFFE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		86C3C2B2296858370035CFFE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		86C3C2B4296858370035CFFE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		86C3C2B7296858370035CFFE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		86C3C2B9296858380035CFFE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		86C3C2BC296858380035CFFE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		86C3C2BE296858380035CFFE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -93,8 +94,6 @@
 		E82079752994797900B36FC9 /* CreateOneLineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOneLineViewController.swift; sourceTree = "<group>"; };
 		E820797729947DBC00B36FC9 /* backImg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backImg.png; sourceTree = "<group>"; };
 		E832390729879ABC00DC83C2 /* CommunityInsideViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommunityInsideViewController.swift; sourceTree = "<group>"; };
-		E8C0535D2998535000CA5D8E /* BookMark.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BookMark.entitlements; sourceTree = "<group>"; };
-		E8C0535E299896A400CA5D8E /* UserClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserClass.swift; sourceTree = "<group>"; };
 		E8C2B4F0296A8915000E2030 /* MyLibTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLibTab.swift; sourceTree = "<group>"; };
 		E8C2B4F4296A8A85000E2030 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		E8C2B4F6296A8CC5000E2030 /* OneLineTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneLineTab.swift; sourceTree = "<group>"; };
@@ -169,7 +168,6 @@
 		86C3C2AF296858370035CFFE /* BookMark */ = {
 			isa = PBXGroup;
 			children = (
-				E8C0535D2998535000CA5D8E /* BookMark.entitlements */,
 				E8C2B4F8296A8D6D000E2030 /* MainTabBarController.swift */,
 				245FED702983976400EE02B6 /* haerin.jpg */,
 				245FED6F2983976400EE02B6 /* myeongsoo.png */,
@@ -178,6 +176,7 @@
 				86C3C2B0296858370035CFFE /* AppDelegate.swift */,
 				86C3C2B2296858370035CFFE /* SceneDelegate.swift */,
 				86C3C2B4296858370035CFFE /* ViewController.swift */,
+				86C3C2B6296858370035CFFE /* Main.storyboard */,
 				86C3C2B9296858380035CFFE /* Assets.xcassets */,
 				86C3C2BB296858380035CFFE /* LaunchScreen.storyboard */,
 				86C3C2BE296858380035CFFE /* Info.plist */,
@@ -294,7 +293,6 @@
 				E8C2B4F4296A8A85000E2030 /* Colors.swift */,
 				24A21A382976EA2400AE8BF9 /* DataClass.swift */,
 				E8C2B500296A93C2000E2030 /* Utils.swift */,
-				E8C0535E299896A400CA5D8E /* UserClass.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -386,6 +384,7 @@
 				86C3C2CD296D8CCC0035CFFE /* book.png in Resources */,
 				86C3C2BA296858380035CFFE /* Assets.xcassets in Resources */,
 				E8C2B50F296AA576000E2030 /* pepe.jpg in Resources */,
+				86C3C2B8296858370035CFFE /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -473,7 +472,6 @@
 				E8C2B4FD296A8F6A000E2030 /* ScrapTab.swift in Sources */,
 				E8C2B4F7296A8CC5000E2030 /* OneLineTab.swift in Sources */,
 				E82079462990B72A00B36FC9 /* LoginView.swift in Sources */,
-				E8C0535F299896A400CA5D8E /* UserClass.swift in Sources */,
 				E8C2B4F1296A8915000E2030 /* MyLibTab.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -481,6 +479,14 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		86C3C2B6296858370035CFFE /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				86C3C2B7296858370035CFFE /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
 		86C3C2BB296858380035CFFE /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -612,10 +618,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = BookMark/BookMark.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = ZADA25JZ4A;
+				DEVELOPMENT_TEAM = UKZF3A6P2B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BookMark/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "책갈피";
@@ -623,6 +628,7 @@
 				INFOPLIST_KEY_NSCameraUsageDescription = "책 바코드 인식을 위해 카메라 접근을 허용해주세요.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -647,10 +653,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = BookMark/BookMark.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = ZADA25JZ4A;
+				DEVELOPMENT_TEAM = UKZF3A6P2B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BookMark/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "책갈피";
@@ -658,6 +663,7 @@
 				INFOPLIST_KEY_NSCameraUsageDescription = "책 바코드 인식을 위해 카메라 접근을 허용해주세요.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";

@@ -166,7 +166,7 @@ extension ReadingTime {
         if (shouldPostTimerStart) {
             stopwatchView.circleAnimate()
             shouldPostTimerStart = false
-            network.postTimerStart(completion: {
+            network.timerStart(completion: {
                 print("---[POST] TIMER START---")
             })
         }
@@ -198,7 +198,7 @@ extension ReadingTime {
         self.timerLabel.text = "00 : 00"
         
 // MARK: - TimerStop POST
-        network.postTimerStop(completion: {
+        network.timerStop(completion: {
             print("---[POST] TIMER STOP---")
 //            print("Histories : \(self.timeHistories)")
         })

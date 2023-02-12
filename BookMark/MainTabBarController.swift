@@ -10,19 +10,21 @@ import Toast_Swift
 
 // MARK: - 앱 메인 화면
 class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
+    let username: String = "김독서"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
         tabBar.tintColor = .white
         tabBar.tintColor = .textOrange
         tabBar.unselectedItemTintColor = .textBoldGray
-
+        
         setViewController()
         toastWelcomeMsg()
     }
     
     private func toastWelcomeMsg() {
-        self.view.makeToast((UserInfo.shared.userName ?? "") + "님 환영합니다!", duration: 1.5, point: CGPoint(x: (tabBar.frame.minX + tabBar.frame.maxX) / 2, y: tabBar.frame.minY - tabBar.frame.height - 70), title: nil, image: nil, completion: nil)
+        self.view.makeToast("\(username)님 환영합니다!", duration: 1.5, point: CGPoint(x: (tabBar.frame.minX + tabBar.frame.maxX) / 2, y: tabBar.frame.minY - tabBar.frame.height - 70), title: nil, image: nil, completion: nil)
     }
     
     // 탭 뷰 컨트롤러 설정

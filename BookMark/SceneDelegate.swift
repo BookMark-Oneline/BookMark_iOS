@@ -6,62 +6,17 @@
 //
 
 import UIKit
-import AuthenticationServices
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
+
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        guard let windowScene = (scene as? UIWindowScene) else { return }
-        let window = UIWindow(windowScene: windowScene)
-        window.rootViewController = LoginViewController()
-        self.window = window
-        window.makeKeyAndVisible()
-//        let appleIDProvider = ASAuthorizationAppleIDProvider()
-//        if let userIdentifier = UserDefaults.standard.string(forKey: "userIdentifier") {
-//            appleIDProvider.getCredentialState(forUserID: userIdentifier) { (credentialState, error) in
-//                    switch credentialState {
-//                    case .authorized:
-//                        DispatchQueue.main.async {
-//                            let window = UIWindow(windowScene: windowScene)
-//                            window.rootViewController = MainTabBarController()
-//                            self.window = window
-//                            window.makeKeyAndVisible()
-//                        }
-//                        print("authorized")
-//                    case .notFound:
-//                        print("not found")
-//                    case .revoked:
-//                        print("revoked")
-//                    default:
-//                        DispatchQueue.main.async {
-//                            let window = UIWindow(windowScene: windowScene)
-//                            window.rootViewController = LoginViewController()
-//                            self.window = window
-//                            window.makeKeyAndVisible()
-//                        }
-//                        print("failed")
-//                    }
-//                }
-//        }
-//        else {
-//            print("new")
-//            let window = UIWindow(windowScene: windowScene)
-//            window.rootViewController = LoginViewController()
-//            self.window = window
-//            window.makeKeyAndVisible()
-//        }
-//
-//        NotificationCenter.default.addObserver(forName: ASAuthorizationAppleIDProvider.credentialRevokedNotification, object: nil, queue: nil) { (Notification) in
-//            DispatchQueue.main.async {
-//
-//                let window = UIWindow(windowScene: windowScene)
-//                window.rootViewController = LoginViewController()
-//                self.window = window
-//                window.makeKeyAndVisible()
-//            }
-//        }
+        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
+        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
+        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
+        guard let _ = (scene as? UIWindowScene) else { return }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

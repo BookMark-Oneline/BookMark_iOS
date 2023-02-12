@@ -8,7 +8,6 @@
 import UIKit
 import SnapKit
 import Pastel
-import AuthenticationServices
 
 // MARK: - 로그인 뷰
 class LoginView {
@@ -17,7 +16,7 @@ class LoginView {
     let img_ribon = UIImageView()
     let img_mainlogo = UIImageView()
     let label_startService = UILabel()
-    let btn_appleLogin = ASAuthorizationAppleIDButton(type: .signIn, style: .whiteOutline)
+    let btn_appleLogin = UIButton()
     let label_loginProblem = UILabel()
     
     func initViews(_ superView: UIView) {
@@ -85,7 +84,12 @@ class LoginView {
         btn_appleLogin.snp.makeConstraints() { make in
             make.top.equalTo(label_startService.snp.bottom).offset(16)
             make.centerX.equalToSuperview()
+            make.width.equalTo(209)
+            make.height.equalTo(38)
         }
+        btn_appleLogin.backgroundColor = .textLightGray
+        btn_appleLogin.layer.cornerRadius = 20
+        btn_appleLogin.setTitle("애플로 시작하기", for: .normal)
         
         label_loginProblem.snp.makeConstraints() { make in
             make.centerX.equalToSuperview()

@@ -11,6 +11,7 @@ import Kingfisher
 
 // MARK: - 나의 서재 탭
 class MyLibTab: UIViewController, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+    
     let layout = MyLibTabView()
     let network = Network()
     
@@ -18,7 +19,7 @@ class MyLibTab: UIViewController, UICollectionViewDelegate, UICollectionViewDele
     override func viewDidLoad() {
         super.viewDidLoad()
         getShelfData()
-        
+
         layout.layout_collection.layout_books.delegate = self
         layout.layout_collection.layout_books.dataSource = self
     }
@@ -241,7 +242,7 @@ class MyLibTabView {
             make.top.equalTo(layout_circle.snp.bottom).offset(10)
             make.centerX.equalTo(layout_circle)
         }
-        label_name.text = UserInfo.shared.userName
+        label_name.text = "페페"
         label_name.font = UIFont.systemFont(ofSize: 15)
         label_name.sizeToFit()
         

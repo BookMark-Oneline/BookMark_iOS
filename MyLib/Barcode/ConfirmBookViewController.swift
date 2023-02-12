@@ -59,7 +59,7 @@ extension ConfirmBookViewController {
             return
         }
         
-        network.postRegisterBooks(title: self.bookTitle, img_url: self.bookImageURL, author: self.bookAuthor, pubilsher: self.bookPublisher, isbn: self.bookIsbn, completion: {
+        network.registerBooks(title: self.bookTitle, img_url: self.bookImageURL, author: self.bookAuthor, pubilsher: self.bookPublisher, isbn: self.bookIsbn, completion: {
             if let appdel = UIApplication.shared.delegate as? AppDelegate {
                 // MARK: - BOOK ID 어떻게 처리 할지
                 appdel.books.append(["\(appdel.books.count + 1)", self.bookImageURL, self.bookTitle, self.bookAuthor])
