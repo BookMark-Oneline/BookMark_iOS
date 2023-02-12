@@ -10,7 +10,6 @@ import UIKit
 // MARK: - 오늘 한줄 탭
 class OneLineTab: UIViewController {
     let oneLineView = OneLineTabView()
-    
     var txtUserData: String = "사랑에는 늘 약간의 망상이 들어 있다.\n\n차라투스트라는 이렇게 말했다, 프리드리히 니체"
     var imgUserData: UIImage? = UIImage(named: "backImg")
     

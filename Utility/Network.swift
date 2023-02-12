@@ -14,7 +14,7 @@ class Network {
     let baseUrl = "https://port-0-server-nodejs-1ih8d2gld1khslm.gksl2.cloudtype.app"
     
     // 책 등록 POST
-    func registerBooks(title: String, img_url: String, author: String, pubilsher: String, isbn: String, completion: @escaping (() -> Void)) {
+    func postRegisterBooks(title: String, img_url: String, author: String, pubilsher: String, isbn: String, completion: @escaping (() -> Void)) {
         let params: Parameters = ["title": title, "img_url": img_url, "author": author, "publisher": pubilsher, "isbn": isbn]
         
         let URL = baseUrl + "/register/book/1"
@@ -103,7 +103,7 @@ class Network {
     }
 
     // timer 시작 post
-    func timerStart(completion: @escaping (() -> Void)) {
+    func postTimerStart(completion: @escaping (() -> Void)) {
         let URL = baseUrl + "/timer/start/1/2"
         let dataRequest = AF.request( URL,
                                       method: .post,
@@ -125,7 +125,7 @@ class Network {
     }
     
     // timer 종료 post
-    func timerStop(completion: @escaping (() -> Void)) {
+    func postTimerStop(completion: @escaping (() -> Void)) {
         let params: Parameters = [
             "total_reading_time": 1000,
             "current_reading_time": 100
@@ -152,6 +152,30 @@ class Network {
             completion()
         })
     }
+    
+    // Apple Login identity token post
+    func postAppleLoginIdentityToken(identityToken: String, completion: @escaping (NetworkResult<Any>) -> Void) {
+        let params: Parameters = ["identityToken": identityToken]
+        
+        let URL = baseUrl + "/apple/auth"
+        let datarequest = AF.request(URL, method: .post, parameters: params, encoding: JSONEncoding.default).validate()
+        
+        datarequest.responseData(completionHandler: { response in
+            switch response.result {
+            case .success:
+                guard let value = response.value else {return}
+                guard let rescode = response.response?.statusCode else {return}
+                
+                let networkResult = self.judgeStatus(object: 3, by: rescode, value)
+                completion(networkResult)
+                
+            case .failure(let e):
+                print(e)
+                completion(.pathErr)
+            }
+        
+        })
+    }
 }
 
 // MARK: - NetworkResult 용 extension
@@ -172,7 +196,7 @@ extension Network {
                 return isValidData_BookDetail(data: data)
             }
             else {
-                return .pathErr
+                return .success(data)
             }
         case 400: return .pathErr // 요청이 잘못됨
         case 500: return .serverErr // 서버 에러

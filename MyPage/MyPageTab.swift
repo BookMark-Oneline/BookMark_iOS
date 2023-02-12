@@ -120,6 +120,15 @@ extension MyPageTab: UITableViewDataSource, UITableViewDelegate {
         }
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        switch indexPath.row {
+        case 0:
+            return 175
+        default:
+            return 57
+        }
+    }
+    
     private func setCellAttribute(_ sender: UITableViewCell, title: String, isButton: Bool, isSwitch: Bool, txtColor: UIColor = .black) {
         guard let cell = sender as? MyPageCell else {return}
         cell.selectionStyle = .none
@@ -151,13 +160,8 @@ class ProfileCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: "ProfileCell")
         setBaseView()
     }
-    
+
     private func setBaseView() {
-        self.contentView.translatesAutoresizingMaskIntoConstraints = true
-        self.contentView.snp.makeConstraints() { make in
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(175)
-        }
         self.contentView.addSubviews(layout_circle, img_profile, label_name, label_message, btn_settingProfile, line)
         
         layout_circle.snp.makeConstraints() { make in
@@ -184,7 +188,7 @@ class ProfileCell: UITableViewCell {
             make.top.equalToSuperview().offset(43)
             make.leading.equalTo(layout_circle.snp.trailing).offset(14)
         }
-        label_name.text = "독서왕페페"
+        label_name.text = UserInfo.shared.userName
         label_name.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         label_name.sizeToFit()
         
@@ -237,10 +241,6 @@ class MyPageCell: UITableViewCell {
     }
     
     private func setBaseView() {
-        self.contentView.snp.makeConstraints() { make in
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(57)
-        }
         self.contentView.addSubviews(btn, switchs, title)
 
         btn.snp.makeConstraints() { make in
