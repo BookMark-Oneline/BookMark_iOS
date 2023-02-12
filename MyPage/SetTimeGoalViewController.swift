@@ -79,8 +79,8 @@ class SetTimeGoalView {
         label_title.sizeToFit()
         label_title.numberOfLines = 0
         label_title.font = UIFont.systemFont(ofSize: 24, weight: .semibold)
-        let str = NSMutableAttributedString(string: "목표 독서 시간을\n설정하세요")
-        str.addAttribute(.foregroundColor, value: UIColor.textOrange, range: NSRange(location: 3, length: 5))
+        let str = NSMutableAttributedString(string: "일일 목표 독서 시간을\n설정하세요")
+        str.addAttribute(.foregroundColor, value: UIColor.textOrange, range: NSRange(location: 6, length: 5))
         label_title.attributedText = str
         
         label_subtitle.snp.makeConstraints() { make in
