@@ -48,3 +48,20 @@ class CommunityUserList: Decodable {
     let now_reading: Int
     let introduce_message: String
 }
+
+// MARK: - 책 모임 가입 요청 data class
+class CommunityJoinRequest: Decodable {
+    let club_id: [ClubID]
+    let membersRequesting: [RequestList]
+}
+
+class ClubID: Decodable {
+    let club_id: Int
+}
+
+class RequestList: Decodable {
+    let user_id: Int
+    let introduce_message: String
+    let user_name: String
+    let img_url: String
+}

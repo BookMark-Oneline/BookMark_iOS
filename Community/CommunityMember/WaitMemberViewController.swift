@@ -7,12 +7,15 @@
 import UIKit
 
 class WaitMemberViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-
-    let layout_waits = WaitMembers()
+    let network = Network()
+    let layout_waits = WaitMembersView()
+    var clubID: Int = 1
+    private var requestList = [[String]]() // [프로필 사진, 이름, 소개말]
 
     override func viewDidLoad() {
         super.viewDidLoad()
         naviLayout()
+        getRequestList()
         
         layout_waits.initView(view: self.view)
         layout_waits.layout_waits.delegate = self
@@ -31,13 +34,16 @@ extension WaitMemberViewController {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "WaitMemberCell", for: indexPath) as? WaitMemeberTableViewCell else { return WaitMemeberTableViewCell() }
         
-        cell.selectionStyle = .none
+        print(self.requestList.count)
+        cell.layout_avatarImg.setImageUrl(url: requestList[indexPath.row][0])
+        cell.label_name.text = requestList[indexPath.row][1]
+        cell.label_introduce.text = requestList[indexPath.row][2]
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return self.requestList.count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -45,8 +51,26 @@ extension WaitMemberViewController {
     }
 }
 
+// MARK: - 네트워크 용 extension
+extension WaitMemberViewController {
+    func getRequestList() {
+        network.getCommunityJoinRequestList(clubID: self.clubID, completion: { res in
+            switch res {
+            case .success(let members):
+                guard let member = (members as? CommunityJoinRequest)?.membersRequesting else {return}
+                member.forEach { item in
+                    self.requestList.append([item.img_url, item.user_name, item.introduce_message])
+                }
+                self.layout_waits.layout_waits.reloadData()
+            default:
+                print("failed")
+            }
+        })
+    }
+}
+
 // MARK: - TableView Layout
-class WaitMembers {
+class WaitMembersView {
     var layout_waits: UITableView = {
         let layout_waits = UITableView()
         layout_waits.register(WaitMemeberTableViewCell.self, forCellReuseIdentifier: WaitMemeberTableViewCell.identifier)
@@ -77,6 +101,7 @@ class WaitMemeberTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.selectionStyle = .none
         addSubviews(layout_avatarImg, label_introduce, label_name, button_deny, button_accept)
         
         layout_avatarImg.snp.makeConstraints{ make in
@@ -96,7 +121,7 @@ class WaitMemeberTableViewCell: UITableViewCell {
             make.left.equalTo(layout_avatarImg.snp.right).offset(10)
             make.top.equalToSuperview().offset(25)
         }
-        label_name.text = "NickName"
+        label_name.text = "이름없음"
         label_name.font = .systemFont(ofSize: 16)
         label_name.textColor = .black
         label_name.lineBreakMode = .byTruncatingTail
@@ -107,7 +132,7 @@ class WaitMemeberTableViewCell: UITableViewCell {
             make.left.equalTo(label_name.snp.left)
             make.top.equalTo(label_name.snp.bottom).offset(5)
         }
-        label_introduce.text = "This is introduce"
+        label_introduce.text = "소개없음"
         label_introduce.font = .systemFont(ofSize: 12)
         label_introduce.textColor = .textGray
         label_introduce.lineBreakMode = .byTruncatingTail

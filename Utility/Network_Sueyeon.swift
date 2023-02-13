@@ -99,6 +99,28 @@ extension Network {
         })
     }
     
+    // API 2-6: 책 모임 가입 요청자 조회
+    func getCommunityJoinRequestList(clubID: Int, completion: @escaping (NetworkResult<Any>) -> Void) {
+        let URL = baseUrl + "/club/members/request/\(clubID)"
+        let datarequest = AF.request(URL, method: .get, encoding: JSONEncoding.default)
+        
+        datarequest.responseData(completionHandler: { res in
+            switch res.result {
+            case .success:
+                guard let value = res.value else {return}
+                guard let rescode = res.response?.statusCode else {return}
+                
+                let networkResult = self.tempJudgeStatus(object: 6, by: rescode, value)
+                completion(networkResult)
+                
+            case .failure(let e):
+                print(e)
+                completion(.pathErr)
+            }
+            
+        })
+    }
+    
     private func tempJudgeStatus(object: Int = 0, by statusCode: Int, _ data: Data) -> NetworkResult<Any> {
         switch statusCode {
         case 200:
@@ -113,6 +135,10 @@ extension Network {
             // API 2-5
             else if (object == 5) {
                 return isValidData_CommunityUserList(data: data)
+            }
+            // API 2-6
+            else if (object == 6) {
+                return isValidData_CommunityUserRequest(data: data)
             }
             else {
                 return .success(data)
@@ -145,6 +171,16 @@ extension Network {
         let decoder = JSONDecoder()
         
         guard let decodedData = try? decoder.decode([CommunityUserList].self, from: data) else {
+            return .decodeFail
+        }
+    
+        return .success(decodedData)
+    }
+    
+    private func isValidData_CommunityUserRequest(data: Data) -> NetworkResult<Any> {
+        let decoder = JSONDecoder()
+        
+        guard let decodedData = try? decoder.decode(CommunityJoinRequest.self, from: data) else {
             return .decodeFail
         }
     
