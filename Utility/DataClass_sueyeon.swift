@@ -41,3 +41,10 @@ class CommunityData: Decodable {
     let club_invite_option: Int
     let max_people_num: Int
 }
+
+// MARK: - 책 모임 멤버 data class
+class CommunityUserList: Decodable {
+    let user_id: Int
+    let now_reading: Int
+    let introduce_message: String
+}

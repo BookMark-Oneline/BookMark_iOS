@@ -8,17 +8,19 @@ import UIKit
 import SnapKit
 
 class CommunityMemberViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-
-    let layout_member = Members()
+    var clubID: Int = 1
+    let network = Network()
+    let layout_member = CommunityMemberView()
+    private var memberList = [[String]]() // [user id, now reading, message]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setNavCustom()
+        getCommunityMember()
         
         layout_member.initViews(view: self.view)
         layout_member.layout_members.dataSource = self
         layout_member.layout_members.delegate = self
-        
     }
     
     func setNavCustom() {
@@ -29,43 +31,69 @@ class CommunityMemberViewController: UIViewController, UITableViewDelegate, UITa
     @objc func pushJoinCommunityRequest(_ sender: UIBarButtonItem) {
         self.navigationController?.pushViewController(WaitMemberViewController(), animated: true)
     }
-
 }
+
 // MARK: - TableView Datasource & Delegate
 extension CommunityMemberViewController {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == 0 {
+        switch indexPath.row {
+        case 0:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: GroupIdTableViewCell.identifier, for: indexPath) as? GroupIdTableViewCell else { return GroupIdTableViewCell() }
-            
-            cell.selectionStyle = .none
-            
             return cell
-            
-        } else {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: MemeberTableViewCell.identifier, for: indexPath) as? MemeberTableViewCell else { return MemeberTableViewCell() }
-            
-            cell.selectionStyle = .none
-            
+
+        default:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: MemeberTableViewCell.identifier, for: indexPath) as? MemeberTableViewCell else {
+                return MemeberTableViewCell() }
+
+            if (self.memberList.count == 0) {return cell}
+
+            cell.label_name.text = self.memberList[indexPath.row - 1][0]
+            cell.label_introduce.text = self.memberList[indexPath.row - 1][2]
+            if (self.memberList[indexPath.row - 1][1] == "0") {
+                cell.layout_isReadingImg.image = UIImage(named: "bookmark_unclicked")
+            }
+            else {
+                cell.layout_isReadingImg.image = UIImage(named: "bookmark_clicked")
+            }
+
             return cell
-            
         }
     }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+
+    func tableView(_ tableViesw: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.memberList.count + 1
     }
-    
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == 0 {
+        switch indexPath.row {
+        case 0:
             return 35
-        } else {
-            return 90
+        default:
+            return 99
         }
+    }
+}
+
+// MARK: - 네트워크 용 extension
+extension CommunityMemberViewController {
+    func getCommunityMember() {
+        network.getCommunityUserInfo(clubID: self.clubID, completion: { res in
+            switch res {
+            case .success(let members):
+                guard let member = (members as? [CommunityUserList]) else {return}
+                member.forEach { item in
+                    self.memberList.append(["\(item.user_id)", "\(item.now_reading)", item.introduce_message])
+                }
+                self.layout_member.layout_members.reloadData()
+            default:
+                print("failed")
+            }
+        })
     }
 }
 
 // MARK: - Performing TableView
-class Members {
+class CommunityMemberView {
     var layout_members: UITableView = {
         let layout_memebers = UITableView()
         layout_memebers.backgroundColor = .white
@@ -86,8 +114,6 @@ class Members {
     }
 }
 
-
-
 // MARK: - Member Cell Layout
 class MemeberTableViewCell: UITableViewCell {
     static let identifier = "MemberCell"
@@ -98,6 +124,7 @@ class MemeberTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.selectionStyle = .none
         addSubviews(layout_avatarImg, label_name, label_introduce, layout_isReadingImg)
         
         layout_avatarImg.snp.makeConstraints{ make in
@@ -117,7 +144,7 @@ class MemeberTableViewCell: UITableViewCell {
             make.left.equalTo(layout_avatarImg.snp.right).offset(10)
             make.top.equalToSuperview().offset(25)
         }
-        label_name.text = "Nick Name"
+        label_name.text = "이름없음"
         label_name.font = .systemFont(ofSize: 16)
         label_name.textColor = .black
         label_name.lineBreakMode = .byTruncatingTail
@@ -128,7 +155,7 @@ class MemeberTableViewCell: UITableViewCell {
             make.left.equalTo(label_name.snp.left)
             make.top.equalTo(label_name.snp.bottom).offset(5)
         }
-        label_introduce.text = "This is introduce"
+        label_introduce.text = "소개없음"
         label_introduce.font = .systemFont(ofSize: 12)
         label_introduce.textColor = .textGray
         label_introduce.lineBreakMode = .byTruncatingTail
@@ -139,14 +166,13 @@ class MemeberTableViewCell: UITableViewCell {
             make.centerY.equalToSuperview()
             make.right.equalToSuperview().offset(-22)
         }
-        layout_isReadingImg.image = UIImage(named: "bookmark_clicked")
+        layout_isReadingImg.image = UIImage(named: "bookmark_unclicked")
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
-
 
 // MARK: - Group ID Cell Layout
 class GroupIdTableViewCell: UITableViewCell {
@@ -156,6 +182,7 @@ class GroupIdTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.selectionStyle = .none
         addSubviews(label_title, label_groupId)
         
         label_title.snp.makeConstraints { make in
@@ -175,8 +202,6 @@ class GroupIdTableViewCell: UITableViewCell {
         label_groupId.snp.makeConstraints { make in
             make.centerY.equalTo(label_title)
             make.left.equalTo(label_title.snp.right).offset(11)
-            make.right.equalToSuperview()
-            make.height.equalTo(15)
         }
         label_groupId.text = "5S75FFG42"
         label_groupId.textColor = .black
