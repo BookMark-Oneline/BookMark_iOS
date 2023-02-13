@@ -19,7 +19,7 @@ class PostDetailViewController: UIViewController {
     private var userName: String?
     private var likeNum: Int?
     private var commentNum: Int?
-    private var comment: [[String]]?    // [이름, 댓글 내용]
+    private var comment = [[String]]()    // [이름, 댓글 내용]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,17 +69,16 @@ extension PostDetailViewController: UITableViewDelegate, UITableViewDataSource {
             return cell
         } else {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: CommentCell.identfier, for: indexPath) as? CommentCell else { return CommentCell() }
-            guard let commentData = self.comment?[indexPath.row] else {return cell}
-            
-            cell.label_author.text = commentData[0]
-            cell.label_context.text = commentData[1]
+
+            cell.label_author.text = self.comment[indexPath.row - 1][0]
+            cell.label_context.text = self.comment[indexPath.row - 1][1]
             
             return cell
         }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (self.comment?.count ?? 0) + 1
+        return self.comment.count + 1
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -108,7 +107,7 @@ extension PostDetailViewController {
                 self.commentNum = post.comment_num
                 
                 comment.forEach { item in
-                    self.comment?.append([item.user_name, item.comment_content_text])
+                    self.comment.append([item.user_name, item.comment_content_text])
                 }
                 self.layout_postDetail.layout_postDetail.reloadData()
             default:
