@@ -11,7 +11,8 @@ import Alamofire
 // MARK: - 네트워킹 용 클래스 나중에 싱글톤으로 만들기
 class Network {
     // base Url
-    let baseUrl = "https://3.38.182.237:3000"
+    //let baseUrl = "https://3.38.182.237:3000"
+    let baseUrl = "http://onve.synology.me"
     
     // 책 등록 POST
     func postRegisterBooks(title: String, img_url: String, author: String, pubilsher: String, isbn: String, completion: @escaping (() -> Void)) {
@@ -35,13 +36,13 @@ class Network {
     
     // 책 세부내용 조회 GET
     func getBookDetail(bookId: String, completion: @escaping (NetworkResult<Any>) -> Void) {
-  
         let URL = baseUrl + "/shelf/book/" + bookId
         let datarequest = AF.request(URL, method: .get, encoding: JSONEncoding.default)
         
         datarequest.responseData(completionHandler: { res in
             switch res.result {
             case .success:
+                print("yes")
                 guard let value = res.value else {return}
                 guard let rescode = res.response?.statusCode else {return}
                 
@@ -58,7 +59,7 @@ class Network {
     
     // 서재 조회 GET
     func getShelf(completion: @escaping (NetworkResult<Any>) -> Void) {
-        let URL = baseUrl + "/shelf/1"
+        let URL = baseUrl + "/shelf/\(UserInfo.shared.userID)"
         let datarequest = AF.request(URL, method: .get, encoding: JSONEncoding.default)
         
         datarequest.responseData(completionHandler: {res in
@@ -225,7 +226,7 @@ extension Network {
     private func isValidData_BookDetail(data: Data) -> NetworkResult<Any> {
         let decoder = JSONDecoder()
         
-        guard let decodedData = try? decoder.decode([BookDetail].self, from: data) else {
+        guard let decodedData = try? decoder.decode(BookDetail.self, from: data) else {
             return .decodeFail
         }
 
