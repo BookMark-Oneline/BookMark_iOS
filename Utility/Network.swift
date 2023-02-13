@@ -36,13 +36,13 @@ class Network {
     
     // 책 세부내용 조회 GET
     func getBookDetail(bookId: String, completion: @escaping (NetworkResult<Any>) -> Void) {
-  
         let URL = baseUrl + "/shelf/book/" + bookId
         let datarequest = AF.request(URL, method: .get, encoding: JSONEncoding.default)
         
         datarequest.responseData(completionHandler: { res in
             switch res.result {
             case .success:
+                print("yes")
                 guard let value = res.value else {return}
                 guard let rescode = res.response?.statusCode else {return}
                 
@@ -226,7 +226,7 @@ extension Network {
     private func isValidData_BookDetail(data: Data) -> NetworkResult<Any> {
         let decoder = JSONDecoder()
         
-        guard let decodedData = try? decoder.decode([BookDetail].self, from: data) else {
+        guard let decodedData = try? decoder.decode(BookDetail.self, from: data) else {
             return .decodeFail
         }
 
