@@ -11,7 +11,8 @@ import Alamofire
 // MARK: - 네트워킹 용 클래스 나중에 싱글톤으로 만들기
 class Network {
     // base Url
-    let baseUrl = "https://3.38.182.237:3000"
+    //let baseUrl = "https://3.38.182.237:3000"
+    let baseUrl = "http://onve.synology.me"
     
     // 책 등록 POST
     func postRegisterBooks(title: String, img_url: String, author: String, pubilsher: String, isbn: String, completion: @escaping (() -> Void)) {
@@ -58,7 +59,7 @@ class Network {
     
     // 서재 조회 GET
     func getShelf(completion: @escaping (NetworkResult<Any>) -> Void) {
-        let URL = baseUrl + "/shelf/1"
+        let URL = baseUrl + "/shelf/\(UserInfo.shared.userID)"
         let datarequest = AF.request(URL, method: .get, encoding: JSONEncoding.default)
         
         datarequest.responseData(completionHandler: {res in

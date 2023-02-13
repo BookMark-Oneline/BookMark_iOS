@@ -56,12 +56,20 @@ struct DataDetail: Codable {
 
 // MARK: - 서재 data class
 class Shelf: Decodable {
-    let ok: Bool
-    let data: [BookInfo]
-//    let bookData: [BookInfo]
-//    let userData: [UserInfo]
+    let User: UserShelfInfo
+    let Book: [BookInfo]
 }
 
+// MARK: 서재 유저 data class
+class UserShelfInfo: Decodable {
+    let user_id: Int
+    let img_url: String
+    let total_book: Int
+    let streak: Int?
+    let goal: Int?
+}
+
+// MARK: 서재 책 data class
 class BookInfo: Decodable {
     let book_id: Int
     let title: String
@@ -69,17 +77,8 @@ class BookInfo: Decodable {
     let img_url: String
 }
 
-//class UserInfo: Decodable {
-//    let user_id: Int
-//    let img_url: String
-//    let total_book: Int
-//    let streak: Int
-//    let goal: Int
-//}
-
 
 // MARK: - 책 검색 data struct
-
 struct BookSearch: Codable {
     let userID: UserID
     let myData: [MyData]
@@ -90,7 +89,7 @@ struct BookSearch: Codable {
     }
 }
 
-// MARK: - BookSearch.MyData
+// MARK: BookSearch.MyData
 struct MyData: Codable {
     let title: String
     let link: String
@@ -99,7 +98,7 @@ struct MyData: Codable {
     let isbn, description: String
 }
 
-// MARK: - BookSearch.UserID
+// MARK: BookSearch.UserID
 struct UserID: Codable {
     let userID: Int
 

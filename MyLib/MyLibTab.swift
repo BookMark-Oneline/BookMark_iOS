@@ -15,6 +15,8 @@ class MyLibTab: UIViewController, UICollectionViewDelegate, UICollectionViewDele
     let network = Network()
     
     var books: [[String]] = [["0", "addbook", "", ""]]
+    var userImgUrl: String?
+    var userStreak: Int?
     override func viewDidLoad() {
         super.viewDidLoad()
         getShelfData()
@@ -41,7 +43,7 @@ class MyLibTab: UIViewController, UICollectionViewDelegate, UICollectionViewDele
                 appdel.books = self.books
             }
             layout.bookCount = self.books.count
-            layout.initViews(view: self.view)
+            layout.initViews(view: self.view, img_url: (self.userImgUrl ?? ""), streaks: (self.userStreak ?? 0))
         }
         else {
             self.books = ((UIApplication.shared.delegate as? AppDelegate)?.books)!
@@ -57,23 +59,18 @@ extension MyLibTab {
         network.getShelf { response in
             switch response {
             case .success(let shelf):
-                if let book = (shelf as? Shelf)?.data {
-//                if let book = (shelf as? Shelf)?.bookData {
+                if let user = (shelf as? Shelf)?.User {
+                    self.userImgUrl = user.img_url
+                    self.userStreak = user.streak
+                }
+                
+                if let book = (shelf as? Shelf)?.Book {
                     book.forEach({ item in
                         self.books.append(["\(item.book_id)", item.img_url, item.title, item.author])
                         self.layout.layout_collection.layout_books.reloadData()
                     })
                     self.dataReload(status: 0)
                 }
-//                if let user = (shelf as? Shelf)?.userData {
-//                    user.forEach({ item in
-//                        print(item.goal)
-//                        print(item.img_url)
-//                        print(item.streak)
-//                        print(item.total_book)
-//                    })
-//                    self.dataReload(status: 0)
-//                }
             default:
                 print("failed")
             }
@@ -170,7 +167,7 @@ class MyLibTabView {
     var layout_collectionview = UIView()
     var layout_collection = Books()
     
-    func initViews(view: UIView) {
+    func initViews(view: UIView, img_url: String, streaks: Int) {
         view.addSubviews(layout_title, layout_scroll)
         layout_title.snp.makeConstraints() { make in
             make.top.equalTo(view.safeAreaLayoutGuide)
@@ -233,7 +230,7 @@ class MyLibTabView {
             make.center.equalToSuperview()
         }
         img_profile.layer.cornerRadius = 75 / 2.0
-        img_profile.image = UIImage(named: "pepe.jpg")
+        img_profile.setImageUrl(url: img_url)
         img_profile.clipsToBounds = true
         img_profile.translatesAutoresizingMaskIntoConstraints = false
         
@@ -242,7 +239,7 @@ class MyLibTabView {
             make.centerX.equalTo(layout_circle)
         }
         label_name.text = UserInfo.shared.userName
-        label_name.font = UIFont.systemFont(ofSize: 15)
+        label_name.font = UIFont.systemFont(ofSize: 15, weight: .bold)
         label_name.sizeToFit()
         
         label_books.snp.makeConstraints() { make in
@@ -258,7 +255,7 @@ class MyLibTabView {
             make.centerX.equalTo(label_books)
             make.top.equalTo(label_books.snp.bottom).offset(10)
         }
-        label_bookcount.text = "\(bookCount)"
+        label_bookcount.text = "\(bookCount - 1)"
         label_bookcount.font = UIFont.boldSystemFont(ofSize: 16)
         label_bookcount.textColor = .black
         label_bookcount.sizeToFit()
@@ -279,8 +276,7 @@ class MyLibTabView {
             make.centerY.equalTo(label_bookcount)
             make.width.equalTo(60)
         }
-        label_timecount.text = "15일째"
-//        label_timecount.text = "\(streak)"
+        label_timecount.text = "\(streaks)"
         label_timecount.font = UIFont.boldSystemFont(ofSize: 16)
         label_timecount.textColor = .black
         label_timecount.textAlignment = .center
@@ -342,7 +338,7 @@ class Books {
         }
         label_bookcount.font = UIFont.systemFont(ofSize: 14)
         label_bookcount.textColor = .textGray
-        label_bookcount.text = "\(bookCount)"
+        label_bookcount.text = "\(bookCount - 1)"
         
         layout_books.snp.makeConstraints() { make in
             make.leading.equalToSuperview().offset(15)
