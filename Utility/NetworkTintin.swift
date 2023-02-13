@@ -18,11 +18,33 @@ class NetworkTintin {
         datarequest.responseData(completionHandler: { res in
             switch res.result {
             case .success:
-                print("yes")
+                print("CommunityList")
                 guard let value = res.value else {return}
                 guard let rescode = res.response?.statusCode else {return}
                 
                 let networkResult = self.judgeStatus(object: 0, by: rescode, value)
+                completion(networkResult)
+                
+            case .failure(let e):
+                print(e)
+                completion(.pathErr)
+            }
+        
+        })
+    }
+    
+    func getCommunityInfo(completion: @escaping (NetworkResult<Any>) -> Void) {
+        let URL = baseUrl + "/club/1"
+        let datarequest = AF.request(URL, method: .get, encoding: JSONEncoding.default)
+        
+        datarequest.responseData(completionHandler: { res in
+            switch res.result {
+            case .success:
+                print("CommunityInfo")
+                guard let value = res.value else {return}
+                guard let rescode = res.response?.statusCode else {return}
+                
+                let networkResult = self.judgeStatus(object: 1, by: rescode, value)
                 completion(networkResult)
                 
             case .failure(let e):
@@ -42,6 +64,9 @@ extension NetworkTintin {
             if (object == 0) {
                 return isValidData_CommunityList(data: data)
             }
+            else if (object == 1) {
+                return isValidData_CommunityInfo(data: data)
+            }
             else {
                 return .success(data)
             }
@@ -55,7 +80,18 @@ extension NetworkTintin {
         let decoder = JSONDecoder()
 
         guard let decodedData = try? decoder.decode([CommunityList].self, from: data) else {
-            return .decodeFail }
+            return .decodeFail
+        }
+        
+        return .success(decodedData)
+    }
+    
+    private func isValidData_CommunityInfo(data: Data) -> NetworkResult<Any> {
+        let decoder = JSONDecoder()
+        
+        guard let decodedData = try? decoder.decode(CommunityInfo.self, from: data) else {
+            return .decodeFail
+        }
         
         return .success(decodedData)
     }
