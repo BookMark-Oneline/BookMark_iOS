@@ -1,8 +1,8 @@
 ---
-name: "[FEAT] API "
-about: API 추가
+name: "[FIX] API "
+about: API 수정
 title: ''
-labels: enhancement
+labels: fix
 assignees: ''
 
 ---
@@ -13,7 +13,7 @@ assignees: ''
 
 # url
 
-# 명세서
+# 변경 후 명세서
 user_id | integer
 -- | --
 myData | [club]
