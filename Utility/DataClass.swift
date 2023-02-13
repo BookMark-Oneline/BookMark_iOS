@@ -18,16 +18,41 @@ enum NetworkResult<T> {
 }
 
 // MARK: - 책 세부내용 data class
-class BookDetail: Decodable {
-    let user_id: Int
+struct BookDetail: Codable {
+    let userID: Int
+    let bookID: Int
     let title: String
     let author: String
-    let img_url: String
+    let imgURL: String
     let publisher: String
-    let ave_reading_time: Int
-    var ave_reading_page: Int
+    let totalReadingTime: Int
+    let currentReadingPage: Int
+    let totalPage: Int
+    let dataDetail: [DataDetail]
+
+    enum CodingKeys: String, CodingKey {
+        case userID = "user_id"
+        case bookID = "book_id"
+        case title
+        case author
+        case imgURL = "img_url"
+        case publisher
+        case totalReadingTime = "total_reading_time"
+        case currentReadingPage = "current_reading_page"
+        case totalPage = "total_page"
+        case dataDetail
+    }
 }
 
+struct DataDetail: Codable {
+    let createdAt: String
+    let readingTime: Int
+
+    enum CodingKeys: String, CodingKey {
+        case createdAt = "created_at"
+        case readingTime = "reading_time"
+    }
+}
 
 // MARK: - 서재 data class
 class Shelf: Decodable {
