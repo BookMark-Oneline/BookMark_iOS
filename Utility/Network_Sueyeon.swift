@@ -32,12 +32,38 @@ extension Network {
         })
     }
     
+    // API 2-3: 책 모임 설정 조회
+    func getCommunitySetting(clubID: Int, completion: @escaping (NetworkResult<Any>) -> Void) {
+        let URL = baseUrl + "/club/setting/\(clubID)"
+        let datarequest = AF.request(URL, method: .get, encoding: JSONEncoding.default)
+        
+        datarequest.responseData(completionHandler: { res in
+            switch res.result {
+            case .success:
+                guard let value = res.value else {return}
+                guard let rescode = res.response?.statusCode else {return}
+                
+                let networkResult = self.tempJudgeStatus(object: 4, by: rescode, value)
+                completion(networkResult)
+                
+            case .failure(let e):
+                print(e)
+                completion(.pathErr)
+            }
+        
+        })
+    }
+    
     private func tempJudgeStatus(object: Int = 0, by statusCode: Int, _ data: Data) -> NetworkResult<Any> {
         switch statusCode {
         case 200:
             // API 2-11
             if (object == 3) {
                 return isValidData_CommunityPost(data: data)
+            }
+            // API 2-3
+            else if (object == 4) {
+                return isValidData_CommunitySetting(data: data)
             }
             else {
                 return .success(data)
@@ -52,6 +78,15 @@ extension Network {
         let decoder = JSONDecoder()
         
         guard let decodedData = try? decoder.decode(CommunityPost.self, from: data) else {
+            return .decodeFail }
+    
+        return .success(decodedData)
+    }
+    
+    private func isValidData_CommunitySetting(data: Data) -> NetworkResult<Any> {
+        let decoder = JSONDecoder()
+        
+        guard let decodedData = try? decoder.decode(CommunitySetting.self, from: data) else {
             return .decodeFail }
     
         return .success(decodedData)

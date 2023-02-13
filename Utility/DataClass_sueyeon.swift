@@ -7,7 +7,7 @@
 
 import Foundation
 
-// MARK: 게시물 제목 data class
+// MARK: - 게시물 제목 data class
 class CommunityPost: Decodable {
     let club_post_id: Int
     let club_post_title: String
@@ -30,3 +30,14 @@ class CommunityPostComment: Decodable {
     let comment_content_text: String
 }
 
+// MARK: - 책 모임 설정 data class
+class CommunitySetting: Decodable {
+    let clubData: [CommunityData]
+}
+
+class CommunityData: Decodable {
+    let club_name: String
+    let club_img_url: String
+    let club_invite_option: Int
+    let max_people_num: Int
+}
