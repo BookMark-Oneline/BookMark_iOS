@@ -11,7 +11,7 @@ import Alamofire
 // MARK: - 네트워킹 용 클래스 나중에 싱글톤으로 만들기
 class Network {
     // base Url
-    let baseUrl = "https://port-0-server-nodejs-1ih8d2gld1khslm.gksl2.cloudtype.app"
+    let baseUrl = "https://3.38.182.237:3000"
     
     // 책 등록 POST
     func postRegisterBooks(title: String, img_url: String, author: String, pubilsher: String, isbn: String, completion: @escaping (() -> Void)) {

@@ -35,16 +35,16 @@ class BookDetailViewController: UIViewController {
         self.layout_bookdetail.label_title.text = bookData?.title
         self.layout_bookdetail.label_author.text = bookData?.author
         
-        if let url = bookData?.img_url {
+        if let url = bookData?.imgURL {
             self.layout_bookdetail.img_book.setImageUrl(url: url)
         }
         else {
             self.layout_bookdetail.img_book.image = UIImage(named: "noBookImg")
         }
-        self.layout_bookdetail.label_totaltime_data.text = String(describing: bookData?.ave_reading_time ?? 0)
-        self.layout_bookdetail.label_nowpage_data.text = String(describing: bookData?.ave_reading_page ?? 0)
+        self.layout_bookdetail.label_totaltime_data.text = String(describing: bookData?.totalReadingTime ?? 0)
+        self.layout_bookdetail.label_nowpage_data.text = String(describing: bookData?.currentReadingPage ?? 0)
         
-        setProgress(readingPage: bookData?.ave_reading_page ?? 10, animated: false)
+        setProgress(readingPage: bookData?.currentReadingPage ?? 10, animated: false)
     }
     
     private func setProgress(readingPage: Int, totalPage: Int = 354, animated: Bool) {
