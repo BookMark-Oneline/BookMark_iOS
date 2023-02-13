@@ -34,10 +34,17 @@ extension WaitMemberViewController {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "WaitMemberCell", for: indexPath) as? WaitMemeberTableViewCell else { return WaitMemeberTableViewCell() }
         
-        print(self.requestList.count)
         cell.layout_avatarImg.setImageUrl(url: requestList[indexPath.row][0])
         cell.label_name.text = requestList[indexPath.row][1]
         cell.label_introduce.text = requestList[indexPath.row][2]
+        
+        cell.acceptCallbackMehtod = { [weak self] in
+            self?.accpetJoinRequest()
+        }
+        
+        cell.declineCallbackMehtod = { [weak self] in
+            self?.declineJoinRequest()
+        }
         
         return cell
     }
@@ -67,6 +74,14 @@ extension WaitMemberViewController {
             }
         })
     }
+    
+    func accpetJoinRequest() {
+        
+    }
+    
+    func declineJoinRequest() {
+        
+    }
 }
 
 // MARK: - TableView Layout
@@ -88,8 +103,6 @@ class WaitMembersView {
     }
 }
 
-
-
 // MARK: - Requested Member Cell Layout
 class WaitMemeberTableViewCell: UITableViewCell {
     static let identifier = "WaitMemberCell"
@@ -98,11 +111,13 @@ class WaitMemeberTableViewCell: UITableViewCell {
     let label_introduce = UILabel()
     let button_deny = UIButton()
     let button_accept = UIButton()
+    var acceptCallbackMehtod: (() -> Void)?
+    var declineCallbackMehtod: (() -> Void)?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.selectionStyle = .none
-        addSubviews(layout_avatarImg, label_introduce, label_name, button_deny, button_accept)
+        self.contentView.addSubviews(layout_avatarImg, label_introduce, label_name, button_deny, button_accept)
         
         layout_avatarImg.snp.makeConstraints{ make in
             make.width.equalTo(60)
@@ -144,6 +159,7 @@ class WaitMemeberTableViewCell: UITableViewCell {
             make.height.equalTo(27)
         }
         button_accept.setImage(UIImage(named: "group_accept"), for: .normal)
+        button_accept.addTarget(self, action: #selector(didTapAcceptButton), for: .touchUpInside)
         
         button_deny.snp.makeConstraints { make in
             make.centerY.equalTo(button_accept)
@@ -152,11 +168,18 @@ class WaitMemeberTableViewCell: UITableViewCell {
             make.height.equalTo(27)
         }
         button_deny.setImage(UIImage(named: "group_delete"), for: .normal)
-
-        
+        button_deny.addTarget(self, action: #selector(didTapDeclineButton), for: .touchUpInside)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    @objc func didTapAcceptButton(_ sender: UIButton) {
+        acceptCallbackMehtod?()
+    }
+    
+    @objc func didTapDeclineButton(_ sender: UIButton) {
+        declineCallbackMehtod?()
     }
 }
