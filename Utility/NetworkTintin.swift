@@ -135,8 +135,29 @@ class NetworkTintin {
     }
     
 //MARK: - API 2-14-2 [POST] 게시글 제목, 내용 게시 (사진 포함 O)
-    func postCommunityPostWithImg() {
+    func postCommunityPostWithImg(clubID: Int, userID: Int, clubPostTitle: String, clubPostContent: String, imgStatus: Int, img: String, completion: @escaping (NetworkResult<Any>) -> Void) {
+        let URL = baseUrl + "/club/post/register/\(clubID)"
+        print(clubPostTitle)
+        print(clubPostContent)
+        print(img)
         
+        let params: Parameters = ["user_id": userID, "club_id": clubID, "club_post_title": clubPostTitle, "post_content_text": clubPostContent, "img_status": imgStatus, "img": img]
+        let datarequest = AF.request(URL, method: .post, parameters: params, encoding: JSONEncoding.default).validate()
+        
+        datarequest.responseData(completionHandler: { res in
+            switch res.result {
+            case .success:
+                guard let value = res.value else {return}
+                guard let rescode = res.response?.statusCode else {return}
+    
+                let networkResult = self.judgeStatus(object: 5, by: rescode, value)
+                completion(networkResult)
+                
+            case .failure(let e):
+                print(e)
+                completion(.pathErr)
+            }
+        })
     }
     
 //MARK: - API 2-15 [POST] 게시글 공지 등록
