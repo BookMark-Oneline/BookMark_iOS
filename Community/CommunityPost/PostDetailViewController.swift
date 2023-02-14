@@ -9,17 +9,33 @@ import UIKit
 
 // MARK: - 게시글 확인 view controller
 class PostDetailViewController: UIViewController {
+    let network = Network()
+    let layout_postDetail = PostDetailView()
+    var postID: Int = 1
+    var likeStatus: Int = 0
     
-    let layout_postDetail = postDetail()
+    private var img_url: String?
+    private var postTitle: String?
+    private var postContent: String?
+    private var userName: String?
+    private var likeNum: Int?
+    private var commentNum: Int?
+    private var comment = [[String]]()    // [이름, 댓글 내용]
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        getPostDetailData()
         layout_postDetail.initView(view: self.view)
         layout_postDetail.layout_postDetail.delegate = self
         layout_postDetail.layout_postDetail.dataSource = self
         
         setNavCustom()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        postLikeStatus(likes: self.likeStatus)
     }
     
     func setNavCustom() {
@@ -32,6 +48,7 @@ class PostDetailViewController: UIViewController {
         let report = UIAlertAction(title: "신고하기", style: .default)
         let remove = UIAlertAction(title: "삭제하기", style: .default, handler: { _ in
             // MARK: - todo 삭제 로직 구현
+            self.view.makeToast("삭제되었습니다.", duration: 2, position: .bottom)
             
         })
         let cancel = UIAlertAction(title: "취소", style: .cancel)
@@ -47,20 +64,31 @@ extension PostDetailViewController: UITableViewDelegate, UITableViewDataSource {
         if indexPath.row == 0 {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: MainPostCell.identifier, for: indexPath) as? MainPostCell else { return MainPostCell() }
             
-            cell.selectionStyle = .none
+            guard let img_url = self.img_url, let postTitle = self.postTitle, let postContent = self.postContent, let userName = self.userName, let likeCount = self.likeNum, let commentCount = self.commentNum else {return cell}
+            
+            cell.layout_userImg.setImageUrl(url: img_url)
+            cell.label_author.text = userName
+            cell.label_title.text = postTitle
+            cell.label_context.text = postContent
+            cell.label_heart.text = "\(likeCount)"
+            cell.label_comment.text = "\(commentCount)"
+            cell.likeCallbackMehtod = { [weak self] result in
+                self?.likeStatus = result
+            }
             
             return cell
         } else {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: CommentCell.identfier, for: indexPath) as? CommentCell else { return CommentCell() }
-            
-            cell.selectionStyle = .none
+
+            cell.label_author.text = self.comment[indexPath.row - 1][0]
+            cell.label_context.text = self.comment[indexPath.row - 1][1]
             
             return cell
         }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return self.comment.count + 1
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -73,8 +101,45 @@ extension PostDetailViewController: UITableViewDelegate, UITableViewDataSource {
     
 }
 
+// MARK: - 네트워크 용 extension
+extension PostDetailViewController {
+    func getPostDetailData() {
+        network.getCommunityPost(postID: self.postID, completion: { response in
+            switch response {
+            case .success(let data):
+                guard let post = (data as? CommunityPost), let comment = (data as? CommunityPost)?.CommentData else {return}
+                
+                self.img_url = (post.img_url ?? "")
+                self.postTitle = post.club_post_title
+                self.postContent = post.post_content_text
+                self.userName = post.user_name
+                self.likeNum = post.like_num
+                self.commentNum = post.comment_num
+                
+                comment.forEach { item in
+                    self.comment.append([item.user_name, item.comment_content_text])
+                }
+                self.layout_postDetail.layout_postDetail.reloadData()
+            default:
+                print("failed get post detail data")
+            }
+        })
+    }
+    
+    func postLikeStatus(likes: Int) {
+        network.postCommunityPostLikeStatus(clubPostID: self.postID, userID: UserInfo.shared.userID, likeStatus: likes, completion: { res in
+            switch res {
+            case .success:
+                return
+            default:
+                print("failed update like status")
+            }
+        })
+    }
+}
 
-class postDetail {
+
+class PostDetailView {
     var layout_postDetail : UITableView = {
         let layout_postDetail = UITableView()
         layout_postDetail.translatesAutoresizingMaskIntoConstraints = false
@@ -106,11 +171,13 @@ class MainPostCell: UITableViewCell {
     let label_heart = UILabel()
     let layout_comment = UIImageView()
     let label_comment = UILabel()
-    
+    var likeCallbackMehtod: ((Int) -> Void)?
+    var likeStatus: Int = 0
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        addSubviews(layout_userImg, label_author, label_time, label_title, label_context, btn_heart, label_heart, layout_comment, label_comment)
+        self.selectionStyle = .none
+        self.contentView.addSubviews(layout_userImg, label_author, label_time, label_title, label_context, btn_heart, label_heart, layout_comment, label_comment)
         
         layout_userImg.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(18)
@@ -129,7 +196,7 @@ class MainPostCell: UITableViewCell {
             make.height.equalTo(16)
             make.right.equalToSuperview().offset(23)
         }
-        label_author.text = "독서왕 김독서"
+        label_author.text = "이름없음"
         label_author.textColor = .black
         label_author.font = .systemFont(ofSize: 13)
         label_author.textAlignment = .natural
@@ -148,7 +215,7 @@ class MainPostCell: UITableViewCell {
             make.left.equalTo(layout_userImg)
             make.right.equalToSuperview().offset(23)
         }
-        label_title.text = "제목 예시입니다."
+        label_title.text = "제목이 없습니다."
         label_title.font = .boldSystemFont(ofSize: 17)
         label_title.textColor = .black
         label_title.lineBreakStrategy = .standard
@@ -156,14 +223,14 @@ class MainPostCell: UITableViewCell {
         label_title.textAlignment = .natural
         
         label_context.snp.makeConstraints { make in
-            make.top.equalTo(label_title.snp.bottom).offset(7)
+            make.top.equalTo(label_title.snp.bottom).offset(9)
             make.left.equalTo(layout_userImg)
             make.right.equalToSuperview().offset(23)
         }
         label_context.numberOfLines = 0
         label_context.font = .systemFont(ofSize: 12)
         label_context.textColor = .black
-        label_context.text = "내용 예시입니다. 내용 예시입니다. 내용 예시입니다."
+        label_context.text = "내용이 없습니다."
         label_title.lineBreakStrategy = .standard
         label_title.textAlignment = .natural
         
@@ -173,41 +240,56 @@ class MainPostCell: UITableViewCell {
             make.width.equalTo(21)
             make.height.equalTo(21)
         }
-        btn_heart.setImage(UIImage(named: "heart"), for: .normal)
+        btn_heart.addTarget(self, action: #selector(didTapLikeButton), for: .touchUpInside)
+        btn_heart.setImage(UIImage(named: "heart_unfill"), for: .normal)
         
         label_heart.snp.makeConstraints { make in
             make.centerY.equalTo(btn_heart)
             make.left.equalTo(btn_heart.snp.right).offset(2)
         }
-        label_heart.text = "10"
+        label_heart.text = "0"
         label_heart.textColor = .red
         label_heart.font = .systemFont(ofSize: 11)
         label_heart.textAlignment = .natural
         
         layout_comment.snp.makeConstraints { make in
             make.centerY.equalTo(btn_heart)
-            make.left.equalTo(label_heart.snp.right).offset(3)
+            make.left.equalTo(label_heart.snp.right).offset(5)
             make.width.height.equalTo(21)
         }
         layout_comment.image = UIImage(named: "balloon")
         
         label_comment.snp.makeConstraints { make in
             make.centerY.equalTo(btn_heart)
-            make.left.equalTo(layout_comment.snp.right).offset(2)
+            make.left.equalTo(layout_comment.snp.right).offset(3)
         }
-        label_comment.text = "11"
+        label_comment.text = "0"
         label_comment.textColor = .black
         label_comment.font = .systemFont(ofSize: 11)
         label_comment.textAlignment = .natural
-        
-        
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    @objc func didTapLikeButton(_ sender: UIButton) {
+        let value = Int(self.label_heart.text ?? "0") ?? 0
+        if (self.likeStatus == 0) {
+            self.likeStatus = 1
+            self.label_heart.text = "\(value + 1)"
+            sender.setImage(UIImage(named: "heart_fill"), for: .normal)
+        }
+        else {
+            self.likeStatus = 0
+            sender.setImage(UIImage(named: "heart_unfill"), for: .normal)
+            if (value - 1 >= 0) {
+                self.label_heart.text = "\(value - 1)"
+            }
+        }
+        self.likeCallbackMehtod?(self.likeStatus)
+    }
 }
-
 
 class CommentCell: UITableViewCell {
     static let identfier = "commentCell"
@@ -218,9 +300,8 @@ class CommentCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
+        self.selectionStyle = .none
         addSubviews(layout_userImg, label_author, label_context, label_time)
-        
         
         layout_userImg.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(14)
@@ -232,11 +313,10 @@ class CommentCell: UITableViewCell {
         layout_userImg.backgroundColor = .gray
         layout_userImg.layer.cornerRadius = 14.5
         
-        
         label_author.snp.makeConstraints { make in
             make.centerY.equalTo(layout_userImg)
             make.left.equalTo(layout_userImg.snp.right).offset(8)
-            make.right.equalToSuperview().offset(23)
+            make.right.equalToSuperview().inset(23)
         }
         label_author.text = "댓글 작성자"
         label_author.font = .systemFont(ofSize: 13)

@@ -42,7 +42,6 @@ class Network {
         datarequest.responseData(completionHandler: { res in
             switch res.result {
             case .success:
-                print("yes")
                 guard let value = res.value else {return}
                 guard let rescode = res.response?.statusCode else {return}
                 
