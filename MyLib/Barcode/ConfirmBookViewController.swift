@@ -11,6 +11,9 @@ import Kingfisher
 
 // MARK: - 책 확인 view controller
 class ConfirmBookViewController: UIViewController {
+    
+    let pageInputPopUp = AllPageInputPopUp()
+    var totalPage: Int?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,6 +21,7 @@ class ConfirmBookViewController: UIViewController {
         setUpView()
         setConstraints()    
         getBookSearchAPI()
+        pageInputPopUp.submitButton.addTarget(self, action: #selector(submitPopUp), for: .touchUpInside)
     }
     let layout_book = UIView()
     let imageView = UIImageView()
@@ -53,7 +57,43 @@ class ConfirmBookViewController: UIViewController {
 
 // MARK: - event 처리용 extension
 extension ConfirmBookViewController {
-    @objc func addToCell(_ selector: UIBarButtonItem) {
+    @objc func allPageInputPopUp(_ selector: UIBarButtonItem) {
+        pageInputPopUp.showPopUp(with: "책갈피",
+                              message: "이 책의 총 페이지를 입력해주세요",
+                              on: self)
+    }
+    
+    @objc func submitPopUp(_ sender: UIButton) {
+        // 페이지 수 전달
+        UIView.animate(withDuration: 0.25,
+                       animations: {
+            self.pageInputPopUp.popUpView.frame = CGRect(x: 40,
+                                                         y: self.view.frame.size.height,
+                                                         width: self.view.frame.size.width-80,
+                                                         height: 200)
+        }, completion: { done in
+            if done {
+                UIView.animate(withDuration: 0.25, animations: {
+                    self.pageInputPopUp.backgroundView.alpha = 0
+                }, completion: { done in
+                    self.pageInputPopUp.popUpView.removeFromSuperview()
+                    self.pageInputPopUp.backgroundView.removeFromSuperview()
+                    
+                    guard let page = self.pageInputPopUp.allPageTextField.text else {return}
+                    if (page.isEmpty) {return}
+                    
+                    self.totalPage = Int(page) ?? -1
+                    
+                    print("TOTAL PAGE: \(self.totalPage)")
+                    
+                    self.addToCell()
+                    
+                })
+            }
+        })
+    }
+    
+    func addToCell() {
     if (self.bookTitle.isEmpty || self.bookAuthor.isEmpty) {
             self.view.makeToast("책 정보가 정확하지 않습니다.", duration: 2, position: .bottom)
             return
@@ -107,7 +147,7 @@ extension ConfirmBookViewController {
     
     func setNavCustom() {
         self.setNavigationCustom(title: "")
-        self.setNavigationLabelButton(title: "등록", action: #selector(addToCell))
+        self.setNavigationLabelButton(title: "등록", action: #selector(allPageInputPopUp))
     }
     
     func setConstraints() {

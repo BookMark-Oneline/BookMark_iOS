@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class CustomPopUp: NSObject {
     struct Constants {
@@ -86,6 +87,7 @@ class CustomPopUp: NSObject {
         field.textAlignment = .center
         field.layer.borderColor = UIColor.semiLightGray.cgColor
         field.keyboardType = .numberPad
+        field.isUserInteractionEnabled = false
         return field
     }()
     
