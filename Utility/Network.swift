@@ -12,7 +12,7 @@ import Alamofire
 class Network {
     // base Url
     //let baseUrl = "https://3.38.182.237:3000"
-    let baseUrl = "http://onve.synology.me"
+    let baseUrl = "https://port-0-bookmark-oneliner-luj2cldx5nm16.sel3.cloudtype.app"
     
     // 책 등록 POST
     func postRegisterBooks(title: String, img_url: String, author: String, pubilsher: String, isbn: String, completion: @escaping (() -> Void)) {

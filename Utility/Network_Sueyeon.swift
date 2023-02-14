@@ -176,7 +176,7 @@ extension Network {
     func postNewCommunity(clubName: String, clubImg: UIImage, clubInvitation: Int, clubLimit: Int, ownerUserID: Int, completion: @escaping (NetworkResult<Any>) -> Void) {
         let URL = baseUrl + "/club/register"
         
-        let params: Parameters = ["club_name": clubName, "club_invite_opiton": clubInvitation, "max_people_num": clubLimit, "club_owner_id": ownerUserID]
+        let params: Parameters = ["club_name": clubName, "club_invite_option": clubInvitation, "max_people_num": clubLimit, "club_owner_id": ownerUserID]
         
         guard let imgData = clubImg.jpegData(compressionQuality: 0.7) else {
             print("jpeg data failed")

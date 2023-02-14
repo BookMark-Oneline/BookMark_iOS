@@ -9,7 +9,7 @@ import Foundation
 import Alamofire
 
 class NetworkTintin {
-    let baseUrl = "http://onve.synology.me"
+    let baseUrl = "https://port-0-bookmark-oneliner-luj2cldx5nm16.sel3.cloudtype.app"
 
 // MARK: - API 2-1 [GET] 유저 책모임 조회
     func getCommunityList(completion: @escaping (NetworkResult<Any>) -> Void) {
