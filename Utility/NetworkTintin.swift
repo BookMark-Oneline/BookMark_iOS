@@ -105,22 +105,21 @@ class NetworkTintin {
     }
     
 //MARK: - API 1-5(FIX) [POST] 타이머 종료
-    func postTimerStopFixed(bookID: Int, userID: Int, totalReadTime: Int, curReadPage: Int, nowRead: Int, readTime: Int, lastCal: String, goal: Int, streak: Int, completion: @escaping (NetworkResult<Any>) -> Void) {
+    func postTimerStopFixed(bookID: Int, userID: Int, totalReadTime: Int, curReadPage: Int, completion: @escaping (NetworkResult<Any>) -> Void) {
         let URL = baseUrl + "/timer/finish/\(userID)/\(bookID)"
-        
-        
-        let params: Parameters = ["total_reading_time": totalReadTime, "current_reading_time": curReadPage, "now_reading": nowRead, "reading_time": readTime, "last_cal": lastCal, "goal": goal, "streak": streak]
+            
+        let params: Parameters = ["total_reading_time": totalReadTime, "current_reading_page": curReadPage]
         let datarequest = AF.request(URL, method: .post, parameters: params, encoding: JSONEncoding.default).validate()
-        
+            
         datarequest.responseData(completionHandler: { res in
             switch res.result {
             case .success:
                 guard let value = res.value else {return}
                 guard let rescode = res.response?.statusCode else {return}
-    
+                
                 let networkResult = self.judgeStatus(object: 5, by: rescode, value)
                 completion(networkResult)
-                
+                    
             case .failure(let e):
                 print(e)
                 completion(.pathErr)
@@ -168,8 +167,8 @@ class NetworkTintin {
         }
         
         AF.upload(multipartFormData: { multipartFormData in
-            //MARK: fileName 변경해야 함 ...
-            multipartFormData.append(imgData, withName: "img", fileName: "image.png" , mimeType: "image/png")
+            //MARK: fileName 변경? ...
+            multipartFormData.append(imgData, withName: "img", fileName: "\(clubPostTitle)_image.png" , mimeType: "image/png")
         
             for (key, value) in params {
                 multipartFormData.append("\(value)".data(using: .utf8, allowLossyConversion: false)!, withName: "\(key)")
