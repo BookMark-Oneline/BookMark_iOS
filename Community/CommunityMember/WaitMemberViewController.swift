@@ -10,7 +10,7 @@ class WaitMemberViewController: UIViewController, UITableViewDataSource, UITable
     let network = Network()
     let layout_waits = WaitMembersView()
     var clubID: Int = 1
-    private var requestList = [[String]]() // [프로필 사진, 이름, 소개말]
+    private var requestList = [[String]]() // [프로필 사진, 이름, 소개말, 아이디]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +39,7 @@ extension WaitMemberViewController {
         cell.label_introduce.text = requestList[indexPath.row][2]
         
         cell.acceptCallbackMehtod = { [weak self] in
-            self?.accpetJoinRequest()
+            self?.accpetJoinRequest(userID: self?.requestList[indexPath.row][3] ?? "")
         }
         
         cell.declineCallbackMehtod = { [weak self] in
@@ -66,17 +66,26 @@ extension WaitMemberViewController {
             case .success(let members):
                 guard let member = (members as? CommunityJoinRequest)?.membersRequesting else {return}
                 member.forEach { item in
-                    self.requestList.append([item.img_url, item.user_name, item.introduce_message])
+                    self.requestList.append([item.img_url, item.user_name, item.introduce_message, "\(item.user_id)"])
                 }
                 self.layout_waits.layout_waits.reloadData()
             default:
-                print("failed")
+                self.view.makeToast("가입 요청자가 없습니다", duration: 1, position: .bottom)
+                print("get failed")
             }
         })
     }
     
-    func accpetJoinRequest() {
-        
+    func accpetJoinRequest(userID: String) {
+        let userid = Int(userID) ?? 0
+        network.postCommunityJoinRequestStatus(userID: userid, clubID: self.clubID, completion: { res in
+            switch res {
+            case .success:
+                self.view.makeToast("가입이 되었습니다", duration: 1, position: .bottom)
+            default:
+                self.view.makeToast("가입 요청을 받을 수 없습니다\n 잠시 후 다시 시도해주세요", duration: 1, position: .bottom)
+            }
+        })
     }
     
     func declineJoinRequest() {
