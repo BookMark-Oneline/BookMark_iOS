@@ -76,7 +76,7 @@ extension CommunityInsideViewController {
             case .success(let communityInfo):
                 if let comInfo = communityInfo as? CommunityInfo {
                     print("club ID : \(comInfo.clubID)")
-                    print(comInfo.announcementID)
+                    print("announce : \(comInfo.announcementID ?? -1)")
                     self.announceID = comInfo.announcementID
                     self.clubID = comInfo.clubID
                     
@@ -87,8 +87,6 @@ extension CommunityInsideViewController {
                     })
                     
                     self.layout_post.layout_posts.reloadData()
-                    
-                    print(self.postData)
                 }
 //                self.dataReload(status: 0)
             default:

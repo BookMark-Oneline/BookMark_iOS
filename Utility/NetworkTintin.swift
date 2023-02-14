@@ -154,28 +154,30 @@ class NetworkTintin {
     }
     
 //MARK: - API 2-14-2 [POST] 게시글 제목, 내용 게시 (사진 포함 O)
-    func postCommunityPostWithImg(clubID: Int, userID: Int, clubPostTitle: String, clubPostContent: String, imgStatus: Int, img: String, completion: @escaping (NetworkResult<Any>) -> Void) {
-        let URL = baseUrl + "/club/post/register/\(clubID)"
-        print(clubPostTitle)
-        print(clubPostContent)
-        print(img)
-        
-        let params: Parameters = ["user_id": userID, "club_id": clubID, "club_post_title": clubPostTitle, "post_content_text": clubPostContent, "img_status": imgStatus, "img": img]
-        let datarequest = AF.request(URL, method: .post, parameters: params, encoding: JSONEncoding.default).validate()
-        
-        datarequest.responseData(completionHandler: { res in
-            switch res.result {
-            case .success:
-                guard let value = res.value else {return}
-                guard let rescode = res.response?.statusCode else {return}
+    func postCommunityPostWithImg(clubID: Int, userID: Int, clubPostTitle: String, clubPostContent: String, imgStatus: Int, img: UIImage, completion: @escaping (NetworkResult<Any>) -> Void) {
+        let URL = baseUrl + "/club/post/register_singlephoto/\(clubID)"
     
-                let networkResult = self.judgeStatus(object: 5, by: rescode, value)
-                completion(networkResult)
-                
-            case .failure(let e):
-                print(e)
-                completion(.pathErr)
+        let params: Parameters = ["user_id": userID, "club_id": clubID, "club_post_title": clubPostTitle, "post_content_text": clubPostContent, "img_status": imgStatus]
+        
+        guard let imgData = img.jpegData(compressionQuality: 0.7) else {
+            print("jpeg data failed")
+            return
+        }
+        
+        AF.upload(multipartFormData: { multipartFormData in
+            multipartFormData.append(imgData, withName: "club_img_url", fileName: "\(clubID)_image.png" , mimeType: "image/png")
+        
+            for (key, value) in params {
+                multipartFormData.append("\(value)".data(using: .utf8, allowLossyConversion: false)!, withName: "\(key)")
             }
+        
+        }, to: URL, method: .post).responseData(completionHandler: { (response) in
+            if let err = response.error {
+                print("post upload: \(err)")
+                return
+            }
+            print(response.result)
+            completion(.success(response.result))
         })
     }
     

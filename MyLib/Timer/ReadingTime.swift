@@ -183,7 +183,13 @@ extension ReadingTime {
             case .success:
                 print("---[POST] TIMER STOP---")
             case .decodeFail:
-                print("DF")
+                print("decode Fail")
+            case .networkFail:
+                print("network Fail")
+            case .pathErr:
+                print("path Err")
+            case .serverErr:
+                print("server Err")
             default:
                 print("failed")
             }
