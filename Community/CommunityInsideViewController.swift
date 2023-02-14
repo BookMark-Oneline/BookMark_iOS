@@ -10,6 +10,23 @@ import UIKit
 
 class CommunityInsideViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
+//MARK: NetworkTintin
+    let network = NetworkTintin()
+    
+    var clubID: Int = 0
+    var announceID: Int?
+    
+    var postData = [PostInfo]()
+
+    struct PostInfo {
+        let postID: Int
+        let postTitle: String
+        let postContent: String
+        let likeNum: Int
+        let commentNum: Int
+        let createdAt: String?
+    }
+    
     let layout_post = Posts()
     var selectedIndexPath = 0
     
@@ -18,10 +35,13 @@ class CommunityInsideViewController: UIViewController, UITableViewDelegate, UITa
         if let selectedIndexPath = layout_post.layout_posts.indexPathForSelectedRow {
             layout_post.layout_posts.deselectRow(at: selectedIndexPath, animated: animated)
         }
+
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        getCommunityInsideData()
+        print(self.postData.count)
         setNavCustom()
         layout_post.initViews(view: self.view)
         layout_post.layout_posts.delegate = self
@@ -49,29 +69,76 @@ class CommunityInsideViewController: UIViewController, UITableViewDelegate, UITa
 
 }
 
+extension CommunityInsideViewController {
+    func getCommunityInsideData() {
+        network.getCommunityInfo { res in
+            switch res {
+            case .success(let communityInfo):
+                if let comInfo = communityInfo as? CommunityInfo {
+                    print("club ID : \(comInfo.clubID)")
+                    print("announce : \(comInfo.announcementID ?? -1)")
+                    self.announceID = comInfo.announcementID
+                    self.clubID = comInfo.clubID
+                    
+                    comInfo.postResponse.forEach({ item in
+                        let post: PostInfo = PostInfo(postID: item.clubPostID, postTitle: item.clubPostTitle, postContent: item.postContentText, likeNum: item.likeNum, commentNum: item.commentNum, createdAt: item.createdAt ?? nil)
+                        
+                        self.postData.append(post)
+                    })
+                    
+                    self.layout_post.layout_posts.reloadData()
+                }
+//                self.dataReload(status: 0)
+            default:
+                print("failed")
+            }
+        }
+    }
+}
+
 // MARK: - TableView Delegate & Datasource
-extension CommunityInsideViewController{
+extension CommunityInsideViewController {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == 0 {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: noticePostCell.identifier, for: indexPath) as? noticePostCell else { return noticePostCell() }
-            
+        if (self.announceID == nil) {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: postCell.identifier, for: indexPath) as? postCell else { return postCell() }
+
+            cell.label_comment.text = String(self.postData[indexPath.row].commentNum)
+            cell.label_like.text = String(self.postData[indexPath.row].likeNum)
+            cell.label_title.text = self.postData[indexPath.row].postTitle
+            cell.label_context.text = self.postData[indexPath.row].postContent
+
             return cell
         } else {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: postCell.identifier, for: indexPath) as? postCell else { return postCell() }
-            
-            return cell
+            if indexPath.row == 0 {
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: noticePostCell.identifier, for: indexPath) as? noticePostCell else { return noticePostCell() }
+
+                return cell
+            } else {
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: postCell.identifier, for: indexPath) as? postCell else { return postCell() }
+
+                cell.label_comment.text = String(self.postData[indexPath.row-1].commentNum)
+                cell.label_like.text = String(self.postData[indexPath.row-1].likeNum)
+                cell.label_title.text = self.postData[indexPath.row-1].postTitle
+                cell.label_context.text = self.postData[indexPath.row-1].postContent
+
+                return cell
+            }
         }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 15
+        return self.postData.count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == 0 {
-            return 50
-        } else {
+        if (self.announceID == nil) {
             return 95
+        } else {
+            if indexPath.row == 0 {
+                return 50
+            } else {
+                return 95
+            }
         }
     }
     
@@ -160,7 +227,7 @@ class postCell: UITableViewCell {
     static let identifier = "postCell"
     let label_title = UILabel()
     let label_context = UILabel()
-    let label_writer = UILabel()
+    let label_time = UILabel()
     let layout_like = UIImageView()
     let layout_comment = UIImageView()
     let label_like = UILabel()
@@ -169,48 +236,50 @@ class postCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        addSubviews(label_title, label_context, label_writer, layout_like, label_like, layout_comment, label_comment)
+        addSubviews(label_title, label_context, label_time, layout_like, label_like, layout_comment, label_comment)
         
         label_title.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(23)
+            make.leading.equalToSuperview().offset(23)
             make.top.equalToSuperview().offset(13)
             make.width.equalTo(200)
             make.height.equalTo(19)
         }
-        label_title.text = "게시물 제목입니다."
+//        label_title.text = "게시물 제목입니다."
+        label_title.numberOfLines = 1
         label_title.lineBreakMode = .byTruncatingTail
         label_title.textColor = .black
         label_title.font = .boldSystemFont(ofSize: 15)
         
         label_context.snp.makeConstraints { make in
-            make.left.equalTo(label_title)
+            make.leading.equalTo(label_title)
             make.top.equalTo(label_title.snp.bottom).offset(3)
             make.right.equalToSuperview().offset(-23)
             make.height.equalTo(20)
         }
-        label_context.text = "게시물 내용입니다. 게시물 내용입니다. 게시물 내용입니다. 게시물 내용입니다."
+//        label_context.text = "게시물 내용입니다. 게시물 내용입니다. 게시물 내용입니다. 게시물 내용입니다."
         label_context.font = .systemFont(ofSize: 13)
+        label_context.numberOfLines = 1
         label_context.lineBreakMode = .byTruncatingTail
         label_context.textColor = .black
         
-        label_writer.snp.makeConstraints { make in
-            make.left.equalTo(label_context)
-            make.top.equalTo(label_context.snp.bottom).offset(7)
-            make.height.equalTo(30)
-            make.width.equalTo(90)
+        label_time.snp.makeConstraints { make in
+            make.leading.equalTo(label_title)
+            make.top.equalTo(label_context.snp.bottom).offset(8)
+            make.width.equalTo(70)
+            make.height.equalTo(15)
         }
-        label_writer.text = "게시물 작성자"
-        label_writer.lineBreakMode = .byTruncatingTail
-        label_writer.font = .systemFont(ofSize: 12)
-        label_writer.textColor = .textGray
+        
+        label_time.font = .systemFont(ofSize: 12)
+//        label_time.text = "5시간전"
+        label_time.textColor = .textGray
         
         label_comment.snp.makeConstraints { make in
-            make.right.equalToSuperview().offset(-23)
-            make.centerY.equalTo(label_writer)
+            make.trailing.equalToSuperview().offset(-23)
+            make.bottom.equalToSuperview().offset(-8)
             make.height.equalTo(18)
             make.width.equalTo(18)
         }
-        label_comment.text = "11"
+//        label_comment.text = "11"
         label_comment.textColor = .black
         label_comment.font = .systemFont(ofSize: 11)
         

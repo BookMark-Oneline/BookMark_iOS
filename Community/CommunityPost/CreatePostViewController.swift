@@ -9,6 +9,9 @@ import UIKit
 
 // MARK: - 게시글 작성 view controller
 class CreatePostViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    let network = NetworkTintin()
+    var postImg: UIImage?
 
     let layout_createPost = CreatePostView()
     let cameraTapGestureRecognizer = UITapGestureRecognizer()
@@ -36,7 +39,12 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UITextVie
     }
     
     @objc func createPostViewController(_ sender: UIBarButtonItem) {
-        self.navigationController?.popViewController(animated: true)
+//        self.navigationController?.popViewController(animated: true)
+        if (postImg == nil) {
+            postCommunityPostWithoutImgData()
+        } else {
+            postCommunityPostWithImgData()
+        }
     }
     
     // MARK: 내용 text view 입력 이벤트
@@ -71,12 +79,50 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UITextVie
         }
         removeAllText(layout_createPost.txt_post)
         
+        postImg = newImage
         let attachment = NSTextAttachment()
         attachment.image = newImage
                 
         let attachmentString = NSAttributedString(attachment: attachment)
         layout_createPost.txt_post.textStorage.insert(attachmentString, at: 0)
         imgPicker.dismiss(animated: true)
+    }
+}
+
+extension CreatePostViewController {
+    func postCommunityPostWithoutImgData() {
+        let postTitle = self.layout_createPost.txt_title.text ?? "DEFAULT_TITLE"
+        let postContent = self.layout_createPost.txt_post.text ?? "DEFAULT_CONTENT"
+        
+        network.postCommunityPostWithoutImg(clubID: 1, userID: UserInfo.shared.userID, clubPostTitle: postTitle, clubPostContent: postContent, imgStatus: 1, completion: {  res in
+            switch res {
+            case .success:
+                print("POST CommunityPostWithoutImg")
+                self.navigationController?.popViewController(animated: true)
+            case .decodeFail:
+                print("DF")
+            default:
+                print("failed")
+            }
+        })
+    }
+    
+    func postCommunityPostWithImgData() {
+        let postTitle = self.layout_createPost.txt_title.text ?? "DEFAULT_TITLE"
+        let postContent = self.layout_createPost.txt_post.text ?? "DEFAULT_CONTENT"
+        guard let postImg = self.postImg else { return }
+        
+        network.postCommunityPostWithImg(clubID: 1, userID: UserInfo.shared.userID, clubPostTitle: postTitle, clubPostContent: postContent, imgStatus: 1, img: postImg, completion: {  res in
+            switch res {
+            case .success:
+                print("POST CommunityPostWithoutImg")
+                self.navigationController?.popViewController(animated: true)
+            case .decodeFail:
+                print("DF")
+            default:
+                print("failed")
+            }
+        })
     }
 }
 

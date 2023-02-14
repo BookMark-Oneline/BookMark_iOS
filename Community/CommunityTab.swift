@@ -8,17 +8,23 @@
 
 import UIKit
 import SnapKit
+import Kingfisher
 
 // MARK: - 책 모임 탭
 class CommunityTab: UIViewController {
     
     let mainView = CommunityTabView()
+    let collectView = Communities()
+    
+//MARK: - NetworkTintin
+    let network = NetworkTintin()
     
     var communities = ((UIApplication.shared.delegate as? AppDelegate)?.communities)!
 
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        getCommunityListData()
         mainView.initViews(view: self.view)
         addTargets()
         mainView.collection.communities.delegate = self
@@ -29,7 +35,7 @@ class CommunityTab: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = true
         mainView.collection.communities.reloadData()
-        reloadData()
+        dataReload()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -41,8 +47,23 @@ class CommunityTab: UIViewController {
         mainView.addButton.addTarget(self, action: #selector(addButtonPress), for: .touchUpInside)
     }
     
-    func reloadData() {
-        self.communities = ((UIApplication.shared.delegate as? AppDelegate)?.communities)!
+    func dataReload(status: Int = 1) {
+        // 데이터 새로 추가
+        if (status == 0) {
+            if let appdel = UIApplication.shared.delegate as? AppDelegate {
+                appdel.communities = self.communities
+            }
+            mainView.communityCount = self.communities.count
+//            collectView.comCount = self.communities.count
+            
+            mainView.initViews(view: self.view)
+//            if (self.communities.count > 0) {
+//                collectView.initView(view: mainView.collectView)
+//            }
+        }
+        else {
+            self.communities = ((UIApplication.shared.delegate as? AppDelegate)?.communities)!
+        }
         mainView.collection.communities.reloadData()
     }
     
@@ -55,6 +76,25 @@ class CommunityTab: UIViewController {
         self.navigationController?.pushViewControllerTabHidden(createCommunityVC, animated: true)
     }
 
+}
+
+extension CommunityTab {
+    func getCommunityListData() {
+        network.getCommunityList { res in
+            switch res {
+            case .success(let communityList):
+                if let com = communityList as? [CommunityList] {
+                    self.communities = com
+//                    com.forEach({ item in
+//                        self.communities.append(["\(item.clubImgURL)", "\(item.clubName)"])
+//                    })
+                }
+                self.dataReload(status: 0)
+            default:
+                print("failed")
+            }
+        }
+    }
 }
 
 extension CommunityTab: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
@@ -71,8 +111,9 @@ extension CommunityTab: UICollectionViewDelegate, UICollectionViewDelegateFlowLa
         }
         let community = self.communities[indexPath.row]
         
-        cell.communityImageView.image = UIImage(named: community[0])
-        cell.communityTitleLabel.text = community[1]
+        cell.communityImageView.kf.indicatorType = .activity
+        cell.communityImageView.kf.setImage(with: URL(string: community.clubImgURL), placeholder: nil, options: [.transition(.fade(1)), .cacheOriginalImage, .forceTransition], completionHandler: nil)
+        cell.communityTitleLabel.text = community.clubName
         
         return cell
     }
@@ -91,6 +132,8 @@ extension CommunityTab: UICollectionViewDelegate, UICollectionViewDelegateFlowLa
 }
 
 class CommunityTabView: UIView {
+    var communityCount: Int = 0
+    
     let titleView: UIView = {
         let view = UIView()
         
@@ -163,66 +206,107 @@ class CommunityTabView: UIView {
     }()
     
     func initViews(view: UIView) {
-        view.addSubview(titleView)
+        if (self.communityCount == 0) {
+            view.addSubviews(titleView, descriptLabel)
+
+            titleView.snp.makeConstraints() { make in
+                make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+                make.top.equalTo(view.safeAreaLayoutGuide)
+                make.height.equalTo(44)
+            }
+            
+            descriptLabel.snp.makeConstraints() { make in
+                make.width.equalToSuperview().offset(-23)
+                make.height.equalTo(95)
+                make.leading.equalTo(view.safeAreaLayoutGuide).offset(23)
+                make.top.equalTo(titleView.snp.bottom).offset(43)
+            }
+            
+            titleView.addSubviews(titleLabel, titleLine, searchButton, addButton)
+
+            titleLabel.snp.makeConstraints() { make in
+                make.leading.equalToSuperview().offset(23)
+                make.centerY.equalToSuperview()
+                make.width.equalTo(150)
+                make.height.equalTo(22)
+            }
+
+            titleLine.snp.makeConstraints() { make in
+                make.leading.trailing.equalToSuperview()
+                make.bottom.equalTo(titleView)
+                make.height.equalTo(1)
+            }
+
+            addButton.snp.makeConstraints() { make in
+                make.trailing.equalToSuperview().offset(-24)
+                make.centerY.equalToSuperview()
+                make.width.equalTo(20)
+                make.height.equalTo(20)
+            }
+
+            searchButton.snp.makeConstraints() { make in
+                make.trailing.equalTo(addButton.snp.leading).offset(-23)
+                make.centerY.equalToSuperview()
+                make.width.equalTo(20)
+                make.height.equalTo(20)
+            }
+            
+        } else {
+            self.descriptLabel.removeFromSuperview()
+            
+            view.addSubview(titleView)
+            
+            view.addSubview(collectView)
         
-        view.addSubview(collectView)
-        
-//        view.addSubview(descriptLabel)
+            titleView.snp.makeConstraints() { make in
+                make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+                make.top.equalTo(view.safeAreaLayoutGuide)
+                make.height.equalTo(44)
+            }
 
-        titleView.snp.makeConstraints() { make in
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.top.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(44)
+            titleView.addSubviews(titleLabel, titleLine, searchButton, addButton)
+
+            titleLabel.snp.makeConstraints() { make in
+                make.leading.equalToSuperview().offset(23)
+                make.centerY.equalToSuperview()
+                make.width.equalTo(150)
+                make.height.equalTo(22)
+            }
+
+            titleLine.snp.makeConstraints() { make in
+                make.leading.trailing.equalToSuperview()
+                make.bottom.equalTo(titleView)
+                make.height.equalTo(1)
+            }
+
+            addButton.snp.makeConstraints() { make in
+                make.trailing.equalToSuperview().offset(-24)
+                make.centerY.equalToSuperview()
+                make.width.equalTo(20)
+                make.height.equalTo(20)
+            }
+
+            searchButton.snp.makeConstraints() { make in
+                make.trailing.equalTo(addButton.snp.leading).offset(-23)
+                make.centerY.equalToSuperview()
+                make.width.equalTo(20)
+                make.height.equalTo(20)
+            }
+
+            collectView.snp.makeConstraints() { make in
+                make.leading.trailing.bottom.equalToSuperview()
+                make.top.equalTo(titleView.snp.bottom)
+            }
+
+            collection.initView(view: collectView, comCount: self.communityCount)
         }
-        
-//        descriptLabel.snp.makeConstraints() { make in
-//            make.width.equalToSuperview().offset(-23)
-//            make.height.equalTo(95)
-//            make.leading.equalTo(view.safeAreaLayoutGuide).offset(23)
-//            make.top.equalTo(titleView.snp.bottom).offset(43)
-//        }
-
-        titleView.addSubviews(titleLabel, titleLine, searchButton, addButton)
-
-        titleLabel.snp.makeConstraints() { make in
-            make.leading.equalToSuperview().offset(23)
-            make.centerY.equalToSuperview()
-            make.width.equalTo(150)
-            make.height.equalTo(22)
-        }
-
-        titleLine.snp.makeConstraints() { make in
-            make.leading.trailing.equalToSuperview()
-            make.bottom.equalTo(titleView)
-            make.height.equalTo(1)
-        }
-
-        addButton.snp.makeConstraints() { make in
-            make.trailing.equalToSuperview().offset(-24)
-            make.centerY.equalToSuperview()
-            make.width.equalTo(20)
-            make.height.equalTo(20)
-        }
-
-        searchButton.snp.makeConstraints() { make in
-            make.trailing.equalTo(addButton.snp.leading).offset(-23)
-            make.centerY.equalToSuperview()
-            make.width.equalTo(20)
-            make.height.equalTo(20)
-        }
-
-        collectView.snp.makeConstraints() { make in
-            make.leading.trailing.bottom.equalToSuperview()
-            make.top.equalTo(titleView.snp.bottom)
-        }
-
-        collection.initView(view: collectView)
-
     }
     
 }
 
 class Communities {
+//    var comCount: Int = 0
+    
     let myCommunityLabel: UILabel = {
         let label = UILabel()
         
@@ -236,7 +320,7 @@ class Communities {
     let communityCountLabel: UILabel = {
         let label = UILabel()
         
-        label.text = "5"
+//        label.text = "5"
         label.textColor = .textGray
         label.font = .systemFont(ofSize: 14)
         
@@ -256,7 +340,7 @@ class Communities {
         return view
     }()
     
-    func initView(view: UIView) {
+    func initView(view: UIView, comCount: Int) {
         view.addSubviews(myCommunityLabel, communityCountLabel, communities)
         
         myCommunityLabel.snp.makeConstraints() { make in
@@ -268,6 +352,8 @@ class Communities {
             make.leading.equalTo(myCommunityLabel.snp.trailing).offset(5)
             make.centerY.equalTo(myCommunityLabel)
         }
+        
+        communityCountLabel.text = String(comCount)
         
         communities.snp.makeConstraints() { make in
             make.leading.equalToSuperview().offset(23)
