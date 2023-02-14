@@ -14,12 +14,11 @@ class MyLibTab: UIViewController, UICollectionViewDelegate, UICollectionViewDele
     let layout = MyLibTabView()
     let network = Network()
     
-    var books: [[String]] = [["0", "addbook", "", ""]]
+    var books = [[String]]()
     var userImgUrl: String?
     var userStreak: Int?
     override func viewDidLoad() {
         super.viewDidLoad()
-        getShelfData()
         
         layout.layout_collection.layout_books.delegate = self
         layout.layout_collection.layout_books.dataSource = self
@@ -36,26 +35,18 @@ class MyLibTab: UIViewController, UICollectionViewDelegate, UICollectionViewDele
         self.navigationController?.isNavigationBarHidden = false
     }
     
-    func dataReload(status: Int = 1) {
-        // 데이터 새로 추가
-        if (status == 0) {
-            if let appdel = UIApplication.shared.delegate as? AppDelegate {
-                appdel.books = self.books
-            }
-            layout.bookCount = self.books.count
-            layout.initViews(view: self.view, img_url: (self.userImgUrl ?? ""), streaks: (self.userStreak ?? 0))
-        }
-        else {
-            self.books = ((UIApplication.shared.delegate as? AppDelegate)?.books)!
-        }
-        layout.layout_collection.layout_books.reloadData()
+    func dataReload() {
+        getShelfData(completion: {
+            self.layout.bookCount = self.books.count
+            self.layout.initViews(view: self.view, img_url: (self.userImgUrl ?? ""), streaks: (self.userStreak ?? 0))
+        })
     }
 }
 
 // MARK: - 네트워크 용 extension
 extension MyLibTab {
     // 서재 데이터 get
-    func getShelfData() {
+    func getShelfData(completion: @escaping () -> Void) {
         network.getShelf { response in
             switch response {
             case .success(let shelf):
@@ -65,12 +56,14 @@ extension MyLibTab {
                 }
                 
                 if let book = (shelf as? Shelf)?.Book {
+                    self.books.removeAll()
+                    self.books.append(["0", "addbook", "", ""])
                     book.forEach({ item in
                         self.books.append(["\(item.book_id)", item.img_url, item.title, item.author])
                         self.layout.layout_collection.layout_books.reloadData()
                     })
-                    self.dataReload(status: 0)
                 }
+                completion()
             default:
                 print("failed")
             }
@@ -129,8 +122,8 @@ extension MyLibTab {
             network.getBookDetail(bookId: item.bookid, completion: { response in
                 switch response {
                 case .success(let book):
-                    if let book = book as? [BookDetail] {
-                        vc.bookData = book[0]
+                    if let book = book as? BookDetail {
+                        vc.bookData = book
                     }
                     self.navigationController?.pushViewControllerTabHidden(vc, animated: true)
                 default:

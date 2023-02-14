@@ -65,7 +65,7 @@ class BookDetailView {
             make.edges.equalTo(view.safeAreaLayoutGuide)
         }
         layout_scroll.contentLayoutGuide.snp.makeConstraints() { make in
-            make.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            make.top.leading.trailing.equalToSuperview()
             make.height.equalTo(1050)
         }
         
@@ -308,7 +308,6 @@ class BookDetailView {
         }
         layout_barchart.contentLayoutGuide.snp.makeConstraints() { make in
             make.bottom.equalToSuperview()
-            make.leading.equalToSuperview().offset(10)
             make.height.equalTo(300)
             make.width.equalTo(500)
         }

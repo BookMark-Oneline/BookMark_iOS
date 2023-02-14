@@ -27,7 +27,7 @@ struct BookDetail: Codable {
     let publisher: String
     let totalReadingTime: Int
     let currentReadingPage: Int
-    let totalPage: Int
+    let totalPage: Int?
     let dataDetail: [DataDetail]
 
     enum CodingKeys: String, CodingKey {
