@@ -105,8 +105,27 @@ class NetworkTintin {
     }
     
 //MARK: - API 1-5(FIX) [POST] 타이머 종료
-    func postTimerStopFixed() {
+    func postTimerStopFixed(bookID: Int, userID: Int, totalReadTime: Int, curReadPage: Int, nowRead: Int, readTime: Int, lastCal: String, goal: Int, streak: Int, completion: @escaping (NetworkResult<Any>) -> Void) {
+        let URL = baseUrl + "/timer/finish/\(userID)/\(bookID)"
         
+        
+        let params: Parameters = ["total_reading_time": totalReadTime, "current_reading_time": curReadPage, "now_reading": nowRead, "reading_time": readTime, "last_cal": lastCal, "goal": goal, "streak": streak]
+        let datarequest = AF.request(URL, method: .post, parameters: params, encoding: JSONEncoding.default).validate()
+        
+        datarequest.responseData(completionHandler: { res in
+            switch res.result {
+            case .success:
+                guard let value = res.value else {return}
+                guard let rescode = res.response?.statusCode else {return}
+    
+                let networkResult = self.judgeStatus(object: 5, by: rescode, value)
+                completion(networkResult)
+                
+            case .failure(let e):
+                print(e)
+                completion(.pathErr)
+            }
+        })
     }
     
 //MARK: - API 2-14-1 [POST] 게시글 제목, 내용 게시 (사진 포함 X)
@@ -161,8 +180,27 @@ class NetworkTintin {
     }
     
 //MARK: - API 2-15 [POST] 게시글 공지 등록
-    func postCommunityNotice() {
+    func postCommunityNotice(clubID: Int, userID: Int, clubPostID: Int, completion: @escaping (NetworkResult<Any>) -> Void) {
+        let URL = baseUrl + "/club/post/register/notice/\(clubID)"
+        print(clubPostID)
         
+        let params: Parameters = ["user_id": userID, "club_post_id": clubPostID]
+        let datarequest = AF.request(URL, method: .post, parameters: params, encoding: JSONEncoding.default).validate()
+        
+        datarequest.responseData(completionHandler: { res in
+            switch res.result {
+            case .success:
+                guard let value = res.value else {return}
+                guard let rescode = res.response?.statusCode else {return}
+    
+                let networkResult = self.judgeStatus(object: 5, by: rescode, value)
+                completion(networkResult)
+                
+            case .failure(let e):
+                print(e)
+                completion(.pathErr)
+            }
+        })
     }
     
 }

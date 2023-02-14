@@ -10,6 +10,9 @@ import SnapKit
 class ReadingTime: UIViewController, UITableViewDelegate, UITableViewDataSource {
 // MARK: - Network
     let network = Network()
+    let networkT = NetworkTintin()
+    
+    var bookID: Int = 1
 
     let stopwatchView = StopwatchView()
     
@@ -159,6 +162,37 @@ class ReadingTime: UIViewController, UITableViewDelegate, UITableViewDataSource 
 }
 
 extension ReadingTime {
+//MARK: POST TIMER START 수정 필요
+    func postTimerStartData() {
+        network.postTimerStart(completion: {
+            print("---[POST] TIMER START---")
+        })
+    }
+    
+    func postTimerStopData() {
+        let totalReadTime = 43
+        let curReadPage = 42
+        let nowReadPage = 41
+        let readTime = self.timeCount
+        let lastCal = "2023-02-11"
+        let goal = 39
+        let streak = 2
+        
+        networkT.postTimerStopFixed(bookID: self.bookID, userID: UserInfo.shared.userID, totalReadTime: totalReadTime, curReadPage: curReadPage, nowRead: nowReadPage, readTime: readTime, lastCal: lastCal, goal: goal, streak: streak, completion: { res in
+            switch res {
+            case .success:
+                print("---[POST] TIMER STOP---")
+            case .decodeFail:
+                print("DF")
+            default:
+                print("failed")
+            }
+        })
+    }
+    
+}
+
+extension ReadingTime {
 
 // MARK: Button Action Functions
     @objc func timerButtonAction(_ sender: UIButton) {
@@ -166,9 +200,8 @@ extension ReadingTime {
         if (shouldPostTimerStart) {
             stopwatchView.circleAnimate()
             shouldPostTimerStart = false
-            network.postTimerStart(completion: {
-                print("---[POST] TIMER START---")
-            })
+            
+            postTimerStartData()
         }
         if (timerRunning) {
             stopwatchView.pauseAnimation()
@@ -198,10 +231,7 @@ extension ReadingTime {
         self.timerLabel.text = "00 : 00"
         
 // MARK: - TimerStop POST
-        network.postTimerStop(completion: {
-            print("---[POST] TIMER STOP---")
-//            print("Histories : \(self.timeHistories)")
-        })
+        postTimerStopData()
     }
 
 // MARK: - Timer Calculation
