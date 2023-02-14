@@ -56,9 +56,9 @@ extension Network {
     
     // API 2-4: 책 모임 설정 변경
     func postCommunitySetting(clubID: Int, clubName: String, clubImg: String, clubInvitation: Int, clubLimit: Int, completion: @escaping (NetworkResult<Any>) -> Void) {
-        let URL = baseUrl + "/club/setting/setting/edit/\(clubID)"
+        let URL = baseUrl + "/club/setting/edit/\(clubID)"
         let params: Parameters = ["club_id": clubID, "club_name": clubName, "club_img_url": clubImg, "club_invite_option": clubInvitation,  "max_people_num": clubLimit]
-        let datarequest = AF.request(URL, method: .get, parameters: params, encoding: JSONEncoding.default).validate()
+        let datarequest = AF.request(URL, method: .post, parameters: params, encoding: JSONEncoding.default).validate()
         
         datarequest.responseData(completionHandler: { res in
             switch res.result {
@@ -121,6 +121,77 @@ extension Network {
         })
     }
     
+    // API 2-7-1: 책 모임 가입 요청자 상태를 변경 (가입 허용)
+    func postCommunityJoinRequestStatus(userID: Int, clubID: Int, completion: @escaping (NetworkResult<Any>) -> Void) {
+        let URL = baseUrl + "/club/members/approval/\(userID)"
+        let params: Parameters = ["club_id": clubID]
+        let datarequest = AF.request(URL, method: .post, parameters: params, encoding: JSONEncoding.default).validate()
+        
+        datarequest.responseData(completionHandler: { res in
+            switch res.result {
+            case .success:
+                guard let value = res.value else {return}
+                guard let rescode = res.response?.statusCode else {return}
+                
+                let networkResult = self.tempJudgeStatus(object: 7, by: rescode, value)
+                completion(networkResult)
+                
+            case .failure(let e):
+                print(e)
+                completion(.pathErr)
+            }
+        
+        })
+    }
+    
+    // API 2-8: 책 모임 생성
+    func postNewCommunity(parameter: Parameters, completion: @escaping (NetworkResult<Any>) -> Void) {
+        let URL = baseUrl + "/club/register"
+        
+        // let params: Parameters = ["club_id": clubID, "club_name": ,  "club_img_url": , "club_invite_opiton": , "max_people_num": , "club_owner_id": ]
+        let datarequest = AF.request(URL, method: .post, parameters: parameter, encoding: JSONEncoding.default).validate()
+        
+        datarequest.responseData(completionHandler: { res in
+            switch res.result {
+            case .success:
+                guard let value = res.value else {return}
+                guard let rescode = res.response?.statusCode else {return}
+                
+                let networkResult = self.tempJudgeStatus(object: 8, by: rescode, value)
+                completion(networkResult)
+                
+            case .failure(let e):
+                print(e)
+                completion(.pathErr)
+            }
+        
+        })
+    }
+    
+    // API 2-12: 게시글 like 상태 변경
+    func postCommunityPostLikeStatus(clubPostID: Int, userID: Int, likeStatus: Int, completion: @escaping (NetworkResult<Any>) -> Void) {
+        let URL = baseUrl + "/club/post/like/\(clubPostID)"
+        
+        let params: Parameters = ["club_id": userID, "club_name": likeStatus]
+        let datarequest = AF.request(URL, method: .post, parameters: params, encoding: JSONEncoding.default).validate()
+        
+        datarequest.responseData(completionHandler: { res in
+            switch res.result {
+            case .success:
+                guard let value = res.value else {return}
+                guard let rescode = res.response?.statusCode else {return}
+                
+                let networkResult = self.tempJudgeStatus(object: 8, by: rescode, value)
+                completion(networkResult)
+                
+            case .failure(let e):
+                print(e)
+                completion(.pathErr)
+            }
+        
+        })
+    }
+    
     private func tempJudgeStatus(object: Int = 0, by statusCode: Int, _ data: Data) -> NetworkResult<Any> {
         switch statusCode {
         case 200:
@@ -140,6 +211,7 @@ extension Network {
             else if (object == 6) {
                 return isValidData_CommunityUserRequest(data: data)
             }
+            // API 2-7-1, API 2-8, API 2-12
             else {
                 return .success(data)
             }
@@ -178,6 +250,16 @@ extension Network {
     }
     
     private func isValidData_CommunityUserRequest(data: Data) -> NetworkResult<Any> {
+        let decoder = JSONDecoder()
+        
+        guard let decodedData = try? decoder.decode(CommunityJoinRequest.self, from: data) else {
+            return .decodeFail
+        }
+    
+        return .success(decodedData)
+    }
+    
+    private func isValidData_CreateNewCommunity(data: Data) -> NetworkResult<Any> {
         let decoder = JSONDecoder()
         
         guard let decodedData = try? decoder.decode(CommunityJoinRequest.self, from: data) else {

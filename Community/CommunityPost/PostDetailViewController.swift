@@ -12,6 +12,7 @@ class PostDetailViewController: UIViewController {
     let network = Network()
     let layout_postDetail = PostDetailView()
     var postID: Int = 1
+    var likeStatus: Int = 0
     
     private var img_url: String?
     private var postTitle: String?
@@ -29,6 +30,12 @@ class PostDetailViewController: UIViewController {
         layout_postDetail.layout_postDetail.dataSource = self
         
         setNavCustom()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        postLikeStatus(likes: self.likeStatus)
     }
     
     func setNavCustom() {
@@ -65,6 +72,9 @@ extension PostDetailViewController: UITableViewDelegate, UITableViewDataSource {
             cell.label_context.text = postContent
             cell.label_heart.text = "\(likeCount)"
             cell.label_comment.text = "\(commentCount)"
+            cell.likeCallbackMehtod = { [weak self] result in
+                self?.likeStatus = result
+            }
             
             return cell
         } else {
@@ -111,7 +121,18 @@ extension PostDetailViewController {
                 }
                 self.layout_postDetail.layout_postDetail.reloadData()
             default:
-                print("failed")
+                print("failed get post detail data")
+            }
+        })
+    }
+    
+    func postLikeStatus(likes: Int) {
+        network.postCommunityPostLikeStatus(clubPostID: self.postID, userID: UserInfo.shared.userID, likeStatus: likes, completion: { res in
+            switch res {
+            case .success:
+                return
+            default:
+                print("failed update like status")
             }
         })
     }
@@ -150,12 +171,13 @@ class MainPostCell: UITableViewCell {
     let label_heart = UILabel()
     let layout_comment = UIImageView()
     let label_comment = UILabel()
-    
+    var likeCallbackMehtod: ((Int) -> Void)?
+    var likeStatus: Int = 0
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.selectionStyle = .none
-        addSubviews(layout_userImg, label_author, label_time, label_title, label_context, btn_heart, label_heart, layout_comment, label_comment)
+        self.contentView.addSubviews(layout_userImg, label_author, label_time, label_title, label_context, btn_heart, label_heart, layout_comment, label_comment)
         
         layout_userImg.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(18)
@@ -218,7 +240,8 @@ class MainPostCell: UITableViewCell {
             make.width.equalTo(21)
             make.height.equalTo(21)
         }
-        btn_heart.setImage(UIImage(named: "heart"), for: .normal)
+        btn_heart.addTarget(self, action: #selector(didTapLikeButton), for: .touchUpInside)
+        btn_heart.setImage(UIImage(named: "heart_unfill"), for: .normal)
         
         label_heart.snp.makeConstraints { make in
             make.centerY.equalTo(btn_heart)
@@ -244,15 +267,29 @@ class MainPostCell: UITableViewCell {
         label_comment.textColor = .black
         label_comment.font = .systemFont(ofSize: 11)
         label_comment.textAlignment = .natural
-        
-        
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    @objc func didTapLikeButton(_ sender: UIButton) {
+        let value = Int(self.label_heart.text ?? "0") ?? 0
+        if (self.likeStatus == 0) {
+            self.likeStatus = 1
+            self.label_heart.text = "\(value + 1)"
+            sender.setImage(UIImage(named: "heart_fill"), for: .normal)
+        }
+        else {
+            self.likeStatus = 0
+            if (value - 1 >= 0) {
+                self.label_heart.text = "\(value - 1)"
+                sender.setImage(UIImage(named: "heart_unfill"), for: .normal)
+            }
+        }
+        self.likeCallbackMehtod?(self.likeStatus)
+    }
 }
-
 
 class CommentCell: UITableViewCell {
     static let identfier = "commentCell"
