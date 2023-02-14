@@ -53,6 +53,11 @@ class PostResponse: Decodable {
     }
 }
 
+//MARK: - 2-9 책모임 가입 요청 응답 메세지
+class CommunityJoinResponse: Decodable {
+    let message: String
+}
+
 //MARK: - 2-10 책모임 검색
 class CommunitySearch: Decodable {
     let clubID: Int

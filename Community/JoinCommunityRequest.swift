@@ -123,6 +123,7 @@ class JoinCommunityRequestViewController: UIViewController {
     
     @objc func requestButtonPress() {
         print("가입 요청")
+        postUserCommunityJoinRequestData()
     }
 }
 
@@ -146,6 +147,21 @@ extension JoinCommunityRequestViewController {
                 print("failed")
             }
         }
+    }
+    
+    func postUserCommunityJoinRequestData() {
+        network.postCommunityJoinRequest(userID: String(UserInfo.shared.userID), clubID: "1", completion: { res in
+            switch res {
+            case .success:
+                print("succcccc")
+                print("POST CommunityJoinRequest")
+                self.navigationController?.popToRootViewController(animated: true)
+            case .decodeFail:
+                print("DF")
+            default:
+                print("failed")
+            }
+        })
     }
 }
 

@@ -56,8 +56,6 @@ class NetworkTintin {
         
         })
     }
-    
-// MARK: - API 2-9 [POST] 책모임 가입 요청 전달
 
 // MARK: - API 2-10 [GET] 책모임 검색 조회
     func getCommunitySearchResult(clubID: String, completion: @escaping (NetworkResult<Any>) -> Void) {
@@ -83,6 +81,31 @@ class NetworkTintin {
         
         })
     }
+
+// MARK: - API 2-9 [POST] 책모임 가입 요청 전달
+    func postCommunityJoinRequest(userID: String, clubID: String, completion: @escaping (NetworkResult<Any>) -> Void) {
+        let URL = baseUrl + "/club/request/1?club_id=\(clubID)"
+        let params: Parameters = ["user_id": userID]
+        let datarequest = AF.request(URL, method: .post, parameters: params, encoding: JSONEncoding.default).validate()
+        
+        datarequest.responseData(completionHandler: { res in
+            switch res.result {
+            case .success:
+                guard let value = res.value else {return}
+                guard let rescode = res.response?.statusCode else {return}
+                
+                let networkResult = self.judgeStatus(object: 3, by: rescode, value)
+                completion(networkResult)
+
+            case .failure(let e):
+                print(e)
+                completion(.pathErr)
+            }
+        })
+    }
+    
+//MARK: - API 2-14-1 [POST] 게시글 제목, 내용 게시 (사진 포함 X)
+    
 }
 
 extension NetworkTintin {
@@ -99,6 +122,10 @@ extension NetworkTintin {
             else if (object == 2) {
                 return isValidData_CommuniySearchResult(data: data)
             }
+            else if (object == 3) {
+                return isValidData_CommunityJoinRequest(data: data)
+            }
+            
             else {
                 return .success(data)
             }
@@ -122,6 +149,16 @@ extension NetworkTintin {
         let decoder = JSONDecoder()
         
         guard let decodedData = try? decoder.decode(CommunityInfo.self, from: data) else {
+            return .decodeFail
+        }
+        
+        return .success(decodedData)
+    }
+    
+    private func isValidData_CommunityJoinRequest(data: Data) -> NetworkResult<Any> {
+        let decoder = JSONDecoder()
+        
+        guard let decodedData = try? decoder.decode(CommunityJoinResponse.self, from: data) else {
             return .decodeFail
         }
         
