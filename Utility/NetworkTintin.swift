@@ -35,8 +35,8 @@ class NetworkTintin {
     }
     
 // MARK: - API 2-2 [GET] 책모임(공지, 이름, 게시물 목록) 조회
-    func getCommunityInfo(completion: @escaping (NetworkResult<Any>) -> Void) {
-        let URL = baseUrl + "/club/1"
+    func getCommunityInfo(clubID: Int, completion: @escaping (NetworkResult<Any>) -> Void) {
+        let URL = baseUrl + "/club/\(clubID)"
         let datarequest = AF.request(URL, method: .get, encoding: JSONEncoding.default)
         
         datarequest.responseData(completionHandler: { res in
