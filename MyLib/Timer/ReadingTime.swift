@@ -12,6 +12,8 @@ class ReadingTime: UIViewController, UITableViewDelegate, UITableViewDataSource 
     let network = Network()
     let networkT = NetworkTintin()
     
+    let pageInputPopUp = CustomPopUp()
+    
     var bookID: Int = 1
 
     let stopwatchView = StopwatchView()
@@ -108,6 +110,7 @@ class ReadingTime: UIViewController, UITableViewDelegate, UITableViewDataSource 
         timeHistroyTable.initView(view: timeHistoryView)
         timeHistroyTable.timeHistoryTableView.dataSource = self
         timeHistroyTable.timeHistoryTableView.delegate = self
+        pageInputPopUp.submitButton.addTarget(self, action: #selector(submitPopUp), for: .touchUpInside)
     }
     
 // MARK: - setLayouts()
@@ -169,16 +172,10 @@ extension ReadingTime {
         })
     }
     
-    func postTimerStopData() {
+    func postTimerStopData(curReadPage: Int) {
         let totalReadTime = 43
-        let curReadPage = 42
-        let nowReadPage = 41
-        let readTime = self.timeCount
-        let lastCal = "2023-02-11"
-        let goal = 39
-        let streak = 2
         
-        networkT.postTimerStopFixed(bookID: self.bookID, userID: UserInfo.shared.userID, totalReadTime: totalReadTime, curReadPage: curReadPage, nowRead: nowReadPage, readTime: readTime, lastCal: lastCal, goal: goal, streak: streak, completion: { res in
+        networkT.postTimerStopFixed(bookID: self.bookID, userID: UserInfo.shared.userID, totalReadTime: totalReadTime, curReadPage: curReadPage, completion: { res in
             switch res {
             case .success:
                 print("---[POST] TIMER STOP---")
@@ -236,8 +233,38 @@ extension ReadingTime {
         self.timer.invalidate()
         self.timerLabel.text = "00 : 00"
         
-// MARK: - TimerStop POST
-        postTimerStopData()
+// MARK: PageInputPopUp
+        pageInputPopUp.allPageTextField.text = "354"
+        pageInputPopUp.showPopUp(with: "책갈피",
+                              message: "몇 페이지까지 읽으셨나요?",
+                              on: self)
+    }
+    
+    @objc func submitPopUp(_ sender: UIButton) {
+        // 페이지 수 전달
+        UIView.animate(withDuration: 0.25,
+                       animations: {
+            self.pageInputPopUp.popUpView.frame = CGRect(x: 40,
+                                                         y: self.view.frame.size.height,
+                                                         width: self.view.frame.size.width-80,
+                                                         height: 200)
+        }, completion: { done in
+            if done {
+                UIView.animate(withDuration: 0.25, animations: {
+                    self.pageInputPopUp.backgroundView.alpha = 0
+                }, completion: { done in
+                    self.pageInputPopUp.popUpView.removeFromSuperview()
+                    self.pageInputPopUp.backgroundView.removeFromSuperview()
+                    
+                    guard let page = self.pageInputPopUp.currentPageTextField.text else {return}
+                    if (page.isEmpty) {return}
+
+//MARK: PostTimerStop
+                    self.postTimerStopData(curReadPage: Int(page) ?? -1)
+                    
+                })
+            }
+        })
     }
 
 // MARK: - Timer Calculation
