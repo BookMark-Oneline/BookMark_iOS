@@ -60,11 +60,15 @@ class CommunityInsideViewController: UIViewController, UITableViewDelegate, UITa
     }
     
     @objc func pushCommunitySettingViewController(_ sender: UIBarButtonItem) {
-        self.navigationController?.pushViewController(SetCommunityViewController(), animated: true)
+        let vc = SetCommunityViewController()
+        vc.clubID = self.clubID
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc func pushCommunityMemberViewController(_ sender: UIBarButtonItem) {
-        self.navigationController?.pushViewController(CommunityMemberViewController(), animated: true)
+        let vc = CommunityMemberViewController()
+        vc.clubID = self.clubID
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 
 }
