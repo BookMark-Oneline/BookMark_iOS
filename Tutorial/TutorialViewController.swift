@@ -68,6 +68,9 @@ class TutorialViewController: UIViewController, UIPageViewControllerDataSource, 
     }
     
     @objc func didTapStartButton(_ sender: UIButton) {
+        UserDefaults.standard.setValue("false", forKey: "Tutorial")
+        UserDefaults.standard.synchronize()
+        
         let vc = LoginViewController()
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true)
