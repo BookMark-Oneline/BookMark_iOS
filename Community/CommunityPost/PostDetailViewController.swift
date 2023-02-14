@@ -33,6 +33,7 @@ class PostDetailViewController: UIViewController {
         layout_postDetail.layout_postDetail.dataSource = self
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWhileHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidShow), name: UIResponder.keyboardDidShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardDidShowNotification, object: nil)
         
         setNavCustom()
     }
@@ -48,21 +49,31 @@ class PostDetailViewController: UIViewController {
     }
     
     @objc func keyboardWhileHide(notification: NSNotification) {
-        if self.layout_textField.layout_coner.frame.origin.y != textViewYValue {
-            self.layout_textField.layout_coner.frame.origin.y = textViewYValue
+        UIView.animate(withDuration: 0.3, delay: 0) { [self] in
+            if self.layout_textField.layout_coner.frame.origin.y != self.textViewYValue {
+                self.layout_textField.layout_coner.frame.origin.y = textViewYValue
+            }
+        }
+        
+    }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        UIView.animate(withDuration: 0, delay: 0) { [self] in
+            if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+                if textViewYValue == 15 {
+                    textViewYValue = self.layout_textField.layout_coner.frame.origin.y
+                }
+                if self.layout_textField.layout_coner.frame.origin.y == textViewYValue {
+                    textViewYValue = self.layout_textField.layout_coner.frame.origin.y
+                    self.layout_textField.layout_coner.frame.origin.y -= keyboardSize.height - UIApplication.shared.windows.first!.safeAreaInsets.bottom
+                }
+            }
         }
     }
     
     @objc func keyboardDidShow(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            if textViewYValue == 15 {
-                textViewYValue = self.layout_textField.layout_coner.frame.origin.y
-            }
-            if self.layout_textField.layout_coner.frame.origin.y == textViewYValue {
-                textViewYValue = self.layout_textField.layout_coner.frame.origin.y
-                self.layout_textField.layout_coner.frame.origin.y -= keyboardSize.height - UIApplication.shared.windows.first!.safeAreaInsets.bottom
-            }
-        }
+        
+        
     }
     
     func setNavCustom() {
