@@ -40,8 +40,7 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UITextVie
     
     @objc func createPostViewController(_ sender: UIBarButtonItem) {
 //        self.navigationController?.popViewController(animated: true)
-        
-        if (self.postImg == nil) {
+        if (postImg == nil) {
             postCommunityPostWithoutImgData()
         } else {
             postCommunityPostWithImgData()
@@ -116,7 +115,7 @@ extension CreatePostViewController {
         network.postCommunityPostWithImg(clubID: 1, userID: UserInfo.shared.userID, clubPostTitle: postTitle, clubPostContent: postContent, imgStatus: 1, img: postImg, completion: {  res in
             switch res {
             case .success:
-                print("POST CommunityPostWithImg")
+                print("POST CommunityPostWithoutImg")
                 self.navigationController?.popViewController(animated: true)
             case .decodeFail:
                 print("DF")

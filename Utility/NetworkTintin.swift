@@ -157,6 +157,9 @@ class NetworkTintin {
     func postCommunityPostWithImg(clubID: Int, userID: Int, clubPostTitle: String, clubPostContent: String, imgStatus: Int, img: UIImage, completion: @escaping (NetworkResult<Any>) -> Void) {
         let URL = baseUrl + "/club/post/register_singlephoto/\(clubID)"
     
+        print(clubPostTitle)
+        print(clubPostContent)
+        
         let params: Parameters = ["user_id": userID, "club_id": clubID, "club_post_title": clubPostTitle, "post_content_text": clubPostContent, "img_status": imgStatus]
         
         guard let imgData = img.jpegData(compressionQuality: 0.7) else {
@@ -165,7 +168,8 @@ class NetworkTintin {
         }
         
         AF.upload(multipartFormData: { multipartFormData in
-            multipartFormData.append(imgData, withName: "club_img_url", fileName: "\(clubID)_image.png" , mimeType: "image/png")
+            //MARK: fileName 변경해야 함 ...
+            multipartFormData.append(imgData, withName: "img", fileName: "image.png" , mimeType: "image/png")
         
             for (key, value) in params {
                 multipartFormData.append("\(value)".data(using: .utf8, allowLossyConversion: false)!, withName: "\(key)")
@@ -173,7 +177,7 @@ class NetworkTintin {
         
         }, to: URL, method: .post).responseData(completionHandler: { (response) in
             if let err = response.error {
-                print("post upload: \(err)")
+                print("post upload error: \(err)")
                 return
             }
             print(response.result)
