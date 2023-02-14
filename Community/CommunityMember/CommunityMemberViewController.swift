@@ -29,7 +29,9 @@ class CommunityMemberViewController: UIViewController, UITableViewDelegate, UITa
     }
     
     @objc func pushJoinCommunityRequest(_ sender: UIBarButtonItem) {
-        self.navigationController?.pushViewController(WaitMemberViewController(), animated: true)
+        let vc = WaitMemberViewController()
+        vc.clubID = self.clubID
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 
