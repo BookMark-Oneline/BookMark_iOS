@@ -13,7 +13,10 @@ import Kingfisher
 class ConfirmBookViewController: UIViewController {
     
     let pageInputPopUp = AllPageInputPopUp()
-    var totalPage: Int?
+    let bookDetailVC = BookDetailViewController()
+    var totalPage: Int = 0
+    
+    let stopWatchView = ReadingTime()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,7 +85,9 @@ extension ConfirmBookViewController {
                     guard let page = self.pageInputPopUp.allPageTextField.text else {return}
                     if (page.isEmpty) {return}
                     
-                    self.totalPage = Int(page) ?? -1
+                    self.totalPage = Int(page) ?? -2
+                    
+                    self.stopWatchView.totalPage = self.totalPage
                     
                     print("TOTAL PAGE: \(self.totalPage)")
                     
