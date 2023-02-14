@@ -79,3 +79,9 @@ class CommunitySearch: Decodable {
     }
 }
 
+class PostRequestResponse: Decodable {
+    let isSuccess: Bool
+    let code: Int
+    let message: String
+}
+

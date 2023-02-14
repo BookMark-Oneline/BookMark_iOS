@@ -104,7 +104,45 @@ class NetworkTintin {
         })
     }
     
+//MARK: - API 1-5(FIX) [POST] 타이머 종료
+    func postTimerStopFixed() {
+        
+    }
+    
 //MARK: - API 2-14-1 [POST] 게시글 제목, 내용 게시 (사진 포함 X)
+    func postCommunityPostWithoutImg(clubID: Int, userID: Int, clubPostTitle: String, clubPostContent: String, imgStatus: Int, completion: @escaping (NetworkResult<Any>) -> Void) {
+        let URL = baseUrl + "/club/post/register/\(clubID)"
+        print(clubPostTitle)
+        print(clubPostContent)
+        
+        let params: Parameters = ["user_id": userID, "club_id": clubID, "club_post_title": clubPostTitle, "post_content_text": clubPostContent, "img_status": imgStatus]
+        let datarequest = AF.request(URL, method: .post, parameters: params, encoding: JSONEncoding.default).validate()
+        
+        datarequest.responseData(completionHandler: { res in
+            switch res.result {
+            case .success:
+                guard let value = res.value else {return}
+                guard let rescode = res.response?.statusCode else {return}
+    
+                let networkResult = self.judgeStatus(object: 5, by: rescode, value)
+                completion(networkResult)
+                
+            case .failure(let e):
+                print(e)
+                completion(.pathErr)
+            }
+        })
+    }
+    
+//MARK: - API 2-14-2 [POST] 게시글 제목, 내용 게시 (사진 포함 O)
+    func postCommunityPostWithImg() {
+        
+    }
+    
+//MARK: - API 2-15 [POST] 게시글 공지 등록
+    func postCommunityNotice() {
+        
+    }
     
 }
 
@@ -124,6 +162,9 @@ extension NetworkTintin {
             }
             else if (object == 3) {
                 return isValidData_CommunityJoinRequest(data: data)
+            }
+            else if (object == 5) {
+                return isValidData_PostRequestResponse(data: data)
             }
             
             else {
@@ -169,6 +210,16 @@ extension NetworkTintin {
         let decoder = JSONDecoder()
 
         guard let decodedData = try? decoder.decode([CommunitySearch].self, from: data) else {
+            return .decodeFail
+        }
+
+        return .success(decodedData)
+    }
+    
+    private func isValidData_PostRequestResponse(data: Data) -> NetworkResult<Any> {
+        let decoder = JSONDecoder()
+
+        guard let decodedData = try? decoder.decode(PostRequestResponse.self, from: data) else {
             return .decodeFail
         }
 
