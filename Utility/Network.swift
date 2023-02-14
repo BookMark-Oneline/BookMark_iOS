@@ -18,7 +18,7 @@ class Network {
     func postRegisterBooks(title: String, img_url: String, author: String, pubilsher: String, isbn: String, completion: @escaping (() -> Void)) {
         let params: Parameters = ["title": title, "img_url": img_url, "author": author, "publisher": pubilsher, "isbn": isbn]
         
-        let URL = baseUrl + "/register/book/1"
+        let URL = baseUrl + "/register/book/\(UserInfo.shared.userID)"
         let datarequest = AF.request(URL, method: .post, parameters: params, encoding: JSONEncoding.default).validate()
         
         datarequest.responseData(completionHandler: { response in
@@ -80,7 +80,7 @@ class Network {
     
     // 책 검색(바코드) GET
     func getBookSearch(isbn: String, completion: @escaping (NetworkResult<Any>) -> Void) {
-        let URL = baseUrl + "/search/book/1/?query=" + isbn
+        let URL = baseUrl + "/search/book/\(UserInfo.shared.userID)/?query=" + isbn
    
         let dataRequest = AF.request( URL,
                                       method: .get,
