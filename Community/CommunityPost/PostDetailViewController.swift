@@ -11,8 +11,10 @@ import UIKit
 class PostDetailViewController: UIViewController {
     let network = Network()
     let layout_postDetail = PostDetailView()
+    let layout_textField = TextFieldView()
     var postID: Int = 1
     var likeStatus: Int = 0
+    var textViewYValue = CGFloat(15)
     
     private var img_url: String?
     private var postTitle: String?
@@ -26,8 +28,11 @@ class PostDetailViewController: UIViewController {
         super.viewDidLoad()
         getPostDetailData()
         layout_postDetail.initView(view: self.view)
+        layout_textField.initView(view: self.view)
         layout_postDetail.layout_postDetail.delegate = self
         layout_postDetail.layout_postDetail.dataSource = self
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWhileHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidShow), name: UIResponder.keyboardDidShowNotification, object: nil)
         
         setNavCustom()
     }
@@ -36,6 +41,28 @@ class PostDetailViewController: UIViewController {
         super.viewWillDisappear(animated)
         
         postLikeStatus(likes: self.likeStatus)
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+    @objc func keyboardWhileHide(notification: NSNotification) {
+        if self.layout_textField.layout_coner.frame.origin.y != textViewYValue {
+            self.layout_textField.layout_coner.frame.origin.y = textViewYValue
+        }
+    }
+    
+    @objc func keyboardDidShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            if textViewYValue == 15 {
+                textViewYValue = self.layout_textField.layout_coner.frame.origin.y
+            }
+            if self.layout_textField.layout_coner.frame.origin.y == textViewYValue {
+                textViewYValue = self.layout_textField.layout_coner.frame.origin.y
+                self.layout_textField.layout_coner.frame.origin.y -= keyboardSize.height - UIApplication.shared.windows.first!.safeAreaInsets.bottom
+            }
+        }
     }
     
     func setNavCustom() {
@@ -85,10 +112,16 @@ extension PostDetailViewController: UITableViewDelegate, UITableViewDataSource {
             
             return cell
         }
+        
+        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.comment.count + 1
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.view.endEditing(true)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -150,12 +183,60 @@ class PostDetailView {
         return layout_postDetail
     }()
     
+    
     func initView(view : UIView) {
+        
         view.addSubview(layout_postDetail)
         
         layout_postDetail.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+        
+    
+    }
+}
+
+class TextFieldView {
+    let layout_textField = UITextField()
+    let btn_send = UIButton()
+    let layout_coner = UIView()
+    
+    func initView(view : UIView) {
+        view.addSubviews(layout_coner)
+        layout_coner.snp.makeConstraints { make in
+            make.left.equalToSuperview().offset(15)
+            make.right.equalToSuperview().offset(-15)
+            make.height.equalTo(50)
+            make.bottom.equalToSuperview().offset(-34)
+        }
+        layout_coner.backgroundColor = .white
+        layout_coner.layer.cornerRadius = 25
+        layout_coner.layer.borderWidth = 1
+        layout_coner.layer.borderColor = UIColor.textGray.cgColor
+        
+        layout_coner.addSubviews(btn_send, layout_textField)
+        
+        btn_send.snp.makeConstraints { make in
+            make.height.width.equalTo(38)
+            make.centerY.equalToSuperview()
+            make.right.equalToSuperview().offset(-6)
+        }
+        btn_send.layer.cornerRadius = 19
+        btn_send.setImage(UIImage(named: "comment_send"), for: .normal)
+        
+        
+        layout_textField.snp.makeConstraints { make in
+            make.left.equalToSuperview().offset(19)
+            make.right.equalTo(btn_send.snp.left).offset(2)
+            make.centerY.equalToSuperview()
+            make.height.equalTo(19)
+        }
+        layout_textField.placeholder = "댓글을 입력하세요."
+        layout_textField.font = .systemFont(ofSize: 15)
+        layout_textField.textAlignment = .natural
+        
+        
+
     }
 }
 
