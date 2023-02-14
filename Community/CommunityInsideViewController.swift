@@ -13,7 +13,7 @@ class CommunityInsideViewController: UIViewController, UITableViewDelegate, UITa
 //MARK: NetworkTintin
     let network = NetworkTintin()
     
-    var clubID: Int = 0
+    var clubID: Int = 1
     var announceID: Int?
     
     var postData = [PostInfo]()
@@ -75,7 +75,7 @@ class CommunityInsideViewController: UIViewController, UITableViewDelegate, UITa
 
 extension CommunityInsideViewController {
     func getCommunityInsideData() {
-        network.getCommunityInfo { res in
+        network.getCommunityInfo(clubID: self.clubID) { res in
             switch res {
             case .success(let communityInfo):
                 if let comInfo = communityInfo as? CommunityInfo {
