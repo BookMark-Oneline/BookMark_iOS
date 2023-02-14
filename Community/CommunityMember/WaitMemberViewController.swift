@@ -39,11 +39,15 @@ extension WaitMemberViewController {
         cell.label_introduce.text = requestList[indexPath.row][2]
         
         cell.acceptCallbackMehtod = { [weak self] in
-            self?.accpetJoinRequest(userID: self?.requestList[indexPath.row][3] ?? "")
+            self?.accpetJoinRequest(userID: self?.requestList[indexPath.row][3] ?? "", completion: {
+                self?.layout_waits.layout_waits.deleteRows(at: [indexPath], with: .left)
+            })
         }
         
         cell.declineCallbackMehtod = { [weak self] in
-            self?.declineJoinRequest()
+            self?.declineJoinRequest(userID: self?.requestList[indexPath.row][3] ?? "", completion: {
+                self?.layout_waits.layout_waits.deleteRows(at: [indexPath], with: .left)
+            })
         }
         
         return cell
@@ -76,20 +80,30 @@ extension WaitMemberViewController {
         })
     }
     
-    func accpetJoinRequest(userID: String) {
+    func accpetJoinRequest(userID: String, completion: @escaping () -> Void) {
         let userid = Int(userID) ?? 0
         network.postCommunityJoinRequestStatus(userID: userid, clubID: self.clubID, completion: { res in
             switch res {
             case .success:
                 self.view.makeToast("가입이 되었습니다", duration: 1, position: .bottom)
+                completion()
             default:
                 self.view.makeToast("가입 요청을 받을 수 없습니다\n 잠시 후 다시 시도해주세요", duration: 1, position: .bottom)
             }
         })
     }
     
-    func declineJoinRequest() {
-        
+    func declineJoinRequest(userID: String, completion: @escaping () -> Void) {
+        let userid = Int(userID) ?? 0
+        network.postCommunityJoinRequestDecline(userID: userid, clubID: self.clubID, completion: { res in
+            switch res {
+            case .success:
+                self.view.makeToast("가입 거부 되었습니다", duration: 1, position: .bottom)
+                completion()
+            default:
+                self.view.makeToast("가입 거부를 할 수 없습니다\n 잠시 후 다시 시도해주세요", duration: 1, position: .bottom)
+            }
+        })
     }
 }
 

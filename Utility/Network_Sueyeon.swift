@@ -149,6 +149,29 @@ extension Network {
         })
     }
     
+    // API 2-7-2: 책 모임 가입 요청자 상태를 변경 (가입 불가)
+    func postCommunityJoinRequestDecline(userID: Int, clubID: Int, completion: @escaping (NetworkResult<Any>) -> Void) {
+        let URL = baseUrl + "/club/members/decline/\(userID)"
+        let params: Parameters = ["club_id": clubID]
+        let datarequest = AF.request(URL, method: .delete, parameters: params, encoding: JSONEncoding.default).validate()
+        
+        datarequest.responseData(completionHandler: { res in
+            switch res.result {
+            case .success:
+                guard let value = res.value else {return}
+                guard let rescode = res.response?.statusCode else {return}
+                
+                let networkResult = self.tempJudgeStatus(object: 7, by: rescode, value)
+                completion(networkResult)
+                
+            case .failure(let e):
+                print(e)
+                completion(.pathErr)
+            }
+        
+        })
+    }
+    
     // API 2-8: 책 모임 생성
     func postNewCommunity(parameter: Parameters, completion: @escaping (NetworkResult<Any>) -> Void) {
         let URL = baseUrl + "/club/register"
