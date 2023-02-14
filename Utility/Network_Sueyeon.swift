@@ -192,10 +192,33 @@ extension Network {
         })
     }
     
+    // API 2-13: 게시글 댓글 작성
+    func postCommunityPostComment(clubPostID: Int, userID: Int, comment: String, completion: @escaping (NetworkResult<Any>) -> Void) {
+        let URL = baseUrl + "/club/post/comment/\(clubPostID)"
+        
+        let params: Parameters = ["user_id": userID, "club_post_id": clubPostID, "comment_content_text": comment]
+        let datarequest = AF.request(URL, method: .post, parameters: params, encoding: JSONEncoding.default).validate()
+
+        datarequest.responseData(completionHandler: { res in
+            switch res.result {
+            case .success:
+                guard let value = res.value else {return}
+                guard let rescode = res.response?.statusCode else {return}
+                
+                let networkResult = self.tempJudgeStatus(object: 3, by: rescode, value)
+                completion(networkResult)
+                
+            case .failure(let e):
+                print(e)
+                completion(.pathErr)
+            }
+        })
+    }
+    
     private func tempJudgeStatus(object: Int = 0, by statusCode: Int, _ data: Data) -> NetworkResult<Any> {
         switch statusCode {
         case 200:
-            // API 2-11
+            // API 2-11, API 2-13
             if (object == 3) {
                 return isValidData_CommunityPost(data: data)
             }
@@ -211,7 +234,7 @@ extension Network {
             else if (object == 6) {
                 return isValidData_CommunityUserRequest(data: data)
             }
-            // API 2-7-1, API 2-8, API 2-12
+            // API 2-7-1, API 2-8, API 2-12, API 2-13
             else {
                 return .success(data)
             }

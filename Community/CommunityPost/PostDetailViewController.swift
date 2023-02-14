@@ -303,7 +303,6 @@ class CommentCell: UITableViewCell {
         self.selectionStyle = .none
         addSubviews(layout_userImg, label_author, label_context, label_time)
         
-        
         layout_userImg.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(14)
             make.left.equalToSuperview().offset(23)
@@ -313,7 +312,6 @@ class CommentCell: UITableViewCell {
         layout_userImg.clipsToBounds = true
         layout_userImg.backgroundColor = .gray
         layout_userImg.layer.cornerRadius = 14.5
-        
         
         label_author.snp.makeConstraints { make in
             make.centerY.equalTo(layout_userImg)
