@@ -15,6 +15,7 @@ class ReadingTime: UIViewController, UITableViewDelegate, UITableViewDataSource 
     let pageInputPopUp = CustomPopUp()
     
     var bookID: Int = 1
+    var totalPage: Int = 0
 
     let stopwatchView = StopwatchView()
     
@@ -233,8 +234,9 @@ extension ReadingTime {
         self.timer.invalidate()
         self.timerLabel.text = "00 : 00"
         
-// MARK: PageInputPopUp
-        pageInputPopUp.allPageTextField.text = "354"
+//MARK: TotalPage
+        print(self.totalPage)
+        pageInputPopUp.allPageTextField.text = String(self.totalPage)
         pageInputPopUp.showPopUp(with: "책갈피",
                               message: "몇 페이지까지 읽으셨나요?",
                               on: self)
@@ -258,8 +260,7 @@ extension ReadingTime {
                     
                     guard let page = self.pageInputPopUp.currentPageTextField.text else {return}
                     if (page.isEmpty) {return}
-
-//MARK: PostTimerStop
+                    
                     self.postTimerStopData(curReadPage: Int(page) ?? -1)
                     
                 })
