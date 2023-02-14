@@ -21,6 +21,7 @@ class SetCommunityViewController: UIViewController {
         
         getSettings()
         layout_SetCommunity.initViews(self.view)
+        self.layout_SetCommunity.layout_img.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(imagePicker)))
         setImgPicker()
         setNavCustom()
     }
@@ -31,7 +32,11 @@ class SetCommunityViewController: UIViewController {
     }
     
     @objc func popToCommunityInsideViewController(_ sender: UIBarButtonItem) {
-        self.navigationController?.popViewController(animated: true)
+        self.updateSettings({
+            self.view.makeToast("변경되었습니다", duration: 1, position: .bottom, completion: { _ in
+                self.navigationController?.popViewController(animated: true)
+            })
+        })
     }
 }
 
@@ -80,6 +85,21 @@ extension SetCommunityViewController{
                 
             default:
                 print("failed")
+            }
+        })
+    }
+    
+    func updateSettings(_ backToVC: @escaping () -> Void) {
+        guard let clubname = self.layout_SetCommunity.txt_commName.text, let clubImg = self.layout_SetCommunity.layout_img.image else {return}
+        let invitation = self.layout_SetCommunity.btn_invitation.selectedSegmentIndex
+        let limitation = self.layout_SetCommunity.btn_limit.selectedSegmentIndex
+        
+        network.postCommunitySetting(clubID: self.clubID, clubName: clubname, clubImg: clubImg, clubInvitation: invitation, clubLimit: limitation, completion: { res in
+            switch res {
+            case .success:
+                backToVC()
+            default:
+                print("failed update settings")
             }
         })
     }

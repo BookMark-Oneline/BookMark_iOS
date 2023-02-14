@@ -55,25 +55,30 @@ extension Network {
     }
     
     // API 2-4: 책 모임 설정 변경
-    func postCommunitySetting(clubID: Int, clubName: String, clubImg: String, clubInvitation: Int, clubLimit: Int, completion: @escaping (NetworkResult<Any>) -> Void) {
+    func postCommunitySetting(clubID: Int, clubName: String, clubImg: UIImage, clubInvitation: Int, clubLimit: Int, completion: @escaping (NetworkResult<Any>) -> Void) {
         let URL = baseUrl + "/club/setting/edit/\(clubID)"
-        let params: Parameters = ["club_id": clubID, "club_name": clubName, "club_img_url": clubImg, "club_invite_option": clubInvitation,  "max_people_num": clubLimit]
-        let datarequest = AF.request(URL, method: .post, parameters: params, encoding: JSONEncoding.default).validate()
+        let params: Parameters = ["club_id": clubID, "club_name": clubName, "club_invite_option": clubInvitation,  "max_people_num": clubLimit]
         
-        datarequest.responseData(completionHandler: { res in
-            switch res.result {
-            case .success:
-                guard let value = res.value else {return}
-                guard let rescode = res.response?.statusCode else {return}
-                
-                let networkResult = self.tempJudgeStatus(object: 4, by: rescode, value)
-                completion(networkResult)
-                
-            case .failure(let e):
-                print(e)
-                completion(.pathErr)
+        guard let imgData = clubImg.jpegData(compressionQuality: 0.7) else {
+            print("jpeg data failed")
+            return
+        }
+        
+        AF.upload(multipartFormData: { multipartFormData in
+            multipartFormData.append(imgData, withName: "club_img_url", fileName: "\(clubID)_image.png" , mimeType: "image/png")
+            
+            for (key, value) in params
+            {
+                multipartFormData.append("\(value)".data(using: .utf8, allowLossyConversion: false)!, withName: "\(key)")
             }
-        
+            
+        }, to: URL, method: .post).responseData(completionHandler: { (response) in
+            if let err = response.error {
+                print("setting post failed: \(err)")
+                return
+            }
+            print(response.result)
+            completion(.success(response.result))
         })
     }
     

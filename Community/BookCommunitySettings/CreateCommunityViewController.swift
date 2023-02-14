@@ -19,6 +19,7 @@ class CreateCommunityViewController: UIViewController {
         setBaseView()
         setNavCustom()
         setImgPicker()
+        self.layout_SetCommunity.layout_img.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(imagePicker)))
     }
 
     private func setBaseView() {
