@@ -180,6 +180,7 @@ class NetworkTintin {
     }
     
 //MARK: - API 2-15 [POST] 게시글 공지 등록
+//공지 등록 UI 구현 후 연결해야 함
     func postCommunityNotice(clubID: Int, userID: Int, clubPostID: Int, completion: @escaping (NetworkResult<Any>) -> Void) {
         let URL = baseUrl + "/club/post/register/notice/\(clubID)"
         print(clubPostID)
