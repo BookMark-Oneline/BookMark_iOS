@@ -10,6 +10,7 @@ import UIKit
 // MARK: - 모임 생성 view controller
 class CreateCommunityViewController: UIViewController {
     let layout_SetCommunity = CommunitySettingView()
+    let network = Network()
     let imgPicker = UIImagePickerController()
     let label_title = UILabel()
     let layout_main = UIView()
@@ -46,11 +47,11 @@ class CreateCommunityViewController: UIViewController {
     }
     
     @objc func goBackCommunityTab(_ sender: UIBarButtonItem) {
-        if let appdel = UIApplication.shared.delegate as? AppDelegate {
-            appdel.communities.append(["myeongsoo", "책과 무스비"])
-        }
-        
-        self.navigationController?.popToRootViewController(animated: true)
+        self.createCommunity({
+            self.view.makeToast("모임이 생성되었습니다", duration: 1, position: .bottom, completion: { _ in
+                self.navigationController?.popToRootViewController(animated: true)
+            })
+        })
     }
 }
 
@@ -81,6 +82,24 @@ extension CreateCommunityViewController: UIImagePickerControllerDelegate, UINavi
         self.layout_SetCommunity.layout_img.image = newImage
         picker.dismiss(animated: true, completion: {
             self.layout_SetCommunity.img_iconIMG.isHighlighted = true
+        })
+    }
+}
+
+// MARK: - 네트워크 용 extension
+extension CreateCommunityViewController {
+    private func createCommunity(_ backToVC: @escaping () -> Void) {
+        guard let clubname = self.layout_SetCommunity.txt_commName.text, let clubImg = self.layout_SetCommunity.layout_img.image else {return}
+        let invitation = self.layout_SetCommunity.btn_invitation.selectedSegmentIndex
+        let limitation = self.layout_SetCommunity.btn_limit.selectedSegmentIndex
+        
+        network.postNewCommunity(clubName: clubname, clubImg: clubImg, clubInvitation: invitation, clubLimit: limitation, ownerUserID: UserInfo.shared.userID, completion: { res in
+            switch res {
+            case .success:
+                backToVC()
+            default:
+                print("failed update settings")
+            }
         })
     }
 }

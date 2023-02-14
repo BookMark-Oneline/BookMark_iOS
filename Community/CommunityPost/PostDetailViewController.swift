@@ -282,9 +282,9 @@ class MainPostCell: UITableViewCell {
         }
         else {
             self.likeStatus = 0
+            sender.setImage(UIImage(named: "heart_unfill"), for: .normal)
             if (value - 1 >= 0) {
                 self.label_heart.text = "\(value - 1)"
-                sender.setImage(UIImage(named: "heart_unfill"), for: .normal)
             }
         }
         self.likeCallbackMehtod?(self.likeStatus)

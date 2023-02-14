@@ -173,26 +173,31 @@ extension Network {
     }
     
     // API 2-8: 책 모임 생성
-    func postNewCommunity(parameter: Parameters, completion: @escaping (NetworkResult<Any>) -> Void) {
+    func postNewCommunity(clubName: String, clubImg: UIImage, clubInvitation: Int, clubLimit: Int, ownerUserID: Int, completion: @escaping (NetworkResult<Any>) -> Void) {
         let URL = baseUrl + "/club/register"
         
-        // let params: Parameters = ["club_id": clubID, "club_name": ,  "club_img_url": , "club_invite_opiton": , "max_people_num": , "club_owner_id": ]
-        let datarequest = AF.request(URL, method: .post, parameters: parameter, encoding: JSONEncoding.default).validate()
+        let params: Parameters = ["club_name": clubName, "club_invite_opiton": clubInvitation, "max_people_num": clubLimit, "club_owner_id": ownerUserID]
         
-        datarequest.responseData(completionHandler: { res in
-            switch res.result {
-            case .success:
-                guard let value = res.value else {return}
-                guard let rescode = res.response?.statusCode else {return}
-                
-                let networkResult = self.tempJudgeStatus(object: 8, by: rescode, value)
-                completion(networkResult)
-                
-            case .failure(let e):
-                print(e)
-                completion(.pathErr)
+        guard let imgData = clubImg.jpegData(compressionQuality: 0.7) else {
+            print("jpeg data failed")
+            return
+        }
+        
+        AF.upload(multipartFormData: { multipartFormData in
+            multipartFormData.append(imgData, withName: "club_img_url", fileName: "\(clubName)_image.png" , mimeType: "image/png")
+            
+            for (key, value) in params
+            {
+                multipartFormData.append("\(value)".data(using: .utf8, allowLossyConversion: false)!, withName: "\(key)")
             }
-        
+            
+        }, to: URL, method: .post).responseData(completionHandler: { (response) in
+            if let err = response.error {
+                print("create community failed: \(err)")
+                return
+            }
+            print(response.result)
+            completion(.success(response.result))
         })
     }
     
