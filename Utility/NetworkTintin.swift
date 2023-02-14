@@ -11,6 +11,7 @@ import Alamofire
 class NetworkTintin {
     let baseUrl = "http://onve.synology.me"
 
+// MARK: - API 2-1 [GET] 유저 책모임 조회
     func getCommunityList(completion: @escaping (NetworkResult<Any>) -> Void) {
         let URL = baseUrl + "/club/user/\(UserInfo.shared.userID)"
         let datarequest = AF.request(URL, method: .get, encoding: JSONEncoding.default)
@@ -33,6 +34,7 @@ class NetworkTintin {
         })
     }
     
+// MARK: - API 2-2 [GET] 책모임(공지, 이름, 게시물 목록) 조회
     func getCommunityInfo(completion: @escaping (NetworkResult<Any>) -> Void) {
         let URL = baseUrl + "/club/1"
         let datarequest = AF.request(URL, method: .get, encoding: JSONEncoding.default)
@@ -54,6 +56,33 @@ class NetworkTintin {
         
         })
     }
+    
+// MARK: - API 2-9 [POST] 책모임 가입 요청 전달
+
+// MARK: - API 2-10 [GET] 책모임 검색 조회
+    func getCommunitySearchResult(clubID: String, completion: @escaping (NetworkResult<Any>) -> Void) {
+        print("API ClubID \(clubID)")
+        let URL = baseUrl + "/club/search/\(clubID)"
+//        let URL = baseUrl + "/club/search/1"
+        let datarequest = AF.request(URL, method: .get, encoding: JSONEncoding.default)
+        
+        datarequest.responseData(completionHandler: { res in
+            switch res.result {
+            case .success:
+                print("CommunitySearchInfo")
+                guard let value = res.value else {return}
+                guard let rescode = res.response?.statusCode else {return}
+
+                let networkResult = self.judgeStatus(object: 2, by: rescode, value)
+                completion(networkResult)
+                
+            case .failure(let e):
+                print(e)
+                completion(.pathErr)
+            }
+        
+        })
+    }
 }
 
 extension NetworkTintin {
@@ -66,6 +95,9 @@ extension NetworkTintin {
             }
             else if (object == 1) {
                 return isValidData_CommunityInfo(data: data)
+            }
+            else if (object == 2) {
+                return isValidData_CommuniySearchResult(data: data)
             }
             else {
                 return .success(data)
@@ -93,6 +125,16 @@ extension NetworkTintin {
             return .decodeFail
         }
         
+        return .success(decodedData)
+    }
+    
+    private func isValidData_CommuniySearchResult(data: Data) -> NetworkResult<Any> {
+        let decoder = JSONDecoder()
+
+        guard let decodedData = try? decoder.decode([CommunitySearch].self, from: data) else {
+            return .decodeFail
+        }
+
         return .success(decodedData)
     }
 }

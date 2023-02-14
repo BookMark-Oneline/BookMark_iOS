@@ -73,6 +73,9 @@ class SearchCommunityViewController: UIViewController {
         inputCommunityID = inputIDtextField.text ?? "default"
         print("모임 검색하기, 모임 ID :", inputCommunityID)
 //        tfLine.lineFillAnimation()
+        let vc = JoinCommunityRequestViewController()
+        self.navigationController?.pushViewControllerTabHidden(vc, animated: true)
+        vc.clubID = inputCommunityID
     }
     
 }

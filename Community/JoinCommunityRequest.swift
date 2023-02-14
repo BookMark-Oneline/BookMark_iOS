@@ -7,8 +7,20 @@
 
 import UIKit
 import SnapKit
+import Kingfisher
 
 class JoinCommunityRequestViewController: UIViewController {
+    
+//MARK: NetworkTintin
+    let network = NetworkTintin()
+    
+    var clubID: String = ""
+    
+    var clubName: String = ""
+    var userName: String = ""
+    var clubInviteOption: Int = 0
+    var clubImgURL: String = ""
+    var profileImgURL: String = ""
     
     let backgroundImageView: UIImageView = {
         let view = UIImageView()
@@ -28,7 +40,7 @@ class JoinCommunityRequestViewController: UIViewController {
         label.textColor = .white
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
-        label.text = "책마니+ 스터디와 함께하는 책읽기 프로젝트"
+//        label.text = "책마니+ 스터디와 함께하는 책읽기 프로젝트"
         label.font = .boldSystemFont(ofSize: 26)
         
         return label
@@ -53,7 +65,7 @@ class JoinCommunityRequestViewController: UIViewController {
         
         label.frame = CGRect(x: 0, y: 0, width: 84, height: 20)
         label.textColor = .white
-        label.text = "독서왕김독서"
+//        label.text = "독서왕김독서"
         label.font = .boldSystemFont(ofSize: 16)
         label.numberOfLines = 1
         label.textAlignment = .left
@@ -102,13 +114,38 @@ class JoinCommunityRequestViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        getCommunitySearchResultData()
+        print(clubName)
         setBackgroundImage()
         setLayouts()
-        self.setNavigationCustom(title: "가입 요청")
+        setNavCustom()
     }
     
     @objc func requestButtonPress() {
         print("가입 요청")
+    }
+}
+
+extension JoinCommunityRequestViewController {
+    func getCommunitySearchResultData() {
+        network.getCommunitySearchResult(clubID: clubID) { res in
+            switch res {
+            case .success(let communitySearch):
+                if let com = communitySearch as? [CommunitySearch] {
+                    print(com[0].clubName)
+                    
+                    self.clubName = com[0].clubName
+                    self.userName = com[0].userName
+                    self.clubInviteOption = com[0].clubInviteOption
+                    self.clubImgURL = com[0].clubImgURL
+                    self.profileImgURL = com[0].imgURL
+                    
+                    self.showContents()
+                }
+            default:
+                print("failed")
+            }
+        }
     }
 }
 
@@ -175,5 +212,28 @@ extension JoinCommunityRequestViewController {
             make.top.equalToSuperview().offset(15)
         }
         
+    }
+    
+    func setNavCustom() {
+        self.navigationItem.backButtonTitle = ""
+        self.navigationController?.navigationBar.tintColor = .white
+    }
+    
+    func showContents() {
+        communityNameLabel.text = self.clubName
+        communityProfileNameLabel.text = self.userName
+        backgroundImageView.kf.indicatorType = .activity
+        backgroundImageView.kf.setImage(with: URL(string: clubImgURL), placeholder: nil, options: [.transition(.fade(1)), .cacheOriginalImage, .forceTransition], completionHandler: nil)
+        communityProfileImageView.kf.indicatorType = .activity
+        communityProfileImageView.kf.setImage(with: URL(string: profileImgURL), placeholder: nil, options: [.transition(.fade(1)), .cacheOriginalImage, .forceTransition], completionHandler: nil)
+        
+//MARK: CommunityInviteOption
+        if (clubInviteOption == 0) {
+            communityStatusLabel.text = "모두가입허용"
+        } else if (clubInviteOption == 1) {
+            communityStatusLabel.text = "일부가입허용"
+        } else if (clubInviteOption == 2) {
+            communityStatusLabel.text = "모든가입거부"
+        }
     }
 }
