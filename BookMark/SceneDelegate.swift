@@ -15,14 +15,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
-        guard let _ = UserDefaults.standard.string(forKey: "Tutorial") else {
-            let window = UIWindow(windowScene: windowScene)
-            window.rootViewController = TutorialViewController()
-            self.window = window
-            window.makeKeyAndVisible()
-            return
-        }
-        
+//        guard let _ = UserDefaults.standard.string(forKey: "Tutorial") else {
+//            let window = UIWindow(windowScene: windowScene)
+//            window.rootViewController = TutorialViewController()
+//            self.window = window
+//            window.makeKeyAndVisible()
+//            return
+//        }
+//
         let window = UIWindow(windowScene: windowScene)
         window.rootViewController = LoginViewController()
         self.window = window

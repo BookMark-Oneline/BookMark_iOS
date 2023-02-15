@@ -33,13 +33,20 @@
 		86C3C2D3296E69630035CFFE /* ConfirmBookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C3C2D2296E69630035CFFE /* ConfirmBookViewController.swift */; };
 		E82079442990B6E800B36FC9 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82079432990B6E800B36FC9 /* LoginViewController.swift */; };
 		E82079462990B72A00B36FC9 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82079452990B72A00B36FC9 /* LoginView.swift */; };
-		E820794C2990BDB500B36FC9 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = E820794B2990BDB500B36FC9 /* back.png */; };
-		E820794E2990C68C00B36FC9 /* ribon.png in Resources */ = {isa = PBXBuildFile; fileRef = E820794D2990C68C00B36FC9 /* ribon.png */; };
 		E82079742994795800B36FC9 /* OneLineTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82079732994795800B36FC9 /* OneLineTabView.swift */; };
 		E82079762994797900B36FC9 /* CreateOneLineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82079752994797900B36FC9 /* CreateOneLineViewController.swift */; };
 		E820797829947DBC00B36FC9 /* backImg.png in Resources */ = {isa = PBXBuildFile; fileRef = E820797729947DBC00B36FC9 /* backImg.png */; };
 		E832390829879ABC00DC83C2 /* CommunityInsideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E832390729879ABC00DC83C2 /* CommunityInsideViewController.swift */; };
 		E8C0535F299896A400CA5D8E /* UserClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8C0535E299896A400CA5D8E /* UserClass.swift */; };
+		E8C05366299C7EFB00CA5D8E /* Network_Sueyeon.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8C05362299C7EFA00CA5D8E /* Network_Sueyeon.swift */; };
+		E8C05367299C7EFB00CA5D8E /* DataClass_sueyeon.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8C05363299C7EFB00CA5D8E /* DataClass_sueyeon.swift */; };
+		E8C05368299C7EFB00CA5D8E /* DataClassTintin.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8C05364299C7EFB00CA5D8E /* DataClassTintin.swift */; };
+		E8C05369299C7EFB00CA5D8E /* NetworkTintin.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8C05365299C7EFB00CA5D8E /* NetworkTintin.swift */; };
+		E8C0536B299C7F0C00CA5D8E /* AllPageInputPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8C0536A299C7F0C00CA5D8E /* AllPageInputPopUp.swift */; };
+		E8C0536F299C7F1700CA5D8E /* Tutorials.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8C0536D299C7F1700CA5D8E /* Tutorials.swift */; };
+		E8C05370299C7F1700CA5D8E /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8C0536E299C7F1700CA5D8E /* TutorialViewController.swift */; };
+		E8C05373299C857D00CA5D8E /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8C05372299C857D00CA5D8E /* SignUpViewController.swift */; };
+		E8C05375299C874200CA5D8E /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8C05374299C874200CA5D8E /* TestViewController.swift */; };
 		E8C2B4F1296A8915000E2030 /* MyLibTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8C2B4F0296A8915000E2030 /* MyLibTab.swift */; };
 		E8C2B4F5296A8A85000E2030 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8C2B4F4296A8A85000E2030 /* Colors.swift */; };
 		E8C2B4F7296A8CC5000E2030 /* OneLineTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8C2B4F6296A8CC5000E2030 /* OneLineTab.swift */; };
@@ -87,14 +94,21 @@
 		CD50D9E346145F9EDEF00686 /* Pods-BookMark.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BookMark.release.xcconfig"; path = "Target Support Files/Pods-BookMark/Pods-BookMark.release.xcconfig"; sourceTree = "<group>"; };
 		E82079432990B6E800B36FC9 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		E82079452990B72A00B36FC9 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
-		E820794B2990BDB500B36FC9 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
-		E820794D2990C68C00B36FC9 /* ribon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ribon.png; sourceTree = "<group>"; };
 		E82079732994795800B36FC9 /* OneLineTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneLineTabView.swift; sourceTree = "<group>"; };
 		E82079752994797900B36FC9 /* CreateOneLineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOneLineViewController.swift; sourceTree = "<group>"; };
 		E820797729947DBC00B36FC9 /* backImg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backImg.png; sourceTree = "<group>"; };
 		E832390729879ABC00DC83C2 /* CommunityInsideViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommunityInsideViewController.swift; sourceTree = "<group>"; };
 		E8C0535D2998535000CA5D8E /* BookMark.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BookMark.entitlements; sourceTree = "<group>"; };
 		E8C0535E299896A400CA5D8E /* UserClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserClass.swift; sourceTree = "<group>"; };
+		E8C05362299C7EFA00CA5D8E /* Network_Sueyeon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network_Sueyeon.swift; sourceTree = "<group>"; };
+		E8C05363299C7EFB00CA5D8E /* DataClass_sueyeon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataClass_sueyeon.swift; sourceTree = "<group>"; };
+		E8C05364299C7EFB00CA5D8E /* DataClassTintin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataClassTintin.swift; sourceTree = "<group>"; };
+		E8C05365299C7EFB00CA5D8E /* NetworkTintin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkTintin.swift; sourceTree = "<group>"; };
+		E8C0536A299C7F0C00CA5D8E /* AllPageInputPopUp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllPageInputPopUp.swift; sourceTree = "<group>"; };
+		E8C0536D299C7F1700CA5D8E /* Tutorials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tutorials.swift; sourceTree = "<group>"; };
+		E8C0536E299C7F1700CA5D8E /* TutorialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
+		E8C05372299C857D00CA5D8E /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		E8C05374299C874200CA5D8E /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		E8C2B4F0296A8915000E2030 /* MyLibTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLibTab.swift; sourceTree = "<group>"; };
 		E8C2B4F4296A8A85000E2030 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		E8C2B4F6296A8CC5000E2030 /* OneLineTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneLineTab.swift; sourceTree = "<group>"; };
@@ -144,6 +158,8 @@
 		86C3C2A4296858370035CFFE = {
 			isa = PBXGroup;
 			children = (
+				E8C05371299C856A00CA5D8E /* SignUp */,
+				E8C0536C299C7F1700CA5D8E /* Tutorial */,
 				E82079422990B6D500B36FC9 /* Login */,
 				E8D5C3E129838303003D1AD0 /* Utility */,
 				E8D5C3E0298382C1003D1AD0 /* MyPage */,
@@ -196,8 +212,6 @@
 		E82079422990B6D500B36FC9 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				E820794D2990C68C00B36FC9 /* ribon.png */,
-				E820794B2990BDB500B36FC9 /* back.png */,
 				E82079432990B6E800B36FC9 /* LoginViewController.swift */,
 				E82079452990B72A00B36FC9 /* LoginView.swift */,
 			);
@@ -222,6 +236,24 @@
 			path = CommunityPost;
 			sourceTree = "<group>";
 		};
+		E8C0536C299C7F1700CA5D8E /* Tutorial */ = {
+			isa = PBXGroup;
+			children = (
+				E8C0536D299C7F1700CA5D8E /* Tutorials.swift */,
+				E8C0536E299C7F1700CA5D8E /* TutorialViewController.swift */,
+			);
+			path = Tutorial;
+			sourceTree = "<group>";
+		};
+		E8C05371299C856A00CA5D8E /* SignUp */ = {
+			isa = PBXGroup;
+			children = (
+				E8C05372299C857D00CA5D8E /* SignUpViewController.swift */,
+				E8C05374299C874200CA5D8E /* TestViewController.swift */,
+			);
+			path = SignUp;
+			sourceTree = "<group>";
+		};
 		E8C2B4F3296A8A66000E2030 /* MyLib */ = {
 			isa = PBXGroup;
 			children = (
@@ -229,6 +261,7 @@
 				E8D5C3E329838352003D1AD0 /* Barcode */,
 				E8D5C3E229838329003D1AD0 /* Timer */,
 				E8C2B4F0296A8915000E2030 /* MyLibTab.swift */,
+				E8C0536A299C7F0C00CA5D8E /* AllPageInputPopUp.swift */,
 				24E7942B2972BDD300E69633 /* CustomPopUp.swift */,
 			);
 			path = MyLib;
@@ -291,6 +324,10 @@
 			children = (
 				24D01FCD299395F40045DC68 /* CustomAlertViewController.swift */,
 				E8C2B51229743975000E2030 /* Network.swift */,
+				E8C05363299C7EFB00CA5D8E /* DataClass_sueyeon.swift */,
+				E8C05364299C7EFB00CA5D8E /* DataClassTintin.swift */,
+				E8C05362299C7EFA00CA5D8E /* Network_Sueyeon.swift */,
+				E8C05365299C7EFB00CA5D8E /* NetworkTintin.swift */,
 				E8C2B4F4296A8A85000E2030 /* Colors.swift */,
 				24A21A382976EA2400AE8BF9 /* DataClass.swift */,
 				E8C2B500296A93C2000E2030 /* Utils.swift */,
@@ -380,8 +417,6 @@
 				E820797829947DBC00B36FC9 /* backImg.png in Resources */,
 				245FED722983976400EE02B6 /* haerin.jpg in Resources */,
 				245FED712983976400EE02B6 /* myeongsoo.png in Resources */,
-				E820794C2990BDB500B36FC9 /* back.png in Resources */,
-				E820794E2990C68C00B36FC9 /* ribon.png in Resources */,
 				86C3C2BD296858380035CFFE /* LaunchScreen.storyboard in Resources */,
 				86C3C2CD296D8CCC0035CFFE /* book.png in Resources */,
 				86C3C2BA296858380035CFFE /* Assets.xcassets in Resources */,
@@ -440,6 +475,7 @@
 			files = (
 				24D01FD02993966E0045DC68 /* SetTimeGoalViewController.swift in Sources */,
 				86C3C2B5296858370035CFFE /* ViewController.swift in Sources */,
+				E8C05375299C874200CA5D8E /* TestViewController.swift in Sources */,
 				24A21A392976EA2400AE8BF9 /* DataClass.swift in Sources */,
 				24D01FCC299395DB0045DC68 /* BookDetailViewController.swift in Sources */,
 				E8C2B4FB296A8F40000E2030 /* CommunityTab.swift in Sources */,
@@ -450,16 +486,22 @@
 				24D01FCE299395F40045DC68 /* CustomAlertViewController.swift in Sources */,
 				412B7ED92988DDF000B40AF3 /* PostDetailViewController.swift in Sources */,
 				E8C2B51329743975000E2030 /* Network.swift in Sources */,
+				E8C05367299C7EFB00CA5D8E /* DataClass_sueyeon.swift in Sources */,
 				E8C2B4FF296A8F8C000E2030 /* MyPageTab.swift in Sources */,
+				E8C0536B299C7F0C00CA5D8E /* AllPageInputPopUp.swift in Sources */,
 				412DDC8629858E5F00F6CB22 /* WaitMemberViewController.swift in Sources */,
 				24E794242971653C00E69633 /* ReadingTime.swift in Sources */,
 				E82079442990B6E800B36FC9 /* LoginViewController.swift in Sources */,
 				E8C2B4F5296A8A85000E2030 /* Colors.swift in Sources */,
+				E8C05366299C7EFB00CA5D8E /* Network_Sueyeon.swift in Sources */,
 				86C3C2B1296858370035CFFE /* AppDelegate.swift in Sources */,
 				E8C2B4F9296A8D6D000E2030 /* MainTabBarController.swift in Sources */,
 				24E7942C2972BDD300E69633 /* CustomPopUp.swift in Sources */,
+				E8C05368299C7EFB00CA5D8E /* DataClassTintin.swift in Sources */,
+				E8C05373299C857D00CA5D8E /* SignUpViewController.swift in Sources */,
 				86C3C2B3296858370035CFFE /* SceneDelegate.swift in Sources */,
 				24D01FCB299395DB0045DC68 /* BookDetailView.swift in Sources */,
+				E8C0536F299C7F1700CA5D8E /* Tutorials.swift in Sources */,
 				E82079762994797900B36FC9 /* CreateOneLineViewController.swift in Sources */,
 				E8D5C3D529824126003D1AD0 /* CreateCommunityViewController.swift in Sources */,
 				412DDC8429858E3C00F6CB22 /* CommunityMemberViewController.swift in Sources */,
@@ -469,11 +511,13 @@
 				E82079742994795800B36FC9 /* OneLineTabView.swift in Sources */,
 				24D01FC7299395BE0045DC68 /* AddBookBarcodeViewController.swift in Sources */,
 				24D01FC5299395AE0045DC68 /* SearchCommunityViewController.swift in Sources */,
+				E8C05369299C7EFB00CA5D8E /* NetworkTintin.swift in Sources */,
 				86C3C2D3296E69630035CFFE /* ConfirmBookViewController.swift in Sources */,
 				E8C2B4FD296A8F6A000E2030 /* ScrapTab.swift in Sources */,
 				E8C2B4F7296A8CC5000E2030 /* OneLineTab.swift in Sources */,
 				E82079462990B72A00B36FC9 /* LoginView.swift in Sources */,
 				E8C0535F299896A400CA5D8E /* UserClass.swift in Sources */,
+				E8C05370299C7F1700CA5D8E /* TutorialViewController.swift in Sources */,
 				E8C2B4F1296A8915000E2030 /* MyLibTab.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
