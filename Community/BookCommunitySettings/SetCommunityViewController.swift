@@ -80,7 +80,7 @@ extension SetCommunityViewController{
 
                 self.layout_SetCommunity.layout_img.setImageUrl(url: setting.club_img_url)
                 self.layout_SetCommunity.txt_commName.text = setting.club_name
-                self.layout_SetCommunity.btn_invitation.selectedSegmentIndex = setting.club_invite_option
+                self.layout_SetCommunity.btn_invitation.selectedSegmentIndex = Int(setting.club_invite_option) ?? 1
                 self.layout_SetCommunity.btn_limit.selectedSegmentIndex = setting.max_people_num
                 
             default:
