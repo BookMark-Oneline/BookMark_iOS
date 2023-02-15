@@ -23,5 +23,4 @@ class TestViewController: UIViewController {
     @objc func didtap(_ sender: UIButton) {
         self.navigationController?.pushViewController(SetNameViewController(), animated: true)
     }
-
 }

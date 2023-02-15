@@ -31,14 +31,11 @@ extension LoginViewController: ASAuthorizationControllerPresentationContextProvi
             return
         }
         let userIdentifier = appleIDCredential.user
-        var fullName = (appleIDCredential.fullName?.familyName ?? "") + (appleIDCredential.fullName?.givenName ?? "")
+        let fullName = (appleIDCredential.fullName?.familyName ?? "") + (appleIDCredential.fullName?.givenName ?? "")
         
         let userDef = UserDefaults.standard
         userDef.set(userIdentifier, forKey: "userIdentifier")
-        if (!fullName.isEmpty) {
-            userDef.set(fullName, forKey: "userName")
-            userDef.synchronize()
-        }
+        userDef.synchronize()
         UserInfo.shared.userAccessToken = userIdentifier
         
 //        if  let authorizationCode = appleIDCredential.authorizationCode,
@@ -53,6 +50,13 @@ extension LoginViewController: ASAuthorizationControllerPresentationContextProvi
         
         self.postLogin(userIdentifier: userIdentifier, completion: { res in
             if (res) {
+                if let name = userDef.string(forKey: "userNickName"), let msg = userDef.string(forKey: "userMessage"), let goal = userDef.string(forKey: "userGoal") {
+                    print("okok")
+                    UserInfo.shared.userNickName = name
+                    UserInfo.shared.userMessage = msg
+                    UserInfo.shared.userGoal = Int(goal) ?? 0
+                }
+                
                 let vc = MainTabBarController()
                 vc.modalPresentationStyle = .fullScreen
                 self.present(vc, animated: true)

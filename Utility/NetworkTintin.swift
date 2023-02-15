@@ -157,7 +157,7 @@ class NetworkTintin {
         }
         
         AF.upload(multipartFormData: { multipartFormData in
-            multipartFormData.append(imgData, withName: "img_url", fileName: "\(clubPostTitle)_image.png" , mimeType: "image/png")
+            multipartFormData.append(imgData, withName: "img", fileName: "\(clubPostTitle)_image.png" , mimeType: "image/png")
         
             for (key, value) in params {
                 multipartFormData.append("\(value)".data(using: .utf8, allowLossyConversion: false)!, withName: "\(key)")

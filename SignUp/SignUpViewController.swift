@@ -393,6 +393,11 @@ class FinishSignUpViewController: BaseSignUpViewController {
     
     @objc func didTapStartButton(_ sender: UIButton) {
         self.newUserSignUp(completion: { [weak self] in
+            UserDefaults.standard.setValue(UserInfo.shared.userMessage, forKey: "userMessage")
+            UserDefaults.standard.setValue(UserInfo.shared.userNickName, forKey: "userNickName")
+            UserDefaults.standard.setValue(UserInfo.shared.userGoal, forKey: "userGoal")
+            UserDefaults.standard.synchronize()
+            
             let vc = LoginViewController()
             vc.modalPresentationStyle = .fullScreen
             self?.present(vc, animated: true)
@@ -419,17 +424,19 @@ extension FinishSignUpViewController {
         if let img = UserInfo.shared.userImg {
             guard let imgData = img.jpegData(compressionQuality: 0.7) else {
                 print("jpeg data failed")
-                postWithNoUserImg(params, URL: URL, completion: {
-                    completion()
-                })
                 return
             }
             postWithUserImg(params, URL: URL, userImgData: imgData, completion: {
                 completion()
             })
         }
+        
         else {
-            postWithNoUserImg(params, URL: URL, completion: {
+            guard let imgData = UIImage(named: "noProfileImg")?.jpegData(compressionQuality: 0.7) else {
+                print("jpeg data failed")
+                return
+            }
+            postWithUserImg(params, URL: URL, userImgData: imgData, completion: {
                 completion()
             })
         }
@@ -451,22 +458,6 @@ extension FinishSignUpViewController {
             }
             print(response.result)
             completion()
-        })
-    }
-    
-    private func postWithNoUserImg(_ params: Parameters, URL: String, completion: @escaping () -> Void) {
-        let datarequest = AF.request(URL, method: .post, parameters: params, encoding: JSONEncoding.default).validate()
-        
-        datarequest.responseData(completionHandler: { response in
-            switch response.result {
-            case .success:
-                print("ok")
-
-                completion()
-            case .failure(let e):
-                print("failed")
-                print(e)
-            }
         })
     }
 }

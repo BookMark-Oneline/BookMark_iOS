@@ -16,7 +16,8 @@ class PostDetailViewController: UIViewController {
     var textViewYValue = CGFloat(15)
     
     private var imgStatus: String?
-    private var img_url: String?
+    private var profileImg: String?
+    private var postImg: String?
     private var postTitle: String?
     private var postContent: String?
     private var userName: String?
@@ -114,8 +115,9 @@ extension PostDetailViewController: UITableViewDelegate, UITableViewDataSource {
         if indexPath.row == 0 {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: MainPostCell.identifier, for: indexPath) as? MainPostCell else { return MainPostCell() }
             
-            guard let img_url = self.img_url, let postTitle = self.postTitle, let postContent = self.postContent, let userName = self.userName, let likeCount = self.likeNum, let commentCount = self.commentNum, let imgstatus = self.imgStatus else {return cell}
+            guard let img_url = self.profileImg, let postTitle = self.postTitle, let postContent = self.postContent, let userName = self.userName, let likeCount = self.likeNum, let commentCount = self.commentNum, let imgstatus = self.imgStatus else {return cell}
             
+            cell.layout_userImg.setImageUrl(url: img_url)
             cell.label_author.text = userName
             cell.label_title.text = postTitle
             cell.label_context.text = postContent
@@ -164,7 +166,7 @@ extension PostDetailViewController {
                 guard let post = (data as? CommunityPost), let comment = (data as? CommunityPost)?.CommentData else {return}
 
                 self.imgStatus = post.img_status
-                self.img_url = (post.img_url ?? "")
+                self.profileImg = (post.img_url ?? "")
                 self.postTitle = post.club_post_title
                 self.postContent = post.post_content_text
                 self.userName = post.user_name

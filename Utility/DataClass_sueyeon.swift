@@ -13,10 +13,11 @@ class CommunityPost: Decodable {
     let club_post_title: String
     
     let img_status: String
-    let img_url: String?
+    let post_img_url: String?
     let post_content_text: String
     
     let user_id: Int
+    let img_url: String?
     let user_name: String
     let like_num: Int
     

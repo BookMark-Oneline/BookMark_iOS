@@ -339,8 +339,6 @@ class Books {
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
     }
-    
-    
 }
 
 // MARK: - scroll view cell class
@@ -363,6 +361,7 @@ class BookCollectionCell: UICollectionViewCell {
         layout_img.backgroundColor = .lightLightGray
         layout_img.layer.cornerRadius = 3
         layout_img.clipsToBounds = true
+        UserInfo.shared.userImg = layout_img.image
         
         label_title.snp.makeConstraints() { make in
             make.leading.equalToSuperview().offset(4)

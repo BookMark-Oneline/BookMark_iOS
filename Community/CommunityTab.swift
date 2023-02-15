@@ -183,20 +183,20 @@ class CommunityTabView: UIView {
     let descriptLabel: UILabel = {
         let label = UILabel()
         
-        label.frame = CGRect(x: 0, y: 0, width: 227, height: 63)
-        label.textColor = .black
-        label.text = "모임을 생성하거나\n검색하여 다양한 사람들과\n소통해보세요"
-        label.font = .boldSystemFont(ofSize: 26)
-        label.numberOfLines = 3
-        
-        let attributedStr = NSMutableAttributedString(string: label.text!)
-        attributedStr.addAttribute(.foregroundColor, value: UIColor.textOrange, range: (label.text! as NSString).range(of: "소통"))
+        label.numberOfLines = 0
+        let str = "모임을 생성하거나\n검색하여 다양한 사람들과\n소통해보세요"
+        let attributedStr = NSMutableAttributedString(string: str)
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .left
+        paragraphStyle.lineSpacing = 6
+        attributedStr.addAttributes([.font: UIFont.systemFont(ofSize: 24, weight: .bold)], range: NSMakeRange(0, str.count))
+        attributedStr.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, str.count))
+        attributedStr.addAttribute(.foregroundColor, value: UIColor.textOrange, range: (str as NSString).range(of: "소통"))
         label.attributedText = attributedStr
-        
         
         return label
     }()
-    
+
     func initViews(view: UIView) {
         if (self.communityCount == 0) {
             view.addSubviews(titleView, descriptLabel)
@@ -206,16 +206,14 @@ class CommunityTabView: UIView {
                 make.top.equalTo(view.safeAreaLayoutGuide)
                 make.height.equalTo(44)
             }
-            
+
             descriptLabel.snp.makeConstraints() { make in
-                make.width.equalToSuperview().offset(-23)
-                make.height.equalTo(95)
                 make.leading.equalTo(view.safeAreaLayoutGuide).offset(23)
                 make.top.equalTo(titleView.snp.bottom).offset(43)
             }
-            
-            titleView.addSubviews(titleLabel, titleLine, searchButton, addButton)
 
+            titleView.addSubviews(titleLabel, titleLine, searchButton, addButton)
+            
             titleLabel.snp.makeConstraints() { make in
                 make.leading.equalToSuperview().offset(23)
                 make.centerY.equalToSuperview()
@@ -242,7 +240,6 @@ class CommunityTabView: UIView {
                 make.width.equalTo(20)
                 make.height.equalTo(20)
             }
-            
         } else {
             self.descriptLabel.removeFromSuperview()
             
@@ -289,11 +286,9 @@ class CommunityTabView: UIView {
                 make.leading.trailing.bottom.equalToSuperview()
                 make.top.equalTo(titleView.snp.bottom)
             }
-
             collection.initView(view: collectView, comCount: self.communityCount)
         }
     }
-    
 }
 
 class Communities {
@@ -383,6 +378,7 @@ class CommunitiesCell: UICollectionViewCell {
         let label = UILabel()
         
         label.text = "책모임 이름"
+        label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         label.textColor = .white
         
         return label
@@ -398,7 +394,6 @@ class CommunitiesCell: UICollectionViewCell {
         return view
     }()
 
-    
     override init(frame: CGRect) {
         super.init(frame: .zero)
         setLayouts()
@@ -415,27 +410,24 @@ class CommunitiesCell: UICollectionViewCell {
             make.leading.top.trailing.equalToSuperview()
             make.height.equalTo(110)
         }
-        
         communityDetailView.snp.makeConstraints() { make in
             make.leading.trailing.equalToSuperview()
             make.top.equalTo(communityImageView.snp.bottom).offset(1)
             make.height.equalTo(40)
         }
-        
         communityDetailView.addSubviews(communityTitleLabel, arrowImageView)
-        
-        communityTitleLabel.snp.makeConstraints() { make in
-            make.leading.equalToSuperview().offset(15)
-            make.centerY.equalToSuperview()
-            make.width.equalTo(200)
-            make.height.equalTo(21)
-        }
         
         arrowImageView.snp.makeConstraints() { make in
             make.trailing.equalToSuperview().offset(-15)
             make.centerY.equalToSuperview()
             make.width.equalTo(6)
             make.height.equalTo(12)
+        }
+        
+        communityTitleLabel.snp.makeConstraints() { make in
+            make.leading.equalToSuperview().offset(15)
+            make.centerY.equalToSuperview()
+            make.trailing.equalTo(arrowImageView.snp.leading).offset(-10)
         }
     }
 }
