@@ -26,6 +26,7 @@ class CommunityPost: Decodable {
 
 class CommunityPostComment: Decodable {
     let club_comment_id: Int
+    let img_url: String?
     let writer_id: Int
     let user_name: String
     let comment_content_text: String

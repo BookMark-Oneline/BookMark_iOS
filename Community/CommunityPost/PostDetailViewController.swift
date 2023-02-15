@@ -15,6 +15,7 @@ class PostDetailViewController: UIViewController {
     var postID: Int = 1
     var textViewYValue = CGFloat(15)
     
+    private var imgStatus: String?
     private var img_url: String?
     private var postTitle: String?
     private var postContent: String?
@@ -113,9 +114,8 @@ extension PostDetailViewController: UITableViewDelegate, UITableViewDataSource {
         if indexPath.row == 0 {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: MainPostCell.identifier, for: indexPath) as? MainPostCell else { return MainPostCell() }
             
-            guard let img_url = self.img_url, let postTitle = self.postTitle, let postContent = self.postContent, let userName = self.userName, let likeCount = self.likeNum, let commentCount = self.commentNum else {return cell}
+            guard let img_url = self.img_url, let postTitle = self.postTitle, let postContent = self.postContent, let userName = self.userName, let likeCount = self.likeNum, let commentCount = self.commentNum, let imgstatus = self.imgStatus else {return cell}
             
-            cell.layout_userImg.setImageUrl(url: img_url)
             cell.label_author.text = userName
             cell.label_title.text = postTitle
             cell.label_context.text = postContent
@@ -131,6 +131,7 @@ extension PostDetailViewController: UITableViewDelegate, UITableViewDataSource {
 
             cell.label_author.text = self.comment[indexPath.row - 1][0]
             cell.label_context.text = self.comment[indexPath.row - 1][1]
+            cell.layout_userImg.setImageUrl(url: self.comment[indexPath.row - 1][2])
             
             return cell
         }
@@ -162,6 +163,7 @@ extension PostDetailViewController {
             case .success(let data):
                 guard let post = (data as? CommunityPost), let comment = (data as? CommunityPost)?.CommentData else {return}
 
+                self.imgStatus = post.img_status
                 self.img_url = (post.img_url ?? "")
                 self.postTitle = post.club_post_title
                 self.postContent = post.post_content_text
@@ -170,7 +172,7 @@ extension PostDetailViewController {
                 self.commentNum = post.comment_num
                 
                 comment.forEach { item in
-                    self.comment.append([item.user_name, item.comment_content_text])
+                    self.comment.append([item.user_name, item.comment_content_text, item.img_url ?? ""])
                 }
                 self.layout_postDetail.layout_postDetail.reloadData()
             default:
@@ -255,7 +257,6 @@ class TextFieldView {
         btn_send.layer.cornerRadius = 19
         btn_send.setImage(UIImage(named: "comment_send"), for: .normal)
         
-        
         layout_textField.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(19)
             make.right.equalTo(btn_send.snp.left).offset(2)
@@ -294,7 +295,7 @@ class MainPostCell: UITableViewCell {
             make.width.equalTo(35)
             make.height.equalTo(35)
         }
-        layout_userImg.image = UIImage(named: "haerin.jpg")
+        layout_userImg.image = UIImage(named: "noProfileImg")
         layout_userImg.clipsToBounds = true
         layout_userImg.layer.cornerRadius = 17.5
         layout_userImg.backgroundColor = .gray
