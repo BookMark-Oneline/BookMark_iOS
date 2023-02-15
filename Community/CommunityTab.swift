@@ -94,7 +94,7 @@ extension CommunityTab {
                 if let com = communityList as? [CommunityList] {
                     self.communities.removeAll()
                     com.forEach({ item in
-                        self.communities.append(["\(item.clubImgURL)", "\(item.clubName)"])
+                        self.communities.append(["\(item.clubImgURL)", "\(item.clubName)", "\(item.clubID)"])
                         self.mainView.collection.communities.reloadData()
                     })
                 }
@@ -139,7 +139,11 @@ extension CommunityTab: UICollectionViewDelegate, UICollectionViewDelegateFlowLa
         guard let item = collectionView.cellForItem(at: indexPath) as? CommunitiesCell else {
             return
         }
-        self.navigationController?.pushViewControllerTabHidden(CommunityInsideViewController(), animated: true)
+        let vc = CommunityInsideViewController()
+        
+        vc.clubName = self.communities[indexPath.row][1]
+        vc.clubID = Int(self.communities[indexPath.row][2])
+        self.navigationController?.pushViewControllerTabHidden(vc, animated: true)
         
     }
     
