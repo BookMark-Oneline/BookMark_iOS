@@ -12,6 +12,7 @@ class CommunityInsideViewController: UIViewController, UITableViewDelegate, UITa
     let network = NetworkTintin()
     var clubName: String = ""
     var clubID: Int = 1
+    var clubOwnerID: Int = 1
     var announceID: Int?
     var postData = [[String]]()
     let layout_post = Posts()
@@ -57,9 +58,14 @@ class CommunityInsideViewController: UIViewController, UITableViewDelegate, UITa
     }
     
     @objc func pushCommunitySettingViewController(_ sender: UIBarButtonItem) {
-        let vc = SetCommunityViewController()
-        vc.clubID = self.clubID
-        self.navigationController?.pushViewController(vc, animated: true)
+        if (self.clubOwnerID == UserInfo.shared.userID) {
+            let vc = SetCommunityViewController()
+            vc.clubID = self.clubID
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+        else {
+            self.view.makeToast("클럽 소유주가 아닙니다", duration: 1, position: .bottom)
+        }
     }
     
     @objc func pushCommunityMemberViewController(_ sender: UIBarButtonItem) {

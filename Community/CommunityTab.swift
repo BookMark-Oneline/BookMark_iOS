@@ -68,7 +68,7 @@ extension CommunityTab {
                 if let com = communityList as? [CommunityList] {
                     self.communities.removeAll()
                     com.forEach({ item in
-                        self.communities.append(["\(item.clubImgURL)", "\(item.clubName)", "\(item.clubID)"])
+                        self.communities.append(["\(item.clubImgURL)", "\(item.clubName)", "\(item.clubID)", "\(item.clubOwnerID)"])
                         self.mainView.collection.communities.reloadData()
                     })
                 }
@@ -114,8 +114,9 @@ extension CommunityTab: UICollectionViewDelegate, UICollectionViewDelegateFlowLa
         let vc = CommunityInsideViewController()
         let community = self.communities[indexPath.row]
         vc.clubName = community[1]
-        guard let id = Int(community[2]) else {return}
+        guard let id = Int(community[2]), let owner = Int(community[3]) else {return}
         vc.clubID = id
+        vc.clubOwnerID = owner
         self.navigationController?.pushViewControllerTabHidden(vc, animated: true)
     }
     

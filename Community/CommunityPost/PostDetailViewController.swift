@@ -175,9 +175,9 @@ extension PostDetailViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row == 0 {
             if (!(self.postImg == "")) {
-                return 390
+                return 430
             } else {
-                return 170
+                return 200
             }
             
         } else {

@@ -39,7 +39,7 @@ class CreateCommunityViewController: UIViewController {
             make.top.equalTo(label_title.snp.bottom)
             make.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
         }
-        layout_SetCommunity.initViews(layout_main)
+        layout_SetCommunity.initViews(layout_main, clubID: 5754)
     }
     
     private func setNavCustom() {

@@ -35,7 +35,7 @@ class CommunitySettingView {
     let btn_limit = UISegmentedControl(items: ["10", "20", "무제한"])
     let label_limitDescription = UILabel()
     
-    func initViews(_ superView: UIView) {
+    func initViews(_ superView: UIView, clubID: Int) {
         superView.addSubview(layout_scroll)
         
         layout_scroll.translatesAutoresizingMaskIntoConstraints = false
@@ -66,7 +66,7 @@ class CommunitySettingView {
             make.top.equalTo(label_bookCommID.snp.bottom).offset(22)
             make.leading.equalToSuperview().offset(26)
         }
-        label_code.text = "5S75FFG4E"
+        label_code.text = "\(clubID)"
         label_code.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         label_code.textColor = .textOrange
         

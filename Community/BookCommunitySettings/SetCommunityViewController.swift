@@ -20,7 +20,7 @@ class SetCommunityViewController: UIViewController {
         self.view.backgroundColor = .white
         
         getSettings()
-        layout_SetCommunity.initViews(self.view)
+        layout_SetCommunity.initViews(self.view, clubID: self.clubID)
         self.layout_SetCommunity.layout_img.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(imagePicker)))
         setImgPicker()
         setNavCustom()

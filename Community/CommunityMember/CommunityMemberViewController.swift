@@ -41,6 +41,7 @@ extension CommunityMemberViewController {
         switch indexPath.row {
         case 0:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: GroupIdTableViewCell.identifier, for: indexPath) as? GroupIdTableViewCell else { return GroupIdTableViewCell() }
+            cell.label_groupId.text = "\(self.clubID)"
             return cell
 
         default:
