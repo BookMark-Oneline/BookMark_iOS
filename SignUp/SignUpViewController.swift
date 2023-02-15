@@ -393,7 +393,7 @@ class FinishSignUpViewController: BaseSignUpViewController {
     }
     
     @objc func didTapStartButton(_ sender: UIButton) {
-        self.postNewCommunity(completion: { [weak self] in
+        self.newUserSignUp(completion: { [weak self] in
             self?.present(LoginViewController(), animated: true)
         })
     }
@@ -405,7 +405,7 @@ class FinishSignUpViewController: BaseSignUpViewController {
 
 // MARK: 네트워크 용 extension
 extension FinishSignUpViewController {
-    func postNewCommunity(completion: @escaping () -> Void) {
+    func newUserSignUp(completion: @escaping () -> Void) {
         let baseUrl = "https://port-0-bookmark-oneliner-luj2cldx5nm16.sel3.cloudtype.app"
         let URL = baseUrl + "/login/register"
         guard let token = UserInfo.shared.userAccessToken else {

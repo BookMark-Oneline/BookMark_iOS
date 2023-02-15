@@ -31,49 +31,44 @@ class PostDetailViewController: UIViewController {
         layout_textField.initView(view: self.view)
         layout_postDetail.layout_postDetail.delegate = self
         layout_postDetail.layout_postDetail.dataSource = self
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWhileHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidShow), name: UIResponder.keyboardDidShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         
         setNavCustom()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
-        postLikeStatus(likes: self.likeStatus)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardUp), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardDown), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        postLikeStatus(likes: self.likeStatus)
+        
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
     
-    @objc func keyboardWhileHide(notification: NSNotification) {
-        UIView.animate(withDuration: 0, animations: { [self] in
-            if self.layout_textField.layout_coner.frame.origin.y != self.textViewYValue {
-                self.layout_textField.layout_coner.frame.origin.y = textViewYValue
-            }
-        })
+    @objc func keyboardUp(_ sender: NSNotification) {
+        if let keyboardFrame: NSValue = sender.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardRectangle = keyboardFrame.cgRectValue
         
+             UIView.animate(
+                 withDuration: 0
+                 , animations: {
+                     self.layout_textField.layout_coner.transform = CGAffineTransform(translationX: 0, y: -keyboardRectangle.height + self.view.safeAreaInsets.bottom)
+                 }
+             )
+         }
     }
     
-    @objc func keyboardWillShow(notification: NSNotification) {
-        UIView.animate(withDuration: 0, animations: { [self] in
-            if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-                if textViewYValue == 15 {
-                    textViewYValue = self.layout_textField.layout_coner.frame.origin.y
-                }
-                if self.layout_textField.layout_coner.frame.origin.y == textViewYValue {
-                    textViewYValue = self.layout_textField.layout_coner.frame.origin.y
-                    self.layout_textField.layout_coner.frame.origin.y -= keyboardSize.height - UIApplication.shared.windows.first!.safeAreaInsets.bottom
-                }
-            }
-        })
-    }
-    
-    @objc func keyboardDidShow(notification: NSNotification) {
-        
-        
+    @objc func keyboardDown(_ sender: NSNotification) {
+        self.layout_textField.layout_coner.transform = .identity
     }
     
     func setNavCustom() {
@@ -198,16 +193,12 @@ class PostDetailView {
         return layout_postDetail
     }()
     
-    
     func initView(view : UIView) {
-        
         view.addSubview(layout_postDetail)
         
         layout_postDetail.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        
-    
     }
 }
 

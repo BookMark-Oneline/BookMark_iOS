@@ -9,7 +9,7 @@ import UIKit
 
 class SearchCommunityViewController: UIViewController {
     
-    var inputCommunityID: String = "default"
+    var inputCommunityID: Int = 0
     
     let descriptLabel: UILabel = {
         let label = UILabel()
@@ -70,10 +70,11 @@ class SearchCommunityViewController: UIViewController {
     }
     
     @objc func searchButtonPress() {
-        inputCommunityID = inputIDtextField.text ?? "default"
+        inputCommunityID = Int(inputIDtextField.text ?? "0") ?? 0
         print("모임 검색하기, 모임 ID :", inputCommunityID)
 //        tfLine.lineFillAnimation()
         let vc = JoinCommunityRequestViewController()
+        vc.clubID = inputCommunityID
         self.navigationController?.pushViewControllerTabHidden(vc, animated: true)
         vc.clubID = inputCommunityID
     }

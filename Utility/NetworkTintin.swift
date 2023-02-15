@@ -58,7 +58,7 @@ class NetworkTintin {
     }
 
 // MARK: - API 2-10 [GET] 책모임 검색 조회
-    func getCommunitySearchResult(clubID: String, completion: @escaping (NetworkResult<Any>) -> Void) {
+    func getCommunitySearchResult(clubID: Int, completion: @escaping (NetworkResult<Any>) -> Void) {
         print("API ClubID \(clubID)")
         let URL = baseUrl + "/club/search/\(clubID)"
 //        let URL = baseUrl + "/club/search/1"

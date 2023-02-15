@@ -47,6 +47,8 @@ class MyLibTab: UIViewController, UICollectionViewDelegate, UICollectionViewDele
 extension MyLibTab {
     // 서재 데이터 get
     func getShelfData(completion: @escaping () -> Void) {
+        self.books.removeAll()
+        self.books.append(["0", "addbook", "", ""])
         network.getShelf { response in
             switch response {
             case .success(let shelf):
@@ -56,8 +58,6 @@ extension MyLibTab {
                 }
                 
                 if let book = (shelf as? Shelf)?.Book {
-                    self.books.removeAll()
-                    self.books.append(["0", "addbook", "", ""])
                     book.forEach({ item in
                         self.books.append(["\(item.book_id)", item.img_url, item.title, item.author])
                         self.layout.layout_collection.layout_books.reloadData()
@@ -65,6 +65,7 @@ extension MyLibTab {
                 }
                 completion()
             default:
+                self.layout.layout_collection.layout_books.reloadData()
                 print("failed")
             }
         }

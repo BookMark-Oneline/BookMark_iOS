@@ -63,8 +63,8 @@ class Shelf: Decodable {
 // MARK: 서재 유저 data class
 class UserShelfInfo: Decodable {
     let user_id: Int
-    let img_url: String
-    let total_book: Int
+    let img_url: String?
+    let total_book: Int?
     let streak: Int?
     let goal: Int?
 }

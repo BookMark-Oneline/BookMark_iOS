@@ -14,7 +14,7 @@ class JoinCommunityRequestViewController: UIViewController {
 //MARK: NetworkTintin
     let network = NetworkTintin()
     
-    var clubID: String = ""
+    var clubID: Int = 0
     
     var clubName: String = ""
     var userName: String = ""
@@ -129,7 +129,7 @@ class JoinCommunityRequestViewController: UIViewController {
 
 extension JoinCommunityRequestViewController {
     func getCommunitySearchResultData() {
-        network.getCommunitySearchResult(clubID: clubID) { res in
+        network.getCommunitySearchResult(clubID: self.clubID) { res in
             switch res {
             case .success(let communitySearch):
                 if let com = communitySearch as? [CommunitySearch] {
@@ -150,7 +150,7 @@ extension JoinCommunityRequestViewController {
     }
     
     func postUserCommunityJoinRequestData() {
-        network.postCommunityJoinRequest(userID: String(UserInfo.shared.userID), clubID: "1", completion: { res in
+        network.postCommunityJoinRequest(userID: String(UserInfo.shared.userID), clubID: "\(self.clubID)", completion: { res in
             switch res {
             case .success:
                 print("succcccc")
