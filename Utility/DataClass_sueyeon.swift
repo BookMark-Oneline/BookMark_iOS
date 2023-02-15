@@ -66,3 +66,9 @@ class RequestList: Decodable {
     let user_name: String
     let img_url: String
 }
+
+// MARK: - LoginResponse
+class LoginResponse: Decodable {
+    let message: String
+    let userId: [UserID]?
+}
