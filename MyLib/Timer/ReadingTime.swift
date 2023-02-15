@@ -157,7 +157,7 @@ extension ReadingTime {
     func postTimerStopData(curReadPage: Int) {
         let totalReadTime = 43
         
-        networkT.postTimerStopFixed(bookID: self.bookID, userID: UserInfo.shared.userID, totalReadTime: totalReadTime, curReadPage: curReadPage, completion: { res in
+        networkT.postTimerStopFixed(bookID: self.bookID, userID: UserInfo.shared.userID, totalReadTime: timeCount, curReadPage: curReadPage, completion: { res in
             switch res {
             case .success:
                 print("---[POST] TIMER STOP---")

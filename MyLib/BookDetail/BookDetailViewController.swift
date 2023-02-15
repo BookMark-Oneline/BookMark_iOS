@@ -143,7 +143,7 @@ extension BookDetailViewController {
     }
     
     @objc func tapStopwatch(_ selector: UIBarButtonItem) {
-        self.navigationController?.pushViewController(ReadingTime(), animated: true)
+        //self.navigationController?.pushViewController(ReadingTime(), animated: true)
     }
     
     @objc func tapTrash(_ selector: UIBarButtonItem) {

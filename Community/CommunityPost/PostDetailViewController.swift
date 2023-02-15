@@ -233,7 +233,7 @@ extension PostDetailViewController {
                 guard let comment = (data as? CommunityPost)?.CommentData else {return}
                 self.comment.removeAll()
                 comment.forEach { item in
-                    self.comment.append([item.user_name, item.comment_content_text])
+                    self.comment.append([item.user_name, item.comment_content_text, item.img_url ?? ""])
                 }
                 self.layout_postDetail.layout_postDetail.reloadData()
             default:

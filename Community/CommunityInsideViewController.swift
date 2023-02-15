@@ -147,7 +147,7 @@ extension CommunityInsideViewController {
             vc.postID = Int(self.postData[indexPath.row][0]) ?? 0
         }
         else {
-            vc.postID = Int(self.postData[indexPath.row + 1][0]) ?? 0
+            vc.postID = Int(self.postData[indexPath.row - 1][0]) ?? 0
         }
         self.navigationController?.pushViewController(vc, animated: true)
     }

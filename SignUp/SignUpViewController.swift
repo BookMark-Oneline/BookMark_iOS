@@ -23,6 +23,10 @@ class BaseSignUpViewController: UIViewController {
         setBaseView()
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+      }
+    
     private func setBaseView() {
         self.view.addSubview(layout_main)
         layout_main.snp.makeConstraints() { make in
