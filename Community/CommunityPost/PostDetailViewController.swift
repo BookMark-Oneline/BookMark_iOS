@@ -113,13 +113,31 @@ extension PostDetailViewController {
 extension PostDetailViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
-            
-            print("status" + (self.imgStatus ?? "it is optional"))
-            
-            if self.imgStatus == "0" {
+
+            if (self.postImg == "") {
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: MainPostCell.identifier, for: indexPath) as? MainPostCell else { return MainPostCell() }
+                
+                guard let img_url = self.profileImg, let postTitle = self.postTitle, let postContent = self.postContent, let userName = self.userName, let likeCount = self.likeNum, let commentCount = self.commentNum else {
+                    return cell}
+                
+                cell.layout_userImg.setImageUrl(url: img_url)
+                cell.label_author.text = userName
+                cell.label_title.text = postTitle
+                cell.label_context.text = postContent
+                cell.label_heart.text = "\(likeCount)"
+                cell.label_comment.text = "\(commentCount)"
+                cell.likeCallbackMehtod = { [weak self] result in
+                    self?.postLikeStatus(likes: result)
+                }
+                
+                return cell
+            }
+            else {
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: MainPictureCell.identifier, for: indexPath) as? MainPictureCell else { return MainPictureCell() }
                 
-                guard let img_url = self.profileImg, let postTitle = self.postTitle, let postImg = self.postImg, let postContent = self.postContent, let userName = self.userName, let likeCount = self.likeNum, let commentCount = self.commentNum  else {return cell}
+                guard let img_url = self.profileImg, let postTitle = self.postTitle, let postImg = self.postImg, let postContent = self.postContent, let userName = self.userName, let likeCount = self.likeNum, let commentCount = self.commentNum  else
+                {
+                    return cell}
                 
                 cell.layout_userImg.setImageUrl(url: img_url)
                 cell.label_author.text = userName
@@ -131,23 +149,6 @@ extension PostDetailViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.likeCallbackMehtod = { [weak self] result in
                     self?.postLikeStatus(likes: result)
                 }
-                
-                return cell
-            } else {
-                guard let cell = tableView.dequeueReusableCell(withIdentifier: MainPostCell.identifier, for: indexPath) as? MainPostCell else { return MainPostCell() }
-                
-                guard let img_url = self.profileImg, let postTitle = self.postTitle, let postContent = self.postContent, let userName = self.userName, let likeCount = self.likeNum, let commentCount = self.commentNum else {return cell}
-                
-                cell.layout_userImg.setImageUrl(url: img_url)
-                cell.label_author.text = userName
-                cell.label_title.text = postTitle
-                cell.label_context.text = postContent
-                cell.label_heart.text = "\(likeCount)"
-                cell.label_comment.text = "\(commentCount)"
-                cell.likeCallbackMehtod = { [weak self] result in
-                    self?.postLikeStatus(likes: result)
-                }
-                
                 return cell
             }
             
@@ -173,10 +174,10 @@ extension PostDetailViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row == 0 {
-            if self.imgStatus == "1" {
-                return 170
+            if (!(self.postImg == "")) {
+                return 390
             } else {
-                return 260
+                return 170
             }
             
         } else {
@@ -196,15 +197,17 @@ extension PostDetailViewController {
 
                 self.imgStatus = post.img_status
                 self.profileImg = (post.img_url ?? "")
+                self.postImg = (post.post_img_url ?? "")
                 self.postTitle = post.club_post_title
                 self.postContent = post.post_content_text
                 self.userName = post.user_name
                 self.likeNum = post.like_num
                 self.commentNum = post.comment_num
-                
+      
                 comment.forEach { item in
                     self.comment.append([item.user_name, item.comment_content_text, item.img_url ?? ""])
                 }
+                
                 self.layout_postDetail.layout_postDetail.reloadData()
             default:
                 print("failed get post detail data")
@@ -245,6 +248,7 @@ class PostDetailView {
         let layout_postDetail = UITableView()
         layout_postDetail.translatesAutoresizingMaskIntoConstraints = false
         layout_postDetail.register(MainPostCell.self, forCellReuseIdentifier: MainPostCell.identifier)
+        layout_postDetail.register(MainPictureCell.self, forCellReuseIdentifier: MainPictureCell.identifier)
         layout_postDetail.register(CommentCell.self, forCellReuseIdentifier: CommentCell.identfier)
 
         layout_postDetail.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
@@ -318,7 +322,7 @@ class MainPictureCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.selectionStyle = .none
-        self.contentView.addSubviews(layout_userImg, label_author, label_time, label_title, label_context, btn_heart, label_heart, layout_comment, label_comment)
+        self.contentView.addSubviews(layout_userImg, label_author, label_time, label_title, label_context, btn_heart, label_heart, layout_comment, label_comment, layout_postImg)
         
         layout_userImg.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(18)
@@ -363,16 +367,13 @@ class MainPictureCell: UITableViewCell {
         label_title.numberOfLines = 0
         label_title.textAlignment = .natural
         
-        
         layout_postImg.snp.makeConstraints { make in
             make.top.equalTo(label_title.snp.bottom).offset(7)
             make.left.equalToSuperview().offset(30)
             make.right.equalToSuperview().offset(-30)
             make.height.equalTo(200)
         }
-        layout_postImg.image = UIImage(named: "haerin.jpg")
         layout_postImg.contentMode = .scaleAspectFit
-        
         
         label_context.snp.makeConstraints { make in
             make.top.equalTo(layout_postImg.snp.bottom).offset(9)
