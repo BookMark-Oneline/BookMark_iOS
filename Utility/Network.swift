@@ -15,8 +15,8 @@ class Network {
     let baseUrl = "https://port-0-bookmark-oneliner-luj2cldx5nm16.sel3.cloudtype.app"
     
     // 책 등록 POST
-    func postRegisterBooks(title: String, img_url: String, author: String, pubilsher: String, isbn: String, completion: @escaping (() -> Void)) {
-        let params: Parameters = ["title": title, "img_url": img_url, "author": author, "publisher": pubilsher, "isbn": isbn]
+    func postRegisterBooks(title: String, img_url: String, author: String, pubilsher: String, isbn: String, totalPage: Int, completion: @escaping (() -> Void)) {
+        let params: Parameters = ["title": title, "img_url": img_url, "author": author, "publisher": pubilsher, "isbn": isbn, "total_page": totalPage]
         
         let URL = baseUrl + "/register/book/\(UserInfo.shared.userID)"
         let datarequest = AF.request(URL, method: .post, parameters: params, encoding: JSONEncoding.default).validate()
