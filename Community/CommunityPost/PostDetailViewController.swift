@@ -89,9 +89,13 @@ class PostDetailViewController: UIViewController {
             self.view.makeToast("삭제되었습니다.", duration: 2, position: .bottom)
             
         })
+        let announce = UIAlertAction(title: "공지로 등록하기", style: .default, handler: { _ in
+            self.view.makeToast("공지로 등록되었습니다.", duration: 2, position: .bottom)
+        })
         let cancel = UIAlertAction(title: "취소", style: .cancel)
         alert.addAction(report)
         alert.addAction(remove)
+        alert.addAction(announce)
         alert.addAction(cancel)
         self.present(alert, animated: true)
     }

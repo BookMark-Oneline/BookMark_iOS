@@ -104,7 +104,7 @@ extension ConfirmBookViewController {
             return
         }
         
-        network.postRegisterBooks(title: self.bookTitle, img_url: self.bookImageURL, author: self.bookAuthor, pubilsher: self.bookPublisher, isbn: self.bookIsbn, completion: {
+        network.postRegisterBooks(title: self.bookTitle, img_url: self.bookImageURL, author: self.bookAuthor, pubilsher: self.bookPublisher, isbn: self.bookIsbn, totalPage: self.totalPage, completion: {
             self.navigationController?.popToRootViewController(animated: true)
         })
     }
