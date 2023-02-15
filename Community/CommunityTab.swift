@@ -19,13 +19,12 @@ class CommunityTab: UIViewController {
 //MARK: - NetworkTintin
     let network = NetworkTintin()
     
-    var communities = ((UIApplication.shared.delegate as? AppDelegate)?.communities)!
+    var communities = [[String]]()
 
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        getCommunityListData()
-        mainView.initViews(view: self.view)
+//        mainView.initViews(view: self.view)
         addTargets()
         mainView.collection.communities.delegate = self
         mainView.collection.communities.dataSource = self
@@ -33,12 +32,14 @@ class CommunityTab: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         self.navigationController?.isNavigationBarHidden = true
-        mainView.collection.communities.reloadData()
+//        mainView.collection.communities.reloadData()
         dataReload()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         self.navigationController?.isNavigationBarHidden = false
     }
     
@@ -47,24 +48,31 @@ class CommunityTab: UIViewController {
         mainView.addButton.addTarget(self, action: #selector(addButtonPress), for: .touchUpInside)
     }
     
-    func dataReload(status: Int = 1) {
-        // 데이터 새로 추가
-        if (status == 0) {
-            if let appdel = UIApplication.shared.delegate as? AppDelegate {
-                appdel.communities = self.communities
-            }
-            mainView.communityCount = self.communities.count
-//            collectView.comCount = self.communities.count
-            
-            mainView.initViews(view: self.view)
-//            if (self.communities.count > 0) {
-//                collectView.initView(view: mainView.collectView)
+//    func dataReload(status: Int = 1) {
+//        // 데이터 새로 추가
+//        if (status == 0) {
+//            if let appdel = UIApplication.shared.delegate as? AppDelegate {
+//                appdel.communities = self.communities
 //            }
-        }
-        else {
-            self.communities = ((UIApplication.shared.delegate as? AppDelegate)?.communities)!
-        }
-        mainView.collection.communities.reloadData()
+//            mainView.communityCount = self.communities.count
+////            collectView.comCount = self.communities.count
+//
+//            mainView.initViews(view: self.view)
+////            if (self.communities.count > 0) {
+////                collectView.initView(view: mainView.collectView)
+////            }
+//        }
+//        else {
+//            self.communities = ((UIApplication.shared.delegate as? AppDelegate)?.communities)!
+//        }
+//        mainView.collection.communities.reloadData()
+//    }
+    
+    func dataReload() {
+        getCommunityListData(completion: {
+            self.mainView.communityCount = self.communities.count
+            self.mainView.initViews(view: self.view)
+        })
     }
     
     @objc func searchButtonPress() {
@@ -79,17 +87,26 @@ class CommunityTab: UIViewController {
 }
 
 extension CommunityTab {
-    func getCommunityListData() {
+    func getCommunityListData(completion: @escaping() -> Void) {
         network.getCommunityList { res in
             switch res {
             case .success(let communityList):
                 if let com = communityList as? [CommunityList] {
-                    self.communities = com
-//                    com.forEach({ item in
-//                        self.communities.append(["\(item.clubImgURL)", "\(item.clubName)"])
-//                    })
+                    self.communities.removeAll()
+                    com.forEach({ item in
+                        self.communities.append(["\(item.clubImgURL)", "\(item.clubName)"])
+                        self.mainView.collection.communities.reloadData()
+                    })
                 }
-                self.dataReload(status: 0)
+                completion()
+            case .serverErr:
+                print("se")
+            case .pathErr:
+                print("pe")
+            case .networkFail:
+                print("nf")
+            case .decodeFail:
+                print("df")
             default:
                 print("failed")
             }
@@ -112,8 +129,8 @@ extension CommunityTab: UICollectionViewDelegate, UICollectionViewDelegateFlowLa
         let community = self.communities[indexPath.row]
         
         cell.communityImageView.kf.indicatorType = .activity
-        cell.communityImageView.kf.setImage(with: URL(string: community.clubImgURL), placeholder: nil, options: [.transition(.fade(1)), .cacheOriginalImage, .forceTransition], completionHandler: nil)
-        cell.communityTitleLabel.text = community.clubName
+        cell.communityImageView.kf.setImage(with: URL(string: community[0]), placeholder: nil, options: [.transition(.fade(1)), .cacheOriginalImage, .forceTransition], completionHandler: nil)
+        cell.communityTitleLabel.text = community[1]
         
         return cell
     }
