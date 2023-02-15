@@ -15,7 +15,7 @@ class PostDetailViewController: UIViewController {
     var postID: Int = 1
     var textViewYValue = CGFloat(15)
     
-    private var imgStatus: String?
+    private var imgStatus: String = "1"
     private var profileImg: String?
     private var postImg: String?
     private var postTitle: String?
@@ -113,21 +113,45 @@ extension PostDetailViewController {
 extension PostDetailViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: MainPostCell.identifier, for: indexPath) as? MainPostCell else { return MainPostCell() }
             
-            guard let img_url = self.profileImg, let postTitle = self.postTitle, let postContent = self.postContent, let userName = self.userName, let likeCount = self.likeNum, let commentCount = self.commentNum, let imgstatus = self.imgStatus else {return cell}
+            print("status" + (self.imgStatus ?? "it is optional"))
             
-            cell.layout_userImg.setImageUrl(url: img_url)
-            cell.label_author.text = userName
-            cell.label_title.text = postTitle
-            cell.label_context.text = postContent
-            cell.label_heart.text = "\(likeCount)"
-            cell.label_comment.text = "\(commentCount)"
-            cell.likeCallbackMehtod = { [weak self] result in
-                self?.postLikeStatus(likes: result)
+            if self.imgStatus == "0" {
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: MainPictureCell.identifier, for: indexPath) as? MainPictureCell else { return MainPictureCell() }
+                
+                guard let img_url = self.profileImg, let postTitle = self.postTitle, let postImg = self.postImg, let postContent = self.postContent, let userName = self.userName, let likeCount = self.likeNum, let commentCount = self.commentNum  else {return cell}
+                
+                cell.layout_userImg.setImageUrl(url: img_url)
+                cell.label_author.text = userName
+                cell.label_title.text = postTitle
+                cell.layout_postImg.setImageUrl(url: postImg)
+                cell.label_context.text = postContent
+                cell.label_heart.text = "\(likeCount)"
+                cell.label_comment.text = "\(commentCount)"
+                cell.likeCallbackMehtod = { [weak self] result in
+                    self?.postLikeStatus(likes: result)
+                }
+                
+                return cell
+            } else {
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: MainPostCell.identifier, for: indexPath) as? MainPostCell else { return MainPostCell() }
+                
+                guard let img_url = self.profileImg, let postTitle = self.postTitle, let postContent = self.postContent, let userName = self.userName, let likeCount = self.likeNum, let commentCount = self.commentNum else {return cell}
+                
+                cell.layout_userImg.setImageUrl(url: img_url)
+                cell.label_author.text = userName
+                cell.label_title.text = postTitle
+                cell.label_context.text = postContent
+                cell.label_heart.text = "\(likeCount)"
+                cell.label_comment.text = "\(commentCount)"
+                cell.likeCallbackMehtod = { [weak self] result in
+                    self?.postLikeStatus(likes: result)
+                }
+                
+                return cell
             }
             
-            return cell
+            
         } else {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: CommentCell.identfier, for: indexPath) as? CommentCell else { return CommentCell() }
 
@@ -149,7 +173,12 @@ extension PostDetailViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row == 0 {
-            return 170
+            if self.imgStatus == "1" {
+                return 170
+            } else {
+                return 260
+            }
+            
         } else {
             return 85
         }
@@ -270,6 +299,153 @@ class TextFieldView {
         layout_textField.textAlignment = .natural
     }
 }
+
+class MainPictureCell: UITableViewCell {
+    static let identifier = "mainPictueCell"
+    let layout_userImg = UIImageView()
+    let layout_postImg = UIImageView()
+    let label_author = UILabel()
+    let label_time = UILabel()
+    let label_title = UILabel()
+    let label_context = UILabel()
+    let btn_heart = UIButton()
+    let label_heart = UILabel()
+    let layout_comment = UIImageView()
+    let label_comment = UILabel()
+    var likeCallbackMehtod: ((Int) -> Void)?
+    var likeStatus: Int = 0
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.selectionStyle = .none
+        self.contentView.addSubviews(layout_userImg, label_author, label_time, label_title, label_context, btn_heart, label_heart, layout_comment, label_comment)
+        
+        layout_userImg.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(18)
+            make.left.equalToSuperview().offset(23)
+            make.width.equalTo(35)
+            make.height.equalTo(35)
+        }
+        layout_userImg.image = UIImage(named: "haerin.jpg")
+        layout_userImg.clipsToBounds = true
+        layout_userImg.layer.cornerRadius = 17.5
+        layout_userImg.backgroundColor = .gray
+        
+        label_author.snp.makeConstraints { make in
+            make.top.equalTo(layout_userImg)
+            make.left.equalTo(layout_userImg.snp.right).offset(9)
+            make.height.equalTo(16)
+            make.right.equalToSuperview().offset(23)
+        }
+        label_author.text = "이름없음"
+        label_author.textColor = .black
+        label_author.font = .systemFont(ofSize: 13)
+        label_author.textAlignment = .natural
+        
+        label_time.snp.makeConstraints { make in
+            make.bottom.equalTo(layout_userImg)
+            make.height.equalTo(11)
+            make.left.equalTo(label_author)
+        }
+        label_time.text = "1/31 03:25"
+        label_time.textColor = .textGray
+        label_time.font = .systemFont(ofSize: 11)
+        
+        label_title.snp.makeConstraints { make in
+            make.top.equalTo(label_time.snp.bottom).offset(13)
+            make.left.equalTo(layout_userImg)
+            make.right.equalToSuperview().offset(23)
+        }
+        label_title.text = "제목이 없습니다."
+        label_title.font = .boldSystemFont(ofSize: 17)
+        label_title.textColor = .black
+        label_title.lineBreakStrategy = .standard
+        label_title.numberOfLines = 0
+        label_title.textAlignment = .natural
+        
+        
+        layout_postImg.snp.makeConstraints { make in
+            make.top.equalTo(label_title.snp.bottom).offset(7)
+            make.left.equalToSuperview().offset(30)
+            make.right.equalToSuperview().offset(-30)
+            make.height.equalTo(200)
+        }
+        layout_postImg.image = UIImage(named: "haerin.jpg")
+        layout_postImg.contentMode = .scaleAspectFit
+        
+        
+        label_context.snp.makeConstraints { make in
+            make.top.equalTo(layout_postImg.snp.bottom).offset(9)
+            make.left.equalTo(layout_userImg)
+            make.right.equalToSuperview().offset(23)
+        }
+        label_context.numberOfLines = 0
+        label_context.font = .systemFont(ofSize: 12)
+        label_context.textColor = .black
+        label_context.text = "내용이 없습니다."
+        label_title.lineBreakStrategy = .standard
+        label_title.textAlignment = .natural
+        
+        btn_heart.snp.makeConstraints { make in
+            make.left.equalTo(layout_userImg)
+            make.top.equalTo(label_context.snp.bottom).offset(31)
+            make.width.equalTo(21)
+            make.height.equalTo(21)
+        }
+        btn_heart.addTarget(self, action: #selector(didTapLikeButton), for: .touchUpInside)
+        btn_heart.setImage(UIImage(named: "heart_unfill"), for: .normal)
+        
+        label_heart.snp.makeConstraints { make in
+            make.centerY.equalTo(btn_heart)
+            make.left.equalTo(btn_heart.snp.right).offset(2)
+        }
+        label_heart.text = "0"
+        label_heart.textColor = .red
+        label_heart.font = .systemFont(ofSize: 11)
+        label_heart.textAlignment = .natural
+        
+        layout_comment.snp.makeConstraints { make in
+            make.centerY.equalTo(btn_heart)
+            make.left.equalTo(label_heart.snp.right).offset(5)
+            make.width.height.equalTo(21)
+        }
+        layout_comment.image = UIImage(named: "balloon")
+        
+        label_comment.snp.makeConstraints { make in
+            make.centerY.equalTo(btn_heart)
+            make.left.equalTo(layout_comment.snp.right).offset(3)
+        }
+        label_comment.text = "0"
+        label_comment.textColor = .black
+        label_comment.font = .systemFont(ofSize: 11)
+        label_comment.textAlignment = .natural
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    @objc func didTapLikeButton(_ sender: UIButton) {
+        let value = Int(self.label_heart.text ?? "0") ?? 0
+        if (self.likeStatus == 0) {
+            self.likeStatus = 1
+            self.label_heart.text = "\(value + 1)"
+            sender.setImage(UIImage(named: "heart_fill"), for: .normal)
+        }
+        else {
+            self.likeStatus = 0
+            sender.setImage(UIImage(named: "heart_unfill"), for: .normal)
+            if (value - 1 >= 0) {
+                self.label_heart.text = "\(value - 1)"
+            }
+        }
+        self.likeCallbackMehtod?(self.likeStatus)
+    }
+    
+}
+
+
+
 
 class MainPostCell: UITableViewCell {
     
