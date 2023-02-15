@@ -39,7 +39,7 @@ class CommunitySetting: Decodable {
 class CommunityData: Decodable {
     let club_name: String
     let club_img_url: String
-    let club_invite_option: Int
+    let club_invite_option: String
     let max_people_num: Int
 }
 
