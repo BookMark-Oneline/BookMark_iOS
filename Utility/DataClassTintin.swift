@@ -62,11 +62,11 @@ class CommunityJoinResponse: Decodable {
 class CommunitySearch: Decodable {
     let clubID: Int
     let clubName: String
-    let clubImgURL: String
+    let clubImgURL: String?
     let clubInviteOption: String
     let userID: Int
     let userName: String
-    let imgURL: String
+    let imgURL: String?
     
     enum CodingKeys: String, CodingKey {
         case clubID = "club_id"

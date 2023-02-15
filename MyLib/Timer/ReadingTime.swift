@@ -11,9 +11,7 @@ class ReadingTime: UIViewController, UITableViewDelegate, UITableViewDataSource 
 // MARK: - Network
     let network = Network()
     let networkT = NetworkTintin()
-    
     let pageInputPopUp = CustomPopUp()
-    
     var bookID: Int = 1
     var totalPage: Int = 0
 
@@ -22,12 +20,7 @@ class ReadingTime: UIViewController, UITableViewDelegate, UITableViewDataSource 
 // MARK: - Timer Components
     let timerView: UIView = {
         let view = UIView()
-
         view.frame = CGRect(x: 0, y: 0, width: 258, height: 258)
-//        view.layer.borderColor = UIColor.textOrange.cgColor
-//        view.layer.borderWidth = 10
-//        view.layer.masksToBounds = true
-//        view.layer.cornerRadius = 129
         
         return view
     }()
@@ -41,8 +34,6 @@ class ReadingTime: UIViewController, UITableViewDelegate, UITableViewDataSource 
         let label = UILabel()
         label.text = "00 : 00"
         label.textColor = .textGray
-        // Font 수정?
-//        label.font = UIFont(name: "SUIT-ExtraLight", size: 80)
         label.font = .systemFont(ofSize: 50)
         label.textAlignment = .center
         return label
@@ -56,11 +47,8 @@ class ReadingTime: UIViewController, UITableViewDelegate, UITableViewDataSource 
         btn.layer.masksToBounds = true
         btn.layer.cornerRadius = 33
 
-        // 시작, 멈춤 버튼 이미지 파일 요청해야 함, 받기 전까지는 텍스트 대체
         btn.setImage(UIImage(named: "play"), for: .normal)
         btn.setImage(UIImage(named: "resume"), for: .selected)
-        //btn.setTitle("시작", for: .normal)
-        //btn.setTitle("멈춤", for: .selected)
 
         btn.addTarget(self, action: #selector(timerButtonAction), for: .touchUpInside)
 
@@ -75,15 +63,11 @@ class ReadingTime: UIViewController, UITableViewDelegate, UITableViewDataSource 
         btn.layer.masksToBounds = true
         btn.layer.cornerRadius = 33
 
-        // 종료 버튼 이미지 파일 요청해야 함, 받기 전까지는 텍스트 대체
         btn.setImage(UIImage(named: "stop"), for: .normal)
-
         btn.addTarget(self, action: #selector(stopButtonAction), for: .touchUpInside)
 
         return btn
     }()
-
-// MARK: - History Components
     
     var timeHistories: [Int] = []
 
@@ -102,7 +86,7 @@ class ReadingTime: UIViewController, UITableViewDelegate, UITableViewDataSource 
     
     let timeHistroyTable = Histories()
 
-// MARK: - viewDidLoad()
+    // MARK: - viewDidLoad()
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
@@ -114,12 +98,9 @@ class ReadingTime: UIViewController, UITableViewDelegate, UITableViewDataSource 
         pageInputPopUp.submitButton.addTarget(self, action: #selector(submitPopUp), for: .touchUpInside)
     }
     
-// MARK: - setLayouts()
+    // MARK: - setLayouts()
     func setLayouts() {
         view.addSubviews(timerView, timerButton, stopButton, timeHistoryView)
-            
-        // History View 뺀 버전
-//        view.addSubviews(timerView, timerButton, stopButton)
 
         timerView.snp.makeConstraints() { make in
             make.width.equalTo(258)
@@ -166,7 +147,7 @@ class ReadingTime: UIViewController, UITableViewDelegate, UITableViewDataSource 
 }
 
 extension ReadingTime {
-//MARK: POST TIMER START 수정 필요
+    // MARK: POST TIMER START 수정 필요
     func postTimerStartData() {
         network.postTimerStart(completion: {
             print("---[POST] TIMER START---")
@@ -193,7 +174,6 @@ extension ReadingTime {
             }
         })
     }
-    
 }
 
 extension ReadingTime {
@@ -228,14 +208,11 @@ extension ReadingTime {
         timerButton.isSelected = false
         shouldPostTimerStart = true
         self.timeHistories.append(self.timeCount)
-        print("--TIMER STOP--")
-        print(self.timerLabel.text!)
         self.timeCount = 0
         self.timer.invalidate()
         self.timerLabel.text = "00 : 00"
         
 //MARK: TotalPage
-        print(self.totalPage)
         pageInputPopUp.allPageTextField.text = String(self.totalPage)
         pageInputPopUp.showPopUp(with: "책갈피",
                               message: "몇 페이지까지 읽으셨나요?",
@@ -366,7 +343,6 @@ class StopwatchView: UIView {
     func circleAnimate() {
         let animation = CABasicAnimation(keyPath: "strokeEnd")
         animation.toValue = 1
-        // 아래의 목표시간 현재 10초, 나중에 변경해야 함 (단위 : 초)
         animation.duration = 10
         animation.isRemovedOnCompletion = false
         animation.fillMode = .forwards
@@ -470,7 +446,6 @@ class TimeHistoryCell: UITableViewCell {
             make.centerY.equalToSuperview()
             make.trailing.equalToSuperview().offset(-54)
         }
-        
         timeLabel.text = "2h 10m"
         timeLabel.font = .boldSystemFont(ofSize: 19)
         timeLabel.textAlignment = .right
@@ -483,7 +458,6 @@ class TimeHistoryCell: UITableViewCell {
         }
         
         deleteButton.setImage(UIImage(named: "cancel"), for: .normal)
-
     }
 
     required init?(coder: NSCoder) {

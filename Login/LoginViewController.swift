@@ -53,14 +53,12 @@ extension LoginViewController: ASAuthorizationControllerPresentationContextProvi
         
         self.postLogin(userIdentifier: userIdentifier, completion: { res in
             if (res) {
-                print("main tab bar")
                 let vc = MainTabBarController()
                 vc.modalPresentationStyle = .fullScreen
                 self.present(vc, animated: true)
             }
             
             else {
-                print("signup")
                 let vc = UINavigationController(rootViewController: SetNameViewController())
                 vc.modalPresentationStyle = .fullScreen
                 self.present(vc, animated: true)
@@ -119,7 +117,6 @@ extension LoginViewController: ASAuthorizationControllerPresentationContextProvi
 extension LoginViewController {
     func postLogin(userIdentifier: String, completion: @escaping (Bool) -> Void) {
         let params: Parameters = ["access_token": userIdentifier]
-        print("user: \(userIdentifier)")
         let baseUrl = "https://port-0-bookmark-oneliner-luj2cldx5nm16.sel3.cloudtype.app"
         let URL = baseUrl + "/login"
         let datarequest = AF.request(URL, method: .post, parameters: params, encoding: JSONEncoding.default).validate()
@@ -128,24 +125,20 @@ extension LoginViewController {
             switch response.result {
             case .success:
                 guard let value = response.value else {return}
-                guard let rescode = response.response?.statusCode else {return}
-                print("rescode: \(rescode)")
+                guard let _ = response.response?.statusCode else {return}
                 
                 let decoder = JSONDecoder()
                 guard let decodedData = try? decoder.decode(LoginResponse.self, from: value) else {
-                    print("decode failed")
                     return
                 }
-                print(decodedData.message)
                 if (decodedData.message == " 기등록된 유저 입니다.") {
                     if let id = decodedData.userId?[0].userID {
-                        print("userid: \(id)")
+                        print("user ID: \(id)")
                         UserInfo.shared.userID = id
                         completion(true)
                     }
                 }
                 else if (decodedData.message == " 등록되지 않은 유저입니다. ") {
-                    print("no user")
                     completion(false)
                 }
                 else {

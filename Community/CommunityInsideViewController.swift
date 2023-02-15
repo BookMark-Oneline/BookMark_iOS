@@ -16,6 +16,7 @@ class CommunityInsideViewController: UIViewController, UITableViewDelegate, UITa
     var postData = [[String]]()
     let layout_post = Posts()
     var selectedIndexPath = 0
+    
     struct PostInfo {
         let postID: Int
         let postTitle: String
@@ -30,7 +31,6 @@ class CommunityInsideViewController: UIViewController, UITableViewDelegate, UITa
         if let selectedIndexPath = layout_post.layout_posts.indexPathForSelectedRow {
             layout_post.layout_posts.deselectRow(at: selectedIndexPath, animated: animated)
         }
-        print("viewwillappear")
         getCommunityInsideData()
     }
     
@@ -145,11 +145,9 @@ extension CommunityInsideViewController {
         let vc = PostDetailViewController()
         if (announceID == nil) {
             vc.postID = Int(self.postData[indexPath.row][0]) ?? 0
-            print(vc.postID)
         }
         else {
             vc.postID = Int(self.postData[indexPath.row + 1][0]) ?? 0
-            print(vc.postID)
         }
         self.navigationController?.pushViewController(vc, animated: true)
     }
@@ -186,10 +184,8 @@ class Posts {
         btn_posting.layer.cornerRadius = 27.5
         btn_posting.backgroundColor = .orange
         btn_posting.setImage(UIImage(named: "group_posting"), for: .normal)
-
     }
 }
-
 
 // MARK: - Notice Post Cell Layout
 class noticePostCell: UITableViewCell {

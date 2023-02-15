@@ -11,7 +11,6 @@ import Kingfisher
 
 // MARK: - 책 확인 view controller
 class ConfirmBookViewController: UIViewController {
-    
     let pageInputPopUp = AllPageInputPopUp()
     let bookDetailVC = BookDetailViewController()
     var totalPage: Int = 0
@@ -67,7 +66,6 @@ extension ConfirmBookViewController {
     }
     
     @objc func submitPopUp(_ sender: UIButton) {
-        // 페이지 수 전달
         UIView.animate(withDuration: 0.25,
                        animations: {
             self.pageInputPopUp.popUpView.frame = CGRect(x: 40,
@@ -86,11 +84,7 @@ extension ConfirmBookViewController {
                     if (page.isEmpty) {return}
                     
                     self.totalPage = Int(page) ?? -2
-                    
                     self.stopWatchView.totalPage = self.totalPage
-                    
-                    print("TOTAL PAGE: \(self.totalPage)")
-                    
                     self.addToCell()
                     
                 })
@@ -288,7 +282,6 @@ extension ConfirmBookViewController {
         descriptionTextView.text = self.bookDes
         imageView.kf.indicatorType = .activity
         imageView.kf.setImage(with: URL(string: self.bookImageURL), placeholder: nil, options: [.transition(.fade(0.5)), .forceRefresh], completionHandler: nil)
-        //imageView.setImageUrl(url: self.bookImageURL)
     }
 }
 

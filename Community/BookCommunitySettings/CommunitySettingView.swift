@@ -138,8 +138,6 @@ class CommunitySettingView {
         label_setInvitation.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         label_setInvitation.sizeToFit()
         
-        //setInvitationBtn()
-        
         btn_invitation.snp.makeConstraints() { make in
             make.top.equalTo(label_setInvitation.snp.bottom).offset(22)
             make.width.equalTo(338)
@@ -183,7 +181,6 @@ class CommunitySettingView {
         label_limitDescription.textColor = .textLightGray
         label_limitDescription.font = UIFont.systemFont(ofSize: 12, weight: .bold)
         label_limitDescription.numberOfLines = 0
-        
     }
     
     func setSegmentedCustom(_ segment: UISegmentedControl) {

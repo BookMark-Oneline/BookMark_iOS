@@ -22,7 +22,7 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
     }
     
     private func toastWelcomeMsg() {
-        self.view.makeToast((UserInfo.shared.userName ?? "") + "님 환영합니다!", duration: 1.5, point: CGPoint(x: (tabBar.frame.minX + tabBar.frame.maxX) / 2, y: tabBar.frame.minY - tabBar.frame.height - 70), title: nil, image: nil, completion: nil)
+        self.view.makeToast((UserInfo.shared.userName) + "님 환영합니다!", duration: 1.5, point: CGPoint(x: (tabBar.frame.minX + tabBar.frame.maxX) / 2, y: tabBar.frame.minY - tabBar.frame.height - 70), title: nil, image: nil, completion: nil)
     }
     
     // 탭 뷰 컨트롤러 설정
@@ -53,7 +53,7 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
         fifth.tabBarItem.selectedImage = UIImage(named: "mypage_tab")
         
         self.viewControllers = [first, second, third, fourth, fifth]
-        self.selectedIndex = 2
+        self.selectedIndex = 0
     }
 
 }

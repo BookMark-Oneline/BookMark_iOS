@@ -11,7 +11,6 @@ import Alamofire
 // MARK: - 네트워킹 용 클래스 나중에 싱글톤으로 만들기
 class Network {
     // base Url
-    //let baseUrl = "https://3.38.182.237:3000"
     let baseUrl = "https://port-0-bookmark-oneliner-luj2cldx5nm16.sel3.cloudtype.app"
     
     // 책 등록 POST
@@ -24,8 +23,6 @@ class Network {
         datarequest.responseData(completionHandler: { response in
             switch response.result {
             case .success:
-                print("ok")
-                //MARK: todo - completion에 NetworkResult<AnyObject>으로 추가하기 나중에
                 completion()
             case .failure(let e):
                 print("failed")
@@ -130,8 +127,6 @@ class Network {
             "total_reading_time": 1000,
             "current_reading_time": 100
         ]
-        // current는 timeCount로, total은 get에서 받아온 토탈에 current 더하기...?
-        
         let URL = baseUrl + "/timer/finish/1/1"
         let dataRequest = AF.request( URL,
                                       method: .post,
@@ -140,16 +135,12 @@ class Network {
         
         dataRequest.responseData(completionHandler: { dataResponse in
             switch dataResponse.result {
-            case .success(let res):
-                print("SUCCESS")
-                print("응답 데이터 :: ", String(data: res, encoding: .utf8) ?? "")
+            case .success(_):
+                completion()
+                
             case .failure(let e):
-                print("ERROR")
-                print(e)
+                print("ERROR: \(e)")
             }
-            
-//MARK: todo3 - completion에 NetworkResult<AnyObject>으로 추가하기 나중에
-            completion()
         })
     }
     

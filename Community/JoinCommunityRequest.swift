@@ -10,10 +10,7 @@ import SnapKit
 import Kingfisher
 
 class JoinCommunityRequestViewController: UIViewController {
-    
-//MARK: NetworkTintin
     let network = NetworkTintin()
-    
     var clubID: Int = 0
     
     var clubName: String = ""
@@ -36,11 +33,9 @@ class JoinCommunityRequestViewController: UIViewController {
     let communityNameLabel: UILabel = {
         let label = UILabel()
         
-        label.frame = CGRect(x: 0, y: 0, width: 290, height: 64)
         label.textColor = .white
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
-//        label.text = "책마니+ 스터디와 함께하는 책읽기 프로젝트"
         label.font = .boldSystemFont(ofSize: 26)
         
         return label
@@ -50,7 +45,6 @@ class JoinCommunityRequestViewController: UIViewController {
         let view = UIImageView()
         let image = UIImage(named: "haerin.jpg")
         
-//        view.backgroundColor = .red // 위치 확인용
         view.image = image
         view.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
         view.contentMode = .scaleAspectFill
@@ -62,12 +56,9 @@ class JoinCommunityRequestViewController: UIViewController {
 
     let communityProfileNameLabel = {
         let label = UILabel()
-        
-        label.frame = CGRect(x: 0, y: 0, width: 84, height: 20)
+    
         label.textColor = .white
-//        label.text = "독서왕김독서"
         label.font = .boldSystemFont(ofSize: 16)
-        label.numberOfLines = 1
         label.textAlignment = .left
         
         return label
@@ -75,8 +66,7 @@ class JoinCommunityRequestViewController: UIViewController {
     
     let communityStatusLabel = {
         let label = UILabel()
-        
-        label.frame = CGRect(x: 0, y: 0, width: 63, height: 15)
+
         label.textColor = UIColor(red: 0.7, green: 0.7, blue: 0.7, alpha: 1)
         label.text = "일부가입허용"
         label.font = .boldSystemFont(ofSize: 12)
@@ -103,8 +93,7 @@ class JoinCommunityRequestViewController: UIViewController {
         
         btn.frame = CGRect(x: 0, y: 0, width: 344, height: 50)
         btn.backgroundColor = .lightOrange
-        btn.setTitle("가입 요청", for: .normal)
-        btn.titleLabel?.textColor = .white
+        btn.setTitle("가입 요청", size: 17, weight: .bold, color: .white)
         btn.layer.masksToBounds = true
         btn.layer.cornerRadius = 25
         btn.addTarget(self, action: #selector(requestButtonPress), for: .touchUpInside)
@@ -122,7 +111,6 @@ class JoinCommunityRequestViewController: UIViewController {
     }
     
     @objc func requestButtonPress() {
-        print("가입 요청")
         postUserCommunityJoinRequestData()
     }
 }
@@ -133,13 +121,12 @@ extension JoinCommunityRequestViewController {
             switch res {
             case .success(let communitySearch):
                 if let com = communitySearch as? [CommunitySearch] {
-                    print(com[0].clubName)
                     
                     self.clubName = com[0].clubName
                     self.userName = com[0].userName
                     self.clubInviteOption = com[0].clubInviteOption
-                    self.clubImgURL = com[0].clubImgURL
-                    self.profileImgURL = com[0].imgURL
+                    self.clubImgURL = com[0].clubImgURL ?? ""
+                    self.profileImgURL = com[0].imgURL ?? ""
                     
                     self.showContents()
                 }
@@ -153,8 +140,6 @@ extension JoinCommunityRequestViewController {
         network.postCommunityJoinRequest(userID: String(UserInfo.shared.userID), clubID: "\(self.clubID)", completion: { res in
             switch res {
             case .success:
-                print("succcccc")
-                print("POST CommunityJoinRequest")
                 self.navigationController?.popToRootViewController(animated: true)
             case .decodeFail:
                 print("DF")
@@ -173,43 +158,12 @@ extension JoinCommunityRequestViewController {
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
             make.bottom.equalToSuperview().offset(-70)
-//            make.bottom.equalTo(additionalSafeAreaInsets.bottom).offset(-70)
         }
+        
         self.view.sendSubviewToBack(backgroundImageView)
     }
     
     func setLayouts() {
-        view.addSubviews(communityNameLabel, communityProfileImageView, communityProfileNameLabel, communityStatusLabel)
-        
-        
-        communityNameLabel.snp.makeConstraints() { make in
-            make.width.equalTo(290)
-            make.height.equalTo(64)
-            make.leading.equalToSuperview().offset(23)
-            make.top.equalToSuperview().offset(557)
-        }
-        
-        communityProfileImageView.snp.makeConstraints() { make in
-            make.width.equalTo(50)
-            make.height.equalTo(50)
-            make.leading.equalTo(communityNameLabel)
-            make.top.equalTo(communityNameLabel.snp.bottom).offset(23)
-        }
-        
-        communityProfileNameLabel.snp.makeConstraints() { make in
-            make.width.equalTo(100)
-            make.height.equalTo(20)
-            make.leading.equalTo(communityProfileImageView.snp.trailing).offset(10)
-            make.top.equalTo(communityNameLabel.snp.bottom).offset(28)
-        }
-        
-        communityStatusLabel.snp.makeConstraints() { make in
-            make.width.equalTo(100)
-            make.height.equalTo(15)
-            make.leading.equalTo(communityProfileNameLabel.snp.leading)
-            make.top.equalTo(communityProfileNameLabel.snp.bottom).offset(5)
-        }
-        
         view.addSubview(buttonFloatView)
         
         buttonFloatView.snp.makeConstraints() { make in
@@ -228,6 +182,29 @@ extension JoinCommunityRequestViewController {
             make.top.equalToSuperview().offset(15)
         }
         
+        view.addSubviews(communityNameLabel, communityProfileImageView, communityProfileNameLabel, communityStatusLabel)
+        
+        communityProfileImageView.snp.makeConstraints() { make in
+            make.width.equalTo(50)
+            make.height.equalTo(50)
+            make.leading.equalToSuperview().offset(23)
+            make.bottom.equalTo(buttonFloatView.snp.top).offset(-30)
+        }
+        
+        communityProfileNameLabel.snp.makeConstraints() { make in
+            make.leading.equalTo(communityProfileImageView.snp.trailing).offset(10)
+            make.bottom.equalTo(communityProfileImageView.snp.centerY)
+        }
+        
+        communityStatusLabel.snp.makeConstraints() { make in
+            make.leading.equalTo(communityProfileNameLabel.snp.leading)
+            make.top.equalTo(communityProfileNameLabel.snp.bottom).offset(5)
+        }
+        
+        communityNameLabel.snp.makeConstraints() { make in
+            make.leading.trailing.equalToSuperview().inset(23)
+            make.bottom.equalTo(communityProfileNameLabel.snp.top).offset(-28)
+        }
     }
     
     func setNavCustom() {

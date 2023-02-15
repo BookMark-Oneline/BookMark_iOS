@@ -134,8 +134,6 @@ extension PostDetailViewController: UITableViewDelegate, UITableViewDataSource {
             
             return cell
         }
-        
-        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -163,7 +161,7 @@ extension PostDetailViewController {
             switch response {
             case .success(let data):
                 guard let post = (data as? CommunityPost), let comment = (data as? CommunityPost)?.CommentData else {return}
-                
+
                 self.img_url = (post.img_url ?? "")
                 self.postTitle = post.club_post_title
                 self.postContent = post.post_content_text
@@ -185,7 +183,6 @@ extension PostDetailViewController {
         network.postCommunityPostLikeStatus(clubPostID: self.postID, userID: UserInfo.shared.userID, likeStatus: likes, completion: { res in
             switch res {
             case .success:
-                print("yes")
                 return
             default:
                 print("failed update like status")
@@ -209,7 +206,6 @@ extension PostDetailViewController {
         })
     }
 }
-
 
 class PostDetailView {
     var layout_postDetail : UITableView = {

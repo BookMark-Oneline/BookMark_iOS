@@ -24,8 +24,6 @@ class LoginView {
 
         pastelView.animationDuration = 3.0
 
-        // 3개
-       //pastelView.setColors([UIColor(Hex: 0xe65c00), UIColor(Hex: 0xF9D423), UIColor(Hex: 0xFF4E50)])
        pastelView.setColors([UIColor(Hex: 0xFFCA0C), UIColor(Hex: 0xF99030), UIColor(Hex: 0xFFCA0C), UIColor(Hex: 0xF99030), UIColor(Hex: 0xFFCA0C), UIColor(Hex: 0xF99030)])
 
         pastelView.startAnimation()
@@ -56,7 +54,5 @@ class LoginView {
         label_loginProblem.text = "로그인에 문제가 있나요?"
         label_loginProblem.font = UIFont.systemFont(ofSize: 13, weight: .medium)
         label_loginProblem.textColor = .white
-        
     }
-    
 }

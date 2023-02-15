@@ -19,8 +19,9 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UITextVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setNavCustom()
         self.view.backgroundColor = .white
+        
+        setNavCustom()
         layout_createPost.initViews(self.view)
         
         layout_createPost.txt_post.delegate = self
@@ -39,7 +40,6 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UITextVie
     }
     
     @objc func createPostViewController(_ sender: UIBarButtonItem) {
-//        self.navigationController?.popViewController(animated: true)
         if (postImg == nil) {
             postCommunityPostWithoutImgData()
         } else {
@@ -47,7 +47,6 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UITextVie
         }
     }
     
-    // MARK: 내용 text view 입력 이벤트
     func textViewDidBeginEditing(_ textView: UITextView) {
         removeAllText(textView)
     }
@@ -63,7 +62,6 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UITextVie
         }
     }
     
-    // MARK: 카메라 아이콘 터치 이벤트
     @objc func presentImgPicker(_ sender: UITapGestureRecognizer) {
         self.present(imgPicker, animated: true)
     }
@@ -97,7 +95,6 @@ extension CreatePostViewController {
         network.postCommunityPostWithoutImg(clubID: self.clubID, userID: UserInfo.shared.userID, clubPostTitle: postTitle, clubPostContent: postContent, imgStatus: 1, completion: {  res in
             switch res {
             case .success:
-                print("POST CommunityPostWithoutImg")
                 self.navigationController?.popViewController(animated: true)
             case .decodeFail:
                 print("DF")
@@ -115,7 +112,6 @@ extension CreatePostViewController {
         network.postCommunityPostWithImg(clubID: self.clubID, userID: UserInfo.shared.userID, clubPostTitle: postTitle, clubPostContent: postContent, imgStatus: 1, img: postImg, completion: {  res in
             switch res {
             case .success:
-                print("POST CommunityPostWithoutImg")
                 self.navigationController?.popViewController(animated: true)
             case .decodeFail:
                 print("DF")

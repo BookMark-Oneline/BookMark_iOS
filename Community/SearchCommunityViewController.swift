@@ -8,7 +8,6 @@
 import UIKit
 
 class SearchCommunityViewController: UIViewController {
-    
     var inputCommunityID: Int = 0
     
     let descriptLabel: UILabel = {
@@ -54,8 +53,7 @@ class SearchCommunityViewController: UIViewController {
         
         btn.frame = CGRect(x: 0, y: 0, width: 166, height: 50)
         btn.backgroundColor = .lightOrange
-        btn.setTitle("검색하기", for: .normal)
-        btn.titleLabel?.textColor = .white
+        btn.setTitle("검색하기", size: 17, weight: .bold, color: .white)
         btn.layer.masksToBounds = true
         btn.layer.cornerRadius = 25
         btn.addTarget(self, action: #selector(searchButtonPress), for: .touchUpInside)
@@ -71,14 +69,10 @@ class SearchCommunityViewController: UIViewController {
     
     @objc func searchButtonPress() {
         inputCommunityID = Int(inputIDtextField.text ?? "0") ?? 0
-        print("모임 검색하기, 모임 ID :", inputCommunityID)
-//        tfLine.lineFillAnimation()
         let vc = JoinCommunityRequestViewController()
         vc.clubID = inputCommunityID
         self.navigationController?.pushViewControllerTabHidden(vc, animated: true)
-        vc.clubID = inputCommunityID
     }
-    
 }
 
 extension SearchCommunityViewController {
@@ -114,26 +108,6 @@ extension SearchCommunityViewController {
             make.top.equalTo(tfLine.snp.bottom).offset(25)
         }
     }
-
-//    func lineFillAnimation() { // UIView Extension에 추가해야 함.
-//        let layer = CAGradientLayer()
-//        let startLocations = [0, 0]
-//        let endLocations = [1, 2]
-//
-//        layer.colors = [UIColor.lightOrange.cgColor, UIColor.semiLightGray.cgColor]
-//        layer.frame = self.frame
-//        layer.locations = startLocations as [NSNumber]
-//        layer.startPoint = CGPoint(x: 0.0, y: 1.0)
-//        layer.endPoint = CGPoint(x: 1.0, y: 1.0)
-//        self.layer.addSublayer(layer)
-//
-//        let anim = CABasicAnimation(keyPath: "locations")
-//        anim.fromValue = startLocations
-//        anim.toValue = endLocations
-//        anim.duration = 2.0
-//        layer.add(anim, forKey: "loc")
-//        layer.locations = endLocations as [NSNumber]
-//    }
 }
 
 extension SearchCommunityViewController: UITextFieldDelegate {

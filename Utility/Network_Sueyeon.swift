@@ -92,7 +92,7 @@ extension Network {
             case .success:
                 guard let value = res.value else {return}
                 guard let rescode = res.response?.statusCode else {return}
-                print("rescode: \(rescode)")
+                
                 let networkResult = self.tempJudgeStatus(object: 5, by: rescode, value)
                 completion(networkResult)
                 
@@ -168,7 +168,6 @@ extension Network {
                 print(e)
                 completion(.pathErr)
             }
-        
         })
     }
     

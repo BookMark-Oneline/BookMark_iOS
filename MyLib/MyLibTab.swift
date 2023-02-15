@@ -289,8 +289,6 @@ class MyLibTabView {
             make.top.equalTo(line2.snp.bottom)
         }
         layout_collection.initViews(view: layout_collectionview)
-        
-        
     }
 }
 

@@ -12,29 +12,23 @@ import Kingfisher
 
 // MARK: - 책 모임 탭
 class CommunityTab: UIViewController {
-    
     let mainView = CommunityTabView()
     let collectView = Communities()
     
-//MARK: - NetworkTintin
     let network = NetworkTintin()
-    
     var communities = [[String]]()
-
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        mainView.initViews(view: self.view)
         addTargets()
         mainView.collection.communities.delegate = self
         mainView.collection.communities.dataSource = self
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.isNavigationBarHidden = true
-//        mainView.collection.communities.reloadData()
+        
         dataReload()
     }
     
@@ -47,26 +41,6 @@ class CommunityTab: UIViewController {
         mainView.searchButton.addTarget(self, action: #selector(searchButtonPress), for: .touchUpInside)
         mainView.addButton.addTarget(self, action: #selector(addButtonPress), for: .touchUpInside)
     }
-    
-//    func dataReload(status: Int = 1) {
-//        // 데이터 새로 추가
-//        if (status == 0) {
-//            if let appdel = UIApplication.shared.delegate as? AppDelegate {
-//                appdel.communities = self.communities
-//            }
-//            mainView.communityCount = self.communities.count
-////            collectView.comCount = self.communities.count
-//
-//            mainView.initViews(view: self.view)
-////            if (self.communities.count > 0) {
-////                collectView.initView(view: mainView.collectView)
-////            }
-//        }
-//        else {
-//            self.communities = ((UIApplication.shared.delegate as? AppDelegate)?.communities)!
-//        }
-//        mainView.collection.communities.reloadData()
-//    }
     
     func dataReload() {
         getCommunityListData(completion: {
@@ -118,6 +92,7 @@ extension CommunityTab: UICollectionViewDelegate, UICollectionViewDelegateFlowLa
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         self.communities.count
     }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 24
     }
@@ -138,17 +113,14 @@ extension CommunityTab: UICollectionViewDelegate, UICollectionViewDelegateFlowLa
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = CommunityInsideViewController()
         let community = self.communities[indexPath.row]
-        print(community)
         vc.clubName = community[1]
         guard let id = Int(community[2]) else {return}
         vc.clubID = id
-        print("id: \(id)")
         self.navigationController?.pushViewControllerTabHidden(vc, animated: true)
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: mainView.collectView.bounds.width-46, height: 150)
+        return CGSize(width: mainView.collectView.bounds.width - 46, height: 150)
     }
 }
 
@@ -208,7 +180,6 @@ class CommunityTabView: UIView {
         return col
     }()
     
-    // myCommunityCount == 0 일 때만 보이게 하기
     let descriptLabel: UILabel = {
         let label = UILabel()
         
@@ -326,8 +297,6 @@ class CommunityTabView: UIView {
 }
 
 class Communities {
-//    var comCount: Int = 0
-    
     let myCommunityLabel: UILabel = {
         let label = UILabel()
         
@@ -340,8 +309,7 @@ class Communities {
     
     let communityCountLabel: UILabel = {
         let label = UILabel()
-        
-//        label.text = "5"
+
         label.textColor = .textGray
         label.font = .systemFont(ofSize: 14)
         
@@ -402,15 +370,11 @@ class CommunitiesCell: UICollectionViewCell {
     
     let communityDetailView: UIView = {
         let view = UIView()
-//        let tap = UITapGestureRecognizer(target: self, action: #selector(communityDetailPress))
         
         view.backgroundColor = UIColor(red: 0.592, green: 0.592, blue: 0.592, alpha: 1)
         view.layer.masksToBounds = true
         view.layer.cornerRadius = 10
         view.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
-        
-//        view.addGestureRecognizer(tap)
-//        view.isUserInteractionEnabled = true
         
         return view
     }()
@@ -442,10 +406,6 @@ class CommunitiesCell: UICollectionViewCell {
     
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    @objc func communityDetailPress() {
-        print("community detail pressed")
     }
     
     func setLayouts() {

@@ -209,7 +209,6 @@ class GroupIdTableViewCell: UITableViewCell {
         label_groupId.text = "5S75FFG42"
         label_groupId.textColor = .black
         label_groupId.font = .systemFont(ofSize: 12)
-        
     }
     
     required init?(coder aDecoder: NSCoder) {

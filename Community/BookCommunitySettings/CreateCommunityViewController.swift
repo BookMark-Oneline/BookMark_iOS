@@ -14,6 +14,7 @@ class CreateCommunityViewController: UIViewController {
     let imgPicker = UIImagePickerController()
     let label_title = UILabel()
     let layout_main = UIView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
@@ -55,7 +56,6 @@ class CreateCommunityViewController: UIViewController {
     }
 }
 
-
 // MARK: - 이미지 피커 컨트롤러 extension
 extension CreateCommunityViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -70,7 +70,6 @@ extension CreateCommunityViewController: UIImagePickerControllerDelegate, UINavi
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        
         var newImage: UIImage? = nil
         
         if let possibleImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {

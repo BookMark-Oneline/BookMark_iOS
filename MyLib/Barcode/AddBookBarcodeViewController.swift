@@ -91,6 +91,5 @@ extension AddBookBarcodeViewController: BarcodeReaderViewDelegate {
         default:
             self.view.makeToast(message, duration: 2, position: .bottom)
         }
-        
     }
 }

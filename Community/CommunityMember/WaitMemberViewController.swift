@@ -22,7 +22,6 @@ class WaitMemberViewController: UIViewController, UITableViewDataSource, UITable
         layout_waits.layout_waits.dataSource = self
     }
     
-    //NavigationView
     func naviLayout() {
         self.navigationItem.title = "가입 요청"
         self.navigationController?.navigationBar.tintColor = .black
