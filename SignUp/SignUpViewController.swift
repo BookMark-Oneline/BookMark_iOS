@@ -119,10 +119,9 @@ class SetNameViewController: BaseSignUpViewController {
     }
     
     @objc func didTapButton(_ sender: UIButton) {
-        if let name = tf_name.text {
-            if (!name.isEmpty) {
-                UserInfo.shared.userName = name
-            }
+        if tf_name.hasText, let name = tf_name.text {
+            if (name == "") {}
+            else {UserInfo.shared.userNickName = name}
         }
         self.navigationController?.pushViewController(SetProfileViewController(), animated: true)
     }
@@ -177,7 +176,7 @@ class SetProfileViewController: BaseSignUpViewController {
             make.top.equalTo(layout_circle.snp.bottom).offset(15)
             make.centerX.equalToSuperview()
         }
-        label_name.text = UserInfo.shared.userName
+        label_name.text = UserInfo.shared.userNickName
         label_name.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         
         tf_message.snp.makeConstraints() { make in
@@ -394,7 +393,9 @@ class FinishSignUpViewController: BaseSignUpViewController {
     
     @objc func didTapStartButton(_ sender: UIButton) {
         self.newUserSignUp(completion: { [weak self] in
-            self?.present(LoginViewController(), animated: true)
+            let vc = LoginViewController()
+            vc.modalPresentationStyle = .fullScreen
+            self?.present(vc, animated: true)
         })
     }
     
@@ -436,7 +437,7 @@ extension FinishSignUpViewController {
     
     private func postWithUserImg(_ params: Parameters, URL: String, userImgData: Data, completion: @escaping () -> Void) {
         AF.upload(multipartFormData: { multipartFormData in
-            multipartFormData.append(userImgData, withName: "img_url", fileName: "\(UserInfo.shared.userName)_profileImage.png" , mimeType: "image/png")
+            multipartFormData.append(userImgData, withName: "img_url", fileName: "\(UserInfo.shared.userNickName)_profileImage.png" , mimeType: "image/png")
             
             for (key, value) in params
             {

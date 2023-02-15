@@ -92,7 +92,7 @@ extension Network {
             case .success:
                 guard let value = res.value else {return}
                 guard let rescode = res.response?.statusCode else {return}
-                
+                print("rescode: \(rescode)")
                 let networkResult = self.tempJudgeStatus(object: 5, by: rescode, value)
                 completion(networkResult)
                 
@@ -205,7 +205,7 @@ extension Network {
     func postCommunityPostLikeStatus(clubPostID: Int, userID: Int, likeStatus: Int, completion: @escaping (NetworkResult<Any>) -> Void) {
         let URL = baseUrl + "/club/post/like/\(clubPostID)"
         
-        let params: Parameters = ["club_id": userID, "club_name": likeStatus]
+        let params: Parameters = ["user_id": userID, "like_status": likeStatus]
         let datarequest = AF.request(URL, method: .post, parameters: params, encoding: JSONEncoding.default).validate()
         
         datarequest.responseData(completionHandler: { res in

@@ -9,16 +9,13 @@
 import UIKit
 
 class CommunityInsideViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-
-//MARK: NetworkTintin
     let network = NetworkTintin()
-    
     var clubName: String = ""
-    var clubID: Int?
+    var clubID: Int = 1
     var announceID: Int?
-    
     var postData = [[String]]()
-
+    let layout_post = Posts()
+    var selectedIndexPath = 0
     struct PostInfo {
         let postID: Int
         let postTitle: String
@@ -28,21 +25,18 @@ class CommunityInsideViewController: UIViewController, UITableViewDelegate, UITa
         let createdAt: String?
     }
     
-    let layout_post = Posts()
-    var selectedIndexPath = 0
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if let selectedIndexPath = layout_post.layout_posts.indexPathForSelectedRow {
             layout_post.layout_posts.deselectRow(at: selectedIndexPath, animated: animated)
         }
-
+        print("viewwillappear")
+        getCommunityInsideData()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        getCommunityInsideData()
-        print(self.postData.count)
+
         setNavCustom()
         layout_post.initViews(view: self.view)
         layout_post.layout_posts.delegate = self
@@ -52,7 +46,9 @@ class CommunityInsideViewController: UIViewController, UITableViewDelegate, UITa
     }
     
     @objc func pushCreatePostViewController(_ sender: UIButton) {
-        self.navigationController?.pushViewController(CreatePostViewController(), animated: true)
+        let vc = CreatePostViewController()
+        vc.clubID = self.clubID
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     func setNavCustom() {
@@ -62,13 +58,13 @@ class CommunityInsideViewController: UIViewController, UITableViewDelegate, UITa
     
     @objc func pushCommunitySettingViewController(_ sender: UIBarButtonItem) {
         let vc = SetCommunityViewController()
-        vc.clubID = self.clubID ?? 0
+        vc.clubID = self.clubID
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc func pushCommunityMemberViewController(_ sender: UIBarButtonItem) {
         let vc = CommunityMemberViewController()
-        vc.clubID = self.clubID ?? 0
+        vc.clubID = self.clubID
         self.navigationController?.pushViewController(vc, animated: true)
     }
 
@@ -76,13 +72,10 @@ class CommunityInsideViewController: UIViewController, UITableViewDelegate, UITa
 
 extension CommunityInsideViewController {
     func getCommunityInsideData() {
-//MARK: DB에 아직 clubID가 1밖에 없어서 다른 숫자로 하면 실행 안 되는 듯함 그래서 일단 1로 넣어주게 해둠
-        network.getCommunityInfo(clubID: 1) { res in
+        network.getCommunityInfo(clubID: self.clubID) { res in
             switch res {
             case .success(let communityInfo):
                 if let comInfo = communityInfo as? CommunityInfo {
-                    print("club ID : \(comInfo.clubID)")
-                    print("announce : \(comInfo.announcementID ?? -1)")
                     self.announceID = comInfo.announcementID
                     self.clubID = comInfo.clubID
                     
@@ -93,7 +86,6 @@ extension CommunityInsideViewController {
                     
                     self.layout_post.layout_posts.reloadData()
                 }
-//                self.dataReload(status: 0)
             default:
                 print("failed")
             }
@@ -150,7 +142,16 @@ extension CommunityInsideViewController {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.navigationController?.pushViewController(PostDetailViewController(), animated: true)
+        let vc = PostDetailViewController()
+        if (announceID == nil) {
+            vc.postID = Int(self.postData[indexPath.row][0]) ?? 0
+            print(vc.postID)
+        }
+        else {
+            vc.postID = Int(self.postData[indexPath.row + 1][0]) ?? 0
+            print(vc.postID)
+        }
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 
@@ -251,7 +252,6 @@ class postCell: UITableViewCell {
             make.width.equalTo(200)
             make.height.equalTo(19)
         }
-//        label_title.text = "게시물 제목입니다."
         label_title.numberOfLines = 1
         label_title.lineBreakMode = .byTruncatingTail
         label_title.textColor = .black
@@ -263,7 +263,6 @@ class postCell: UITableViewCell {
             make.right.equalToSuperview().offset(-23)
             make.height.equalTo(20)
         }
-//        label_context.text = "게시물 내용입니다. 게시물 내용입니다. 게시물 내용입니다. 게시물 내용입니다."
         label_context.font = .systemFont(ofSize: 13)
         label_context.numberOfLines = 1
         label_context.lineBreakMode = .byTruncatingTail
@@ -277,7 +276,6 @@ class postCell: UITableViewCell {
         }
         
         label_time.font = .systemFont(ofSize: 12)
-//        label_time.text = "5시간전"
         label_time.textColor = .textGray
         
         label_comment.snp.makeConstraints { make in
@@ -286,7 +284,6 @@ class postCell: UITableViewCell {
             make.height.equalTo(18)
             make.width.equalTo(18)
         }
-//        label_comment.text = "11"
         label_comment.textColor = .black
         label_comment.font = .systemFont(ofSize: 11)
         

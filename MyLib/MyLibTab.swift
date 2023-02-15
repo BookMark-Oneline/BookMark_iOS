@@ -232,7 +232,7 @@ class MyLibTabView {
             make.top.equalTo(layout_circle.snp.bottom).offset(10)
             make.centerX.equalTo(layout_circle)
         }
-        label_name.text = UserInfo.shared.userName
+        label_name.text = UserInfo.shared.userNickName
         label_name.font = UIFont.systemFont(ofSize: 15, weight: .bold)
         label_name.sizeToFit()
         

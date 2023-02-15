@@ -482,7 +482,7 @@ class TimeHistoryCell: UITableViewCell {
             make.trailing.equalToSuperview().offset(-25)
         }
         
-        deleteButton.setImage(UIImage(named: "historyDelete"), for: .normal)
+        deleteButton.setImage(UIImage(named: "cancel"), for: .normal)
 
     }
 

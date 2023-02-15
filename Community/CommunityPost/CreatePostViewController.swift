@@ -9,7 +9,7 @@ import UIKit
 
 // MARK: - 게시글 작성 view controller
 class CreatePostViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
+    var clubID: Int = 0
     let network = NetworkTintin()
     var postImg: UIImage?
 
@@ -94,7 +94,7 @@ extension CreatePostViewController {
         let postTitle = self.layout_createPost.txt_title.text ?? "DEFAULT_TITLE"
         let postContent = self.layout_createPost.txt_post.text ?? "DEFAULT_CONTENT"
         
-        network.postCommunityPostWithoutImg(clubID: 1, userID: UserInfo.shared.userID, clubPostTitle: postTitle, clubPostContent: postContent, imgStatus: 1, completion: {  res in
+        network.postCommunityPostWithoutImg(clubID: self.clubID, userID: UserInfo.shared.userID, clubPostTitle: postTitle, clubPostContent: postContent, imgStatus: 1, completion: {  res in
             switch res {
             case .success:
                 print("POST CommunityPostWithoutImg")
@@ -112,7 +112,7 @@ extension CreatePostViewController {
         let postContent = self.layout_createPost.txt_post.text ?? "DEFAULT_CONTENT"
         guard let postImg = self.postImg else { return }
         
-        network.postCommunityPostWithImg(clubID: 1, userID: UserInfo.shared.userID, clubPostTitle: postTitle, clubPostContent: postContent, imgStatus: 1, img: postImg, completion: {  res in
+        network.postCommunityPostWithImg(clubID: self.clubID, userID: UserInfo.shared.userID, clubPostTitle: postTitle, clubPostContent: postContent, imgStatus: 1, img: postImg, completion: {  res in
             switch res {
             case .success:
                 print("POST CommunityPostWithoutImg")

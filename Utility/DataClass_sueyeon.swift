@@ -45,9 +45,11 @@ class CommunityData: Decodable {
 
 // MARK: - 책 모임 멤버 data class
 class CommunityUserList: Decodable {
+    let user_name: String
     let user_id: Int
-    let now_reading: Int
+    let now_reading: Int?
     let introduce_message: String
+    let img_url: String?
 }
 
 // MARK: - 책 모임 가입 요청 data class

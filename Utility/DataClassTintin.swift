@@ -63,7 +63,7 @@ class CommunitySearch: Decodable {
     let clubID: Int
     let clubName: String
     let clubImgURL: String
-    let clubInviteOption: Int
+    let clubInviteOption: String
     let userID: Int
     let userName: String
     let imgURL: String

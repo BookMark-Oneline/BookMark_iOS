@@ -136,13 +136,13 @@ extension CommunityTab: UICollectionViewDelegate, UICollectionViewDelegateFlowLa
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let item = collectionView.cellForItem(at: indexPath) as? CommunitiesCell else {
-            return
-        }
         let vc = CommunityInsideViewController()
-        
-        vc.clubName = self.communities[indexPath.row][1]
-        vc.clubID = Int(self.communities[indexPath.row][2])
+        let community = self.communities[indexPath.row]
+        print(community)
+        vc.clubName = community[1]
+        guard let id = Int(community[2]) else {return}
+        vc.clubID = id
+        print("id: \(id)")
         self.navigationController?.pushViewControllerTabHidden(vc, animated: true)
         
     }

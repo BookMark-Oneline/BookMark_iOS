@@ -70,7 +70,6 @@ class NetworkTintin {
                 print("CommunitySearchInfo")
                 guard let value = res.value else {return}
                 guard let rescode = res.response?.statusCode else {return}
-
                 let networkResult = self.judgeStatus(object: 2, by: rescode, value)
                 completion(networkResult)
                 
@@ -84,7 +83,7 @@ class NetworkTintin {
 
 // MARK: - API 2-9 [POST] 책모임 가입 요청 전달
     func postCommunityJoinRequest(userID: String, clubID: String, completion: @escaping (NetworkResult<Any>) -> Void) {
-        let URL = baseUrl + "/club/request/1?club_id=\(clubID)"
+        let URL = baseUrl + "/club/request/\(clubID)"
         let params: Parameters = ["user_id": userID]
         let datarequest = AF.request(URL, method: .post, parameters: params, encoding: JSONEncoding.default).validate()
         

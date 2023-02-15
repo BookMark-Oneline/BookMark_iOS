@@ -83,7 +83,7 @@ class OneLineTabView {
         }
         img_profile.clipsToBounds = true
         img_profile.layer.cornerRadius = 15
-        img_profile.image = UIImage(named: "pepe.jpg")
+        img_profile.image = UserInfo.shared.userImg ?? UIImage(named: "noProfileImg")
 
         label_name.snp.makeConstraints() { make in
             make.centerY.equalTo(img_profile)
@@ -91,7 +91,7 @@ class OneLineTabView {
         }
         label_name.sizeToFit()
         label_name.layer.zPosition = 999
-        label_name.setTxtAttribute(UserInfo.shared.userName ?? "", size: 14, weight: .semibold, txtColor: .white)
+        label_name.setTxtAttribute(UserInfo.shared.userNickName, size: 14, weight: .semibold, txtColor: .white)
 
         label_time.snp.makeConstraints() { make in
             make.centerY.equalTo(label_name)

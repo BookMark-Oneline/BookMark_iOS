@@ -179,8 +179,8 @@ class ProfileCell: UITableViewCell {
             make.size.equalTo(75)
             make.center.equalToSuperview()
         }
+        img_profile.image = UserInfo.shared.userImg ?? UIImage(named: "noProfileImg")
         img_profile.layer.cornerRadius = 75 / 2.0
-        img_profile.image = UIImage(named: "pepe.jpg")
         img_profile.clipsToBounds = true
         img_profile.translatesAutoresizingMaskIntoConstraints = false
         
@@ -188,7 +188,7 @@ class ProfileCell: UITableViewCell {
             make.top.equalToSuperview().offset(43)
             make.leading.equalTo(layout_circle.snp.trailing).offset(14)
         }
-        label_name.text = UserInfo.shared.userName
+        label_name.text = UserInfo.shared.userNickName
         label_name.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         label_name.sizeToFit()
         
@@ -197,7 +197,7 @@ class ProfileCell: UITableViewCell {
             make.leading.equalTo(label_name)
             make.trailing.equalToSuperview().offset(-23)
         }
-        label_message.text = "올해의 목표는 100권"
+        label_message.text = UserInfo.shared.userMessage
         label_message.textAlignment = .left
         label_message.lineBreakMode = .byTruncatingTail
         label_message.textColor = .textLightGray

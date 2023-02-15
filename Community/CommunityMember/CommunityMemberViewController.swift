@@ -11,7 +11,7 @@ class CommunityMemberViewController: UIViewController, UITableViewDelegate, UITa
     var clubID: Int = 1
     let network = Network()
     let layout_member = CommunityMemberView()
-    private var memberList = [[String]]() // [user id, now reading, message]
+    private var memberList = [[String]]() // [user name, now reading, message, user images]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,6 +51,7 @@ extension CommunityMemberViewController {
 
             cell.label_name.text = self.memberList[indexPath.row - 1][0]
             cell.label_introduce.text = self.memberList[indexPath.row - 1][2]
+            cell.layout_avatarImg.setImageUrl(url: self.memberList[indexPath.row - 1][3])
             if (self.memberList[indexPath.row - 1][1] == "0") {
                 cell.layout_isReadingImg.image = UIImage(named: "bookmark_unclicked")
             }
@@ -84,7 +85,7 @@ extension CommunityMemberViewController {
             case .success(let members):
                 guard let member = (members as? [CommunityUserList]) else {return}
                 member.forEach { item in
-                    self.memberList.append(["\(item.user_id)", "\(item.now_reading)", item.introduce_message])
+                    self.memberList.append([item.user_name, String(describing: item.now_reading), item.introduce_message, item.img_url ?? ""])
                 }
                 self.layout_member.layout_members.reloadData()
             default:

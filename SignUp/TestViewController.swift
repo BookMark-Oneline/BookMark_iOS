@@ -21,7 +21,6 @@ class TestViewController: UIViewController {
         btn.addTarget(self, action: #selector(didtap), for: .touchUpInside)
     }
     @objc func didtap(_ sender: UIButton) {
-        print("yes")
         self.navigationController?.pushViewController(SetNameViewController(), animated: true)
     }
 

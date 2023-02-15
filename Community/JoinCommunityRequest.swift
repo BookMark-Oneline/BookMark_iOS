@@ -18,7 +18,7 @@ class JoinCommunityRequestViewController: UIViewController {
     
     var clubName: String = ""
     var userName: String = ""
-    var clubInviteOption: Int = 0
+    var clubInviteOption: String = ""
     var clubImgURL: String = ""
     var profileImgURL: String = ""
     
@@ -242,14 +242,6 @@ extension JoinCommunityRequestViewController {
         backgroundImageView.kf.setImage(with: URL(string: clubImgURL), placeholder: nil, options: [.transition(.fade(1)), .cacheOriginalImage, .forceTransition], completionHandler: nil)
         communityProfileImageView.kf.indicatorType = .activity
         communityProfileImageView.kf.setImage(with: URL(string: profileImgURL), placeholder: nil, options: [.transition(.fade(1)), .cacheOriginalImage, .forceTransition], completionHandler: nil)
-        
-//MARK: CommunityInviteOption
-        if (clubInviteOption == 0) {
-            communityStatusLabel.text = "모두가입허용"
-        } else if (clubInviteOption == 1) {
-            communityStatusLabel.text = "일부가입허용"
-        } else if (clubInviteOption == 2) {
-            communityStatusLabel.text = "모든가입거부"
-        }
+        communityStatusLabel.text = self.clubInviteOption
     }
 }

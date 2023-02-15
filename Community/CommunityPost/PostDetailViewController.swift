@@ -13,7 +13,6 @@ class PostDetailViewController: UIViewController {
     let layout_postDetail = PostDetailView()
     let layout_textField = TextFieldView()
     var postID: Int = 1
-    var likeStatus: Int = 0
     var textViewYValue = CGFloat(15)
     
     private var img_url: String?
@@ -27,8 +26,10 @@ class PostDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         getPostDetailData()
+        
         layout_postDetail.initView(view: self.view)
         layout_textField.initView(view: self.view)
+        layout_textField.btn_send.addTarget(self, action: #selector(didTapSendCommentButton), for: .touchUpInside)
         layout_postDetail.layout_postDetail.delegate = self
         layout_postDetail.layout_postDetail.dataSource = self
         
@@ -44,7 +45,6 @@ class PostDetailViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        postLikeStatus(likes: self.likeStatus)
         
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -54,28 +54,14 @@ class PostDetailViewController: UIViewController {
         self.view.endEditing(true)
     }
     
-    @objc func keyboardUp(_ sender: NSNotification) {
-        if let keyboardFrame: NSValue = sender.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-            let keyboardRectangle = keyboardFrame.cgRectValue
-        
-             UIView.animate(
-                 withDuration: 0
-                 , animations: {
-                     self.layout_textField.layout_coner.transform = CGAffineTransform(translationX: 0, y: -keyboardRectangle.height + self.view.safeAreaInsets.bottom)
-                 }
-             )
-         }
-    }
-    
-    @objc func keyboardDown(_ sender: NSNotification) {
-        self.layout_textField.layout_coner.transform = .identity
-    }
-    
     func setNavCustom() {
         self.setNavigationCustom(title: "")
         self.setNavigationImageButton(imageName: ["seeMore"], action: [#selector(removePostButton)])
     }
-    
+}
+
+// MARK: - button delegate 용 extension
+extension PostDetailViewController {
     @objc func removePostButton(_ sender: UIBarButtonItem) {
         let alert = UIAlertController(title: "", message: "", preferredStyle: .actionSheet)
         let report = UIAlertAction(title: "신고하기", style: .default)
@@ -94,8 +80,34 @@ class PostDetailViewController: UIViewController {
         alert.addAction(cancel)
         self.present(alert, animated: true)
     }
+    
+    @objc func didTapSendCommentButton(_ sender: UIButton) {
+        if (self.layout_textField.layout_textField.hasText), let txt = self.layout_textField.layout_textField.text {
+            self.postComment(text: txt)
+        }
+        self.view.endEditing(true)
+        self.layout_textField.layout_textField.text = ""
+    }
+    
+    @objc func keyboardUp(_ sender: NSNotification) {
+        if let keyboardFrame: NSValue = sender.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardRectangle = keyboardFrame.cgRectValue
+        
+             UIView.animate(
+                 withDuration: 0
+                 , animations: {
+                     self.layout_textField.layout_coner.transform = CGAffineTransform(translationX: 0, y: -keyboardRectangle.height - 20 + self.view.safeAreaInsets.bottom)
+                 }
+             )
+         }
+    }
+    
+    @objc func keyboardDown(_ sender: NSNotification) {
+        self.layout_textField.layout_coner.transform = .identity
+    }
 }
 
+// MARK: - TableviewDelegate 용 extension
 extension PostDetailViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
@@ -110,7 +122,7 @@ extension PostDetailViewController: UITableViewDelegate, UITableViewDataSource {
             cell.label_heart.text = "\(likeCount)"
             cell.label_comment.text = "\(commentCount)"
             cell.likeCallbackMehtod = { [weak self] result in
-                self?.likeStatus = result
+                self?.postLikeStatus(likes: result)
             }
             
             return cell
@@ -173,9 +185,26 @@ extension PostDetailViewController {
         network.postCommunityPostLikeStatus(clubPostID: self.postID, userID: UserInfo.shared.userID, likeStatus: likes, completion: { res in
             switch res {
             case .success:
+                print("yes")
                 return
             default:
                 print("failed update like status")
+            }
+        })
+    }
+    
+    func postComment(text: String) {
+        network.postCommunityPostComment(clubPostID: self.postID, userID: UserInfo.shared.userID, comment: text, completion: { response in
+            switch response {
+            case .success(let data):
+                guard let comment = (data as? CommunityPost)?.CommentData else {return}
+                self.comment.removeAll()
+                comment.forEach { item in
+                    self.comment.append([item.user_name, item.comment_content_text])
+                }
+                self.layout_postDetail.layout_postDetail.reloadData()
+            default:
+                print("failed get post detail data")
             }
         })
     }
@@ -240,9 +269,6 @@ class TextFieldView {
         layout_textField.placeholder = "댓글을 입력하세요."
         layout_textField.font = .systemFont(ofSize: 15)
         layout_textField.textAlignment = .natural
-        
-        
-
     }
 }
 

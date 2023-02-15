@@ -27,6 +27,6 @@ class UserInfo {
         self.userID = 1
         self.userGoal = 60
         self.userMessage = ""
-        self.userNickName = "이름 없음"
+        self.userNickName = self.userName
     }
 }
