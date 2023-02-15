@@ -13,10 +13,11 @@ class CommunityInsideViewController: UIViewController, UITableViewDelegate, UITa
 //MARK: NetworkTintin
     let network = NetworkTintin()
     
-    var clubID: Int = 1
+    var clubName: String = ""
+    var clubID: Int?
     var announceID: Int?
     
-    var postData = [PostInfo]()
+    var postData = [[String]]()
 
     struct PostInfo {
         let postID: Int
@@ -55,19 +56,19 @@ class CommunityInsideViewController: UIViewController, UITableViewDelegate, UITa
     }
     
     func setNavCustom() {
-        self.setNavigationCustom(title: "책과 무스비")
+        self.setNavigationCustom(title: self.clubName)
         self.setNavigationImageButton(imageName: ["group_member", "group_setting"], action: [#selector(pushCommunityMemberViewController), #selector(pushCommunitySettingViewController)])
     }
     
     @objc func pushCommunitySettingViewController(_ sender: UIBarButtonItem) {
         let vc = SetCommunityViewController()
-        vc.clubID = self.clubID
+        vc.clubID = self.clubID ?? 0
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc func pushCommunityMemberViewController(_ sender: UIBarButtonItem) {
         let vc = CommunityMemberViewController()
-        vc.clubID = self.clubID
+        vc.clubID = self.clubID ?? 0
         self.navigationController?.pushViewController(vc, animated: true)
     }
 
@@ -75,7 +76,8 @@ class CommunityInsideViewController: UIViewController, UITableViewDelegate, UITa
 
 extension CommunityInsideViewController {
     func getCommunityInsideData() {
-        network.getCommunityInfo(clubID: self.clubID) { res in
+//MARK: DB에 아직 clubID가 1밖에 없어서 다른 숫자로 하면 실행 안 되는 듯함 그래서 일단 1로 넣어주게 해둠
+        network.getCommunityInfo(clubID: 1) { res in
             switch res {
             case .success(let communityInfo):
                 if let comInfo = communityInfo as? CommunityInfo {
@@ -84,10 +86,9 @@ extension CommunityInsideViewController {
                     self.announceID = comInfo.announcementID
                     self.clubID = comInfo.clubID
                     
+                    self.postData.removeAll()
                     comInfo.postResponse.forEach({ item in
-                        let post: PostInfo = PostInfo(postID: item.clubPostID, postTitle: item.clubPostTitle, postContent: item.postContentText, likeNum: item.likeNum, commentNum: item.commentNum, createdAt: item.createdAt ?? nil)
-                        
-                        self.postData.append(post)
+                        self.postData.append(["\(item.clubPostID)", "\(item.clubPostTitle)", "\(item.postContentText)", "\(item.likeNum)", "\(item.commentNum)", "\(String(describing: item.createdAt))"])
                     })
                     
                     self.layout_post.layout_posts.reloadData()
@@ -106,24 +107,26 @@ extension CommunityInsideViewController {
         if (self.announceID == nil) {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: postCell.identifier, for: indexPath) as? postCell else { return postCell() }
 
-            cell.label_comment.text = String(self.postData[indexPath.row].commentNum)
-            cell.label_like.text = String(self.postData[indexPath.row].likeNum)
-            cell.label_title.text = self.postData[indexPath.row].postTitle
-            cell.label_context.text = self.postData[indexPath.row].postContent
+            cell.label_comment.text = self.postData[indexPath.row][4]
+            cell.label_like.text = self.postData[indexPath.row][3]
+            cell.label_title.text = self.postData[indexPath.row][1]
+            cell.label_context.text = self.postData[indexPath.row][2]
 
             return cell
         } else {
             if indexPath.row == 0 {
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: noticePostCell.identifier, for: indexPath) as? noticePostCell else { return noticePostCell() }
+                
+                cell.label_noticeTitle.text = self.postData[self.announceID ?? 0][1]
 
                 return cell
             } else {
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: postCell.identifier, for: indexPath) as? postCell else { return postCell() }
 
-                cell.label_comment.text = String(self.postData[indexPath.row-1].commentNum)
-                cell.label_like.text = String(self.postData[indexPath.row-1].likeNum)
-                cell.label_title.text = self.postData[indexPath.row-1].postTitle
-                cell.label_context.text = self.postData[indexPath.row-1].postContent
+                cell.label_comment.text = self.postData[indexPath.row-1][4]
+                cell.label_like.text = self.postData[indexPath.row-1][3]
+                cell.label_title.text = self.postData[indexPath.row-1][1]
+                cell.label_context.text = self.postData[indexPath.row-1][2]
 
                 return cell
             }
@@ -311,7 +314,7 @@ class postCell: UITableViewCell {
             make.height.equalTo(label_comment)
             make.width.equalTo(label_comment)
         }
-        layout_like.image = UIImage(named: "heart")
+        layout_like.image = UIImage(named: "heart_unfill")
   
     }
     
