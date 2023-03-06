@@ -6,6 +6,12 @@ PODS:
     - SwiftAlgorithms (~> 1.0)
   - Kingfisher (7.5.0)
   - Pastel (0.6.0)
+  - RxCocoa (6.5.0):
+    - RxRelay (= 6.5.0)
+    - RxSwift (= 6.5.0)
+  - RxRelay (6.5.0):
+    - RxSwift (= 6.5.0)
+  - RxSwift (6.5.0)
   - SnapKit (5.6.0)
   - SwiftAlgorithms (1.0.0)
   - Toast-Swift (5.0.1)
@@ -15,6 +21,8 @@ DEPENDENCIES:
   - Charts
   - Kingfisher (~> 7.0)
   - Pastel
+  - RxCocoa (= 6.5.0)
+  - RxSwift (= 6.5.0)
   - SnapKit (~> 5.6)
   - Toast-Swift (~> 5.0.1)
 
@@ -24,6 +32,9 @@ SPEC REPOS:
     - Charts
     - Kingfisher
     - Pastel
+    - RxCocoa
+    - RxRelay
+    - RxSwift
     - SnapKit
     - SwiftAlgorithms
     - Toast-Swift
@@ -33,10 +44,13 @@ SPEC CHECKSUMS:
   Charts: 354f86803d11d9c35de280587fef50d1af063978
   Kingfisher: b9c2a4a4af2990a768445c277359b27bde287d71
   Pastel: 814f081efbe2859c37e65ee44f396e6e5be88619
+  RxCocoa: 94f817b71c07517321eb4f9ad299112ca8af743b
+  RxRelay: 1de1523e604c72b6c68feadedd1af3b1b4d0ecbd
+  RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   SwiftAlgorithms: 38dda4731d19027fdeee1125f973111bf3386b53
   Toast-Swift: 9b6a70f28b3bf0b96c40d46c0c4b9d6639846711
 
-PODFILE CHECKSUM: 2dfc9c79a57d25175e9a21ae4f4dc92dec28cd6f
+PODFILE CHECKSUM: 5885c940e9fa0a63ac79f051b248c0362857c82c
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.11.3

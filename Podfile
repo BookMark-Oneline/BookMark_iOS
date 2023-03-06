@@ -11,4 +11,6 @@ target 'BookMark' do
 	pod 'Kingfisher', '~> 7.0'
 	pod "Pastel"
 	pod 'Toast-Swift', '~> 5.0.1'
+	pod 'RxSwift', '6.5.0'
+    pod 'RxCocoa', '6.5.0'
 end
