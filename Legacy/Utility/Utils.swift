@@ -94,7 +94,7 @@ extension UIButton {
     func setTitle(_ title: String, size: CGFloat, weight: UIFont.Weight, color: UIColor, when: UIControl.State = .normal) {
         if #available(iOS 15.0, *) {
             var attributedTitle = AttributedString(title)
-            attributedTitle.font = .systemFont(ofSize: size, weight: weight)
+            attributedTitle.font = .suit(size: size, weight: weight)
             attributedTitle.foregroundColor = color
             var configuration = self.configuration ?? .plain()
             configuration.attributedTitle = attributedTitle
@@ -111,7 +111,7 @@ extension UIButton {
 extension UILabel {
     func setTxtAttribute(_ title: String, size: CGFloat, weight: UIFont.Weight, txtColor: UIColor) {
         self.text = title
-        self.font = UIFont.systemFont(ofSize: size, weight: weight)
+        self.font = .suit(size: size, weight: weight)
         self.textColor = txtColor
     }
 }
